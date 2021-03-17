@@ -19,6 +19,18 @@ public class UserDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+    public User selectUserById(long userId) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            User user = (User) session.get(User.class, userId);
+            session.getTransaction().commit();
+            return user;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public List<User> selectUsersByName(String username) {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
@@ -46,7 +58,6 @@ public class UserDao {
             return Collections.emptyList();
         }
     }
-
 
     public boolean updateUser(User user) {
         Session session = sessionFactory.openSession();
