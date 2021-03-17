@@ -29,6 +29,21 @@ public class ProEventoDatabaseInitializer {
             tagDance.setName("Dance");
             tagDance.setDescription("Let's dance!");
 
+            Account testAccountTommy = new Account();
+            testAccountTommy.setEmail("tommy@usc.edu");
+            testAccountTommy.setPhoneNumber("111-111-1111");
+            testAccountTommy.setPassword("uscfighton!");
+
+            Account testAccountTuring = new Account();
+            testAccountTuring.setEmail("alanturing@mail.com");
+            testAccountTuring.setPhoneNumber("123-456-7890");
+            testAccountTuring.setPassword("helloworld123");
+
+            Account testAccountNeumann = new Account();
+            testAccountNeumann.setEmail("johnneumann@mail.com");
+            testAccountNeumann.setPhoneNumber("000-000-0000");
+            testAccountNeumann.setPassword("111111");
+
             User testUserTommy = new User();
             testUserTommy.setUsername("Tommy Trojan");
             testUserTommy.setBiography("USC fight on!");
@@ -36,6 +51,7 @@ public class ProEventoDatabaseInitializer {
             testUserTommy.setStatus("Free");
             testUserTommy.setTags(Set.of(tagGame, tagMusic, tagDance));
             testUserTommy.setEnableNotifications(true);
+            testAccountTommy.setUser(testUserTommy);
 
             User testUserTuring = new User();
             testUserTuring.setUsername("Turing");
@@ -44,6 +60,7 @@ public class ProEventoDatabaseInitializer {
             testUserTuring.setStatus("Free");
             testUserTuring.setTags(Set.of(tagGame));
             testUserTuring.setEnableNotifications(true);
+            testAccountTuring.setUser(testUserTuring);
 
             User testUserNeumann = new User();
             testUserNeumann.setUsername("Neumann");
@@ -52,27 +69,7 @@ public class ProEventoDatabaseInitializer {
             testUserNeumann.setStatus("Free");
             testUserNeumann.setTags(Set.of(tagMusic, tagGame));
             testUserNeumann.setEnableNotifications(true);
-
-            Account testAccountTommy = new Account();
-            testAccountTommy.setEmail("tommy@usc.edu");
-            testAccountTommy.setPhoneNumber("111-111-1111");
-            testAccountTommy.setPassword("uscfighton!");
-            testAccountTommy.setUser(testUserTommy);
-            testUserTommy.setAccount(testAccountTommy);
-
-            Account testAccountTuring = new Account();
-            testAccountTuring.setEmail("alanturing@mail.com");
-            testAccountTuring.setPhoneNumber("123-456-7890");
-            testAccountTuring.setPassword("helloworld123");
-            testAccountTuring.setUser(testUserTuring);
-            testUserTuring.setAccount(testAccountTuring);
-
-            Account testAccountNeumann = new Account();
-            testAccountNeumann.setEmail("johnneumann@mail.com");
-            testAccountNeumann.setPhoneNumber("000-000-0000");
-            testAccountNeumann.setPassword("111111");
             testAccountNeumann.setUser(testUserNeumann);
-            testUserNeumann.setAccount(testAccountNeumann);
 
             testUserTuring.follow(testUserTommy);
             testUserNeumann.follow(testUserTommy);
@@ -112,9 +109,9 @@ public class ProEventoDatabaseInitializer {
             session.save(testAccountTommy);
             session.save(testAccountTuring);
             session.save(testAccountNeumann);
-            session.save(testUserTommy);
-            session.save(testUserTuring);
-            session.save(testUserNeumann);
+//            session.save(testUserTommy);
+//            session.save(testUserTuring);
+//            session.save(testUserNeumann);
             session.save(testEventOne);
             session.save(testEventTwo);
             session.save(testNotification);

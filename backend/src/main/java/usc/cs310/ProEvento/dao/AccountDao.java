@@ -20,7 +20,7 @@ public class AccountDao {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.saveOrUpdate(session);
+            session.saveOrUpdate(account);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class AccountDao {
         }
     }
 
-    public Account selectAccountById(int accountId) {
+    public Account selectAccountById(long accountId) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             Account account = (Account) session.get(Account.class, accountId);

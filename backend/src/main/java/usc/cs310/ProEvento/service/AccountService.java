@@ -47,7 +47,7 @@ public class AccountService {
             return null;
         }
 
-        account.getUser().setAccount(account);
+        account.getUser().setStatus("Free");
         if (accountDao.createAccount(account)) {
             if (email != null && !email.equals("")) {
                 account = accountDao.selectAccountByEmail(email);

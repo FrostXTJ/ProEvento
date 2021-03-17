@@ -1,10 +1,7 @@
 package usc.cs310.ProEvento.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,11 +13,11 @@ import java.util.Set;
 @Table(name = "user")
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User implements Serializable {
-    private static final long serialVersionUID = 5359261218277842172L;
+    private static final long serialVersionUID = -8118218803075062550L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String username;
 
@@ -34,12 +31,8 @@ public class User implements Serializable {
     @Column(name = "enable_notification")
     private boolean enableNotifications;
 
-    @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(unique = true)
-    private Account account;
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "current_event_id")
     private Event currentEvent;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -120,11 +113,11 @@ public class User implements Serializable {
     }
 
     // Getters and Setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -166,14 +159,6 @@ public class User implements Serializable {
 
     public void setEnableNotifications(boolean enableNotifications) {
         this.enableNotifications = enableNotifications;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public Event getCurrentEvent() {

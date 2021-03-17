@@ -12,8 +12,8 @@ public class Notification implements Serializable {
     private static final long serialVersionUID = 2031292100970290268L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String content;
 
@@ -34,11 +34,11 @@ public class Notification implements Serializable {
     )
     private Set<User> receivers;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

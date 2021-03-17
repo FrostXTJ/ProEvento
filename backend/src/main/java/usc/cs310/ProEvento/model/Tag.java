@@ -7,22 +7,22 @@ import java.util.Objects;
 @Entity
 @Table(name = "tag")
 public class Tag implements Serializable {
-    private static final long serialVersionUID = -1097137076008782019L;
+    private static final long serialVersionUID = 3758241589517933651L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private String name;
 
     private String description;
 
     // Getters and Setters
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

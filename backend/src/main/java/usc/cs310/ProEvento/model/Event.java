@@ -14,11 +14,11 @@ import java.util.Set;
 @Table(name = "event")
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Event implements Serializable {
-    private static final long serialVersionUID = -9023730976247511349L;
+    private static final long serialVersionUID = 5343525354995512808L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(name = "like_count")
     private int likeCount;
@@ -77,11 +77,11 @@ public class Event implements Serializable {
     }
 
     // Getters and Setters
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

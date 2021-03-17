@@ -12,11 +12,11 @@ import java.util.Objects;
 @Table(name = "account")
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Account implements Serializable {
-    private static final long serialVersionUID = -5881266693865922332L;
+    private static final long serialVersionUID = -7222527982210391773L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String password;
 
@@ -28,15 +28,16 @@ public class Account implements Serializable {
     @Size(max = 15)
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(unique = true)
     private User user;
 
     // Getters and Setters
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
