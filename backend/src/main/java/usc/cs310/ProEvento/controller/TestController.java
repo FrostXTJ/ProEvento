@@ -8,6 +8,6 @@ public class TestController {
 
     @GetMapping("/api/test")
     public String testConnection() {
-        return "Connected to server!";
+        return "Connected to the ProEvento server!";
     }
 }

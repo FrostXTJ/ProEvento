@@ -19,11 +19,13 @@ public class ProEventoConfig {
         dataSource.setUrl("jdbc:mysql://proevento-database.cxltcwdqro1c.us-east-2.rds.amazonaws.com:3306/proevento?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8");
 
         // Read database credentials.
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Input database admin username: ");
-        String username = scanner.nextLine();
-        System.out.print("Input database admin password: ");
-        String password = scanner.nextLine();
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Input database admin username: ");
+//        String username = scanner.nextLine();
+//        System.out.print("Input database admin password: ");
+//        String password = scanner.nextLine();
+        String username = "ProEventoAdmin";
+        String password = "o67FhaOpkzAIw3jaF74t";
 
         dataSource.setUsername(username);
         dataSource.setPassword(password);
@@ -41,7 +43,9 @@ public class ProEventoConfig {
 
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");  // Used for creating new tables.
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "validate");  // Used for validating database schemes.
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return hibernateProperties;
     }

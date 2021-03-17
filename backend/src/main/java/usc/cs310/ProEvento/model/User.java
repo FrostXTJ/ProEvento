@@ -1,13 +1,22 @@
 package usc.cs310.ProEvento.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User implements Serializable {
-    private static final long serialVersionUID = 4999948174072390810L;
+    private static final long serialVersionUID = 5359261218277842172L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,48 +29,97 @@ public class User implements Serializable {
 
     private String biography;
 
-    private String Status;
+    private String status;
 
     @Column(name = "enable_notification")
     private boolean enableNotifications;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, optional = false)
     @JoinColumn(unique = true)
     private Account account;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Event currentEvent;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_tag",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") }
     )
-    private List<Tag> tags;
+    private Set<Tag> tags;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_network",
             joinColumns = { @JoinColumn(name = "follower_id") },
             inverseJoinColumns = { @JoinColumn(name = "followee_id") }
     )
-    private List<User> following;
+    private Set<User> following;
 
-    @ManyToMany(mappedBy = "following")
-    private List<User> followers;
+    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<User> followers;
 
-    @OneToMany(mappedBy = "host")
-    private List<Event> hostEvents;
+    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Event> hostEvents;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_registered_event",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "event_id") }
     )
-    private List<Event> registeredEvents;
+    private Set<Event> registeredEvents;
 
+    public void follow(User otherUser) {
+        if (this.following == null) {
+            this.following = new HashSet<>();
+        }
+        if (otherUser.followers == null) {
+            otherUser.followers = new HashSet<>();
+        }
+        this.following.add(otherUser);
+        otherUser.followers.add(this);
+    }
+
+    public void unfollow(User otherUser) {
+        this.following.remove(otherUser);
+        otherUser.followers.remove(this);
+    }
+
+    public void registerEvent(Event event) {
+        if (this.registeredEvents == null) {
+            this.registeredEvents = new HashSet<>();
+        }
+        this.registeredEvents.add(event);
+        event.addGuest(this);
+    }
+
+    public void unregisterEvent(Event event) {
+        this.registeredEvents.remove(event);
+        event.removeGuest(this);
+    }
+
+    public void hostEvent(Event event) {
+        if (this.hostEvents == null) {
+            this.hostEvents = new HashSet<>();
+        }
+        event.setHost(this);
+        this.hostEvents.add(event);
+    }
+
+    public void joinEvent(Event event) {
+        this.currentEvent = event;
+        this.status = "In an event";
+    }
+
+    public void leaveEvent(Event event) {
+        this.currentEvent = null;
+        this.status = "Free";
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -95,11 +153,11 @@ public class User implements Serializable {
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 
     public boolean isEnableNotifications() {
@@ -126,43 +184,68 @@ public class User implements Serializable {
         this.currentEvent = currentEvent;
     }
 
-    public List<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
 
-    public List<User> getFollowing() {
+    public Set<User> getFollowing() {
         return following;
     }
 
-    public void setFollowing(List<User> following) {
+    public void setFollowing(Set<User> following) {
         this.following = following;
     }
 
-    public List<User> getFollowers() {
+    public Set<User> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<User> followers) {
+    public void setFollowers(Set<User> followers) {
         this.followers = followers;
     }
 
-    public List<Event> getHostEvents() {
+    public Set<Event> getHostEvents() {
         return hostEvents;
     }
 
-    public void setHostEvents(List<Event> hostEvents) {
+    public void setHostEvents(Set<Event> hostEvents) {
         this.hostEvents = hostEvents;
     }
 
-    public List<Event> getRegisteredEvents() {
+    public Set<Event> getRegisteredEvents() {
         return registeredEvents;
     }
 
-    public void setRegisteredEvents(List<Event> registeredEvents) {
+    public void setRegisteredEvents(Set<Event> registeredEvents) {
         this.registeredEvents = registeredEvents;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", biography='" + biography + '\'' +
+                ", Status='" + status + '\'' +
+                ", enableNotifications=" + enableNotifications +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && enableNotifications == user.enableNotifications && Objects.equals(username, user.username) && Objects.equals(avatarUrl, user.avatarUrl) && Objects.equals(biography, user.biography) && Objects.equals(status, user.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, avatarUrl, biography, status, enableNotifications);
     }
 }

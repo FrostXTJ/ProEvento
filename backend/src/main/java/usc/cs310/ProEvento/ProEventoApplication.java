@@ -9,5 +9,4 @@ public class ProEventoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProEventoApplication.class, args);
 	}
-
 }
