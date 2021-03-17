@@ -19,13 +19,11 @@ public class ProEventoConfig {
         dataSource.setUrl("jdbc:mysql://proevento-database.cxltcwdqro1c.us-east-2.rds.amazonaws.com:3306/proevento?createDatabaseIfNotExist=true&serverTimezone=UTC&characterEncoding=utf8");
 
         // Read database credentials.
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Input database admin username: ");
-//        String username = scanner.nextLine();
-//        System.out.print("Input database admin password: ");
-//        String password = scanner.nextLine();
-        String username = "ProEventoAdmin";
-        String password = "o67FhaOpkzAIw3jaF74t";
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Input database admin username: ");
+        String username = scanner.nextLine();
+        System.out.print("Input database admin password: ");
+        String password = scanner.nextLine();
 
         dataSource.setUsername(username);
         dataSource.setPassword(password);
