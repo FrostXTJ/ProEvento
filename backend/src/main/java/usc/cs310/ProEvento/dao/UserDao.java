@@ -33,7 +33,7 @@ public class UserDao {
     public List<User> selectUsersByName(String username) {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
-            Query query = session.createQuery("FROM User u WHERE u.username = :username");
+            Query query = session.createQuery("FROM User u WHERE u.username LIKE :username");
             query.setParameter("username", username);
             List<User> users = (List<User>) query.list();;
             session.getTransaction().commit();
