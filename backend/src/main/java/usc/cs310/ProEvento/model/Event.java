@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "event")
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Event implements Serializable {
     private static final long serialVersionUID = 5343525354995512808L;
 
@@ -38,13 +37,13 @@ public class Event implements Serializable {
     @Column(name = "datetime")
     private LocalDateTime dateTime;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Tag tag;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private User host;
 
-    @ManyToMany(mappedBy = "registeredEvents", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "registeredEvents", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<User> guests;
 
     public void addGuest(User guest) {

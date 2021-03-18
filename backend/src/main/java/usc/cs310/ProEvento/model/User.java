@@ -1,7 +1,6 @@
 package usc.cs310.ProEvento.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +10,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class User implements Serializable {
     private static final long serialVersionUID = -8118218803075062550L;
 
@@ -31,11 +29,11 @@ public class User implements Serializable {
     @Column(name = "enable_notification")
     private boolean enableNotifications;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "current_event_id")
     private Event currentEvent;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_tag",
             joinColumns = { @JoinColumn(name = "user_id") },
@@ -43,7 +41,8 @@ public class User implements Serializable {
     )
     private Set<Tag> tags;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_network",
             joinColumns = { @JoinColumn(name = "follower_id") },
@@ -51,13 +50,16 @@ public class User implements Serializable {
     )
     private Set<User> following;
 
-    @ManyToMany(mappedBy = "following", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany(mappedBy = "following", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<User> followers;
 
-    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "host", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Event> hostEvents;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_registered_event",
             joinColumns = { @JoinColumn(name = "user_id") },

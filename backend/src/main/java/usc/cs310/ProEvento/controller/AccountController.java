@@ -56,11 +56,14 @@ public class AccountController {
     public boolean changePassword(@RequestBody ChangePasswordRequestBody requestBody,
                                   HttpServletRequest request,
                                   HttpServletResponse response) {
-        boolean success = accountService.changePassword(requestBody.accountId, requestBody.newPassword);
+        boolean success = accountService.changePassword(
+                requestBody.accountId,
+                requestBody.currentPassword,
+                requestBody.newPassword
+        );
         if (!success) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         return success;
     }
-
 }

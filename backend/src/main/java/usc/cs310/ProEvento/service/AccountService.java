@@ -73,7 +73,6 @@ public class AccountService {
         return null;
     }
 
-
     public Account loginWithEmail(String email, String password) {
         Account account = accountDao.selectAccountByEmail(email);
         // Return null if account does not exist or password doest not match.
@@ -92,9 +91,11 @@ public class AccountService {
         return account;
     }
 
-    public boolean changePassword(long accountId, String newPassword) {
+    public boolean changePassword(long accountId,
+                                  String currentPassword,
+                                  String newPassword) {
         Account account = accountDao.selectAccountById(accountId);
-        if (account == null) {
+        if (account == null || !account.getPassword().equals(currentPassword)) {
             return false;
         }
         account.setPassword(newPassword);

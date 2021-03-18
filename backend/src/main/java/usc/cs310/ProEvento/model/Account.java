@@ -10,7 +10,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "account")
-@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Account implements Serializable {
     private static final long serialVersionUID = -7222527982210391773L;
 
@@ -28,7 +27,7 @@ public class Account implements Serializable {
     @Size(max = 15)
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private User user;
 

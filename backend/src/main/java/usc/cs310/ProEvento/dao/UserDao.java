@@ -34,7 +34,7 @@ public class UserDao {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
             Query query = session.createQuery("FROM User u WHERE u.username LIKE :username");
-            query.setParameter("username", username);
+            query.setParameter("username", '%' + username + '%');
             List<User> users = (List<User>) query.list();;
             session.getTransaction().commit();
             return users;
@@ -62,7 +62,7 @@ public class UserDao {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.saveOrUpdate(user);
+            session.update(user);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
