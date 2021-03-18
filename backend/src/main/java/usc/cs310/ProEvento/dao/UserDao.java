@@ -11,7 +11,6 @@ import usc.cs310.ProEvento.model.User;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserDao {
