@@ -5,65 +5,22 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import usc.cs310.ProEvento.model.Account;
+import usc.cs310.ProEvento.model.Event;
 import usc.cs310.ProEvento.model.Tag;
-import usc.cs310.ProEvento.model.User;
 
 import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class UserDao {
-
+public class EventDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public User selectUserById(long userId) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            User user = (User) session.get(User.class, userId);
-            session.getTransaction().commit();
-            return user;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public List<User> selectUsersByName(String username) {
-        try (Session session = sessionFactory.openSession()) {
-            session.getTransaction().begin();
-            Query query = session.createQuery("FROM User u WHERE u.username LIKE :username");
-            query.setParameter("username", '%' + username + '%');
-            List<User> users = (List<User>) query.list();;
-            session.getTransaction().commit();
-            return users;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
-
-    // WARNING: This method has not been tested.
-    public List<User> selectUserByTag(Tag tag) {
-        try (Session session = sessionFactory.openSession()) {
-            session.getTransaction().begin();
-            Query query = session.createQuery("SELECT u FROM User u JOIN u.tags t WHERE t.id = :tagId");
-            query.setParameter("tagId", tag.getId());
-            List<User> users = (List<User>) query.list();
-            session.getTransaction().commit();
-            return users;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
-
-    public boolean updateUser(User user) {
+    public boolean createEvent(Event event) {
         Session session = sessionFactory.openSession();
         try {
-            session.getTransaction().begin();
-            session.update(user);
+            session.beginTransaction();
+            session.saveOrUpdate(event);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -79,11 +36,59 @@ public class UserDao {
         }
     }
 
-    public boolean deleteUser(User user) {
+    public Event selectEventById(long eventId) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Event event = (Event) session.get(Event.class, eventId);
+            session.getTransaction().commit();
+            return event;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Event> selectEventsByName(String name) {
+        try (Session session = sessionFactory.openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createQuery("FROM Event e WHERE e.name LIKE :name");
+            query.setParameter("name", '%' + name + '%');
+            List<Event> events = (List<Event>) query.list();
+            session.getTransaction().commit();
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    // TODO: Implement this function.
+    public List<Event> selectEventsByTag(Tag tag) {
+        return Collections.emptyList();
+    }
+
+    public List<Event> selectAllEvents() {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("FROM Event");
+            List<Event> events= (List<Event>) query.list();
+            session.getTransaction().commit();
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public boolean updateEvent(Event event) {
+        return this.createEvent(event);
+    }
+
+    public boolean deleteEvent(Event event) {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.delete(user);
+            session.delete(event);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {

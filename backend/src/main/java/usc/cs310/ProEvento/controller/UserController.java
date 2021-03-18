@@ -29,20 +29,17 @@ public class UserController {
 
     @GetMapping("/api/user/users_by_name")
     public List<User> getUsersByName(@RequestParam String username) {
-        List<User> users = userService.getUsersByName(username);
-        return users;
+        return userService.getUsersByName(username);
     }
 
     @GetMapping("/api/user/followers")
     public List<User> getFollowersById(@RequestParam long userId) {
-        List<User> followers = userService.getFollowersById(userId);
-        return followers;
+        return userService.getFollowersById(userId);
     }
 
     @GetMapping("/api/user/following")
     public List<User> getFollowingById(@RequestParam long userId) {
-        List<User> following = userService.getFollowingById(userId);
-        return following;
+        return userService.getFollowingById(userId);
     }
 
     @PostMapping("/api/user/follow")
