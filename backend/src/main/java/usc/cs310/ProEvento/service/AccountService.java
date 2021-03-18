@@ -76,7 +76,8 @@ public class AccountService {
 
     public Account loginWithEmail(String email, String password) {
         Account account = accountDao.selectAccountByEmail(email);
-        if (!password.equals(account.getPassword())) {
+        // Return null if account does not exist or password doest not match.
+        if (account == null || !password.equals(account.getPassword())) {
             return null;
         }
         return account;
@@ -84,16 +85,19 @@ public class AccountService {
 
     public Account loginWithPhoneNumber(String phoneNumber, String password) {
         Account account = accountDao.selectAccountByPhoneNumber(phoneNumber);
-        if (!account.getPassword().equals(password)) {
+        // Return null if account does not exist or password doest not match.
+        if (account == null || !account.getPassword().equals(password)) {
             return null;
         }
         return account;
     }
 
-    public boolean changePassword(Account account) {
-        if (accountDao.selectAccountById(account.getId()) == null) {
+    public boolean changePassword(long accountId, String newPassword) {
+        Account account = accountDao.selectAccountById(accountId);
+        if (account == null) {
             return false;
         }
+        account.setPassword(newPassword);
         return accountDao.updateAccount(account);
     }
 }
