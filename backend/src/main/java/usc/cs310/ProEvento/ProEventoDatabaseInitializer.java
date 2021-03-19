@@ -28,6 +28,9 @@ public class ProEventoDatabaseInitializer {
             Tag tagDance = new Tag();
             tagDance.setName("Dance");
             tagDance.setDescription("Let's dance!");
+            Tag tagTech = new Tag();
+            tagTech.setName("Tech");
+            tagTech.setDescription("Tech nerds");
 
             Account testAccountTommy = new Account();
             testAccountTommy.setEmail("tommy@usc.edu");
@@ -106,12 +109,10 @@ public class ProEventoDatabaseInitializer {
             session.save(tagGame);
             session.save(tagMusic);
             session.save(tagDance);
+            session.save(tagTech);
             session.save(testAccountTommy);
             session.save(testAccountTuring);
             session.save(testAccountNeumann);
-//            session.save(testUserTommy);
-//            session.save(testUserTuring);
-//            session.save(testUserNeumann);
             session.save(testEventOne);
             session.save(testEventTwo);
             session.save(testNotification);
