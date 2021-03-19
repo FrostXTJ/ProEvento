@@ -8,14 +8,9 @@ export default function ProfileScreen() {
 
   return (
     <View style={styles.container}>
-      
-
       <Image 
         style={styles.avatar}
         source={require("../assets/images/avatar.png")} />
-
-
-      
       <Text
         h4
         h4Style={styles.name}
