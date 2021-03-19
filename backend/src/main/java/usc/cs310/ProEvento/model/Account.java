@@ -1,7 +1,6 @@
 package usc.cs310.ProEvento.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -15,6 +14,7 @@ public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias({"id", "accountId"})
     private long id;
 
     private String password;

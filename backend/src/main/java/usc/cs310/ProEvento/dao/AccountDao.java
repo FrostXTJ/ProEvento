@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import usc.cs310.ProEvento.model.Account;
 
-import java.util.Collections;
-import java.util.List;
-
 @Repository
 public class AccountDao {
 

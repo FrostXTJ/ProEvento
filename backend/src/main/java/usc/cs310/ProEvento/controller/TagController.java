@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import usc.cs310.ProEvento.model.Tag;
 import usc.cs310.ProEvento.service.TagService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -23,13 +21,8 @@ public class TagController {
     }
 
     @GetMapping("/api/tag")
-    public Tag getTagById(@RequestParam("tag_id") long tagId,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
+    public Tag getTagById(@RequestParam("tag_id") long tagId) {
         Tag tag = tagService.getTagById(tagId);
-        if (tag == null) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
         return tag;
     }
 }
