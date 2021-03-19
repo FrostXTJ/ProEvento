@@ -1,5 +1,10 @@
 package usc.cs310.ProEvento.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -7,16 +12,20 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "notification")
-public class Notification implements Serializable {
-    private static final long serialVersionUID = 2031292100970290268L;
+@Table(name = "invitation")
+public class Invitation implements Serializable {
+    private static final long serialVersionUID = 415522929849224169L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias({"id", "invitationId"})
     private long id;
 
     private String content;
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonAlias({"dateTime", "datetime"})
     @Column(name = "datetime")
     private LocalDateTime dateTime;
 
@@ -28,9 +37,9 @@ public class Notification implements Serializable {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "notification_user",
-            joinColumns = { @JoinColumn(name = "notification_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+            name = "invitation_user",
+            joinColumns = { @JoinColumn(name = "invitation_id") },
+            inverseJoinColumns = { @JoinColumn(name = "receiver_id") }
     )
     private Set<User> receivers;
 
@@ -95,7 +104,7 @@ public class Notification implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Notification that = (Notification) o;
+        Invitation that = (Invitation) o;
         return id == that.id && Objects.equals(content, that.content) && Objects.equals(dateTime, that.dateTime);
     }
 

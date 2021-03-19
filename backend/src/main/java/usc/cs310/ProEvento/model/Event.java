@@ -39,6 +39,7 @@ public class Event implements Serializable {
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonAlias({"dateTime", "datetime"})
     @Column(name = "datetime")
     private LocalDateTime dateTime;
 
