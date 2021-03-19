@@ -8,11 +8,15 @@ import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import HomeScreen from '../screens/HomeScreen';
+import ProfileScreen from '../screens/ProfileScreen'
+
 import {
   BottomTabParamList,
   TabOneParamList,
   TabTwoParamList,
+  ProfileParamList,
   HomeParamList
+  
 } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -45,6 +49,15 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
+
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+
     </BottomTab.Navigator>
   );
 }
@@ -98,3 +111,18 @@ function HomeNavigator() {
     </HomeStack.Navigator>
   );
 }
+
+const ProfileStack = createStackNavigator<ProfileParamList>();
+
+function ProfileNavigator() {
+  return (
+    <ProfileStack.Navigator>
+    <ProfileStack.Screen
+      name="ProfileScreen"
+      component={ProfileScreen}
+      options={{ headerTitle: 'Profile' }}
+    />
+  </ProfileStack.Navigator>
+  );
+}
+
