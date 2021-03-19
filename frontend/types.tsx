@@ -25,3 +25,5 @@ export type HomeParamList = {
 export type ProfileParamList = {
   ProfileScreen: undefined;
 }
+
+

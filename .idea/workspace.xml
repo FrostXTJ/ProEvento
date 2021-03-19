@@ -20,12 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="725100d4-52c8-4eb3-a6db-ce9e8ecde565" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/ProEvento.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/history.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/history.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screens/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.expo/packager-info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/screens/ProfileScreen_Yuming.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screens/ProfileScreen_Yuming.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/types.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/types.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +45,9 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
@@ -79,6 +80,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="490" y="121" key="#Project_Structure" timestamp="1616132845082">
+      <screen x="0" y="25" width="1680" height="1025" />
+    </state>
+    <state x="490" y="121" key="#Project_Structure/0.25.1680.1025@0.25.1680.1025" timestamp="1616132845082" />
     <state x="629" y="499" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1616132610873">
       <screen x="0" y="25" width="1680" height="1025" />
     </state>

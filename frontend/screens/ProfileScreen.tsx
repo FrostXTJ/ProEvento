@@ -5,6 +5,14 @@ import { View} from '../components/Themed';
 
 export default function ProfileScreen() {
   
+  var photo = () => {};    // Accessing User Photo
+  var name = () => {};      //Accessing User Name
+  var user = null; //If this is the user own page
+  var fetch =() =>{}; // tells whether the current use is in the following list
+  var follow = 1;       // tells whether the current use is in the following list
+  var followLogic = () =>{}; //unfollow or follow the user
+  var setLogic = () =>{}; //change user profile
+  var history = () => {}//Accessing User History
 
   return (
     <View style={styles.container}>
