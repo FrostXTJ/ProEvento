@@ -6,21 +6,21 @@ class ExampleOne extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableHead: ['Head', 'Head2', 'Head3', 'Head4','Head5'],
+      tableHead: ['今天记录',''],
       tableData: [
-        ['1', '2', '3', '4',''],
-        ['a', 'b', 'c', 'd',''],
-        ['1', '2', '3', '4',''],
-        ['a', 'b', 'c', 'd',''],
-         ['1', '2', '3', '4',''],
-                ['a', 'b', 'c', 'd',''],
-                ['1', '2', '3', '4',''],
-                 ['1', '2', '3', '4',''],
-                        ['a', 'b', 'c', 'd',''],
-                        ['1', '2', '3', '4',''],
-                         ['1', '2', '3', '4',''],
-                                ['a', 'b', 'c', 'd',''],
-                                ['1', '2', '3', '4','']
+        ['一天不看浑身难受系列1',''],
+         ['一天不看浑身难受系列2',''],
+          ['一天不看浑身难受系列3',''],
+           ['一天不看浑身难受系列4',''],
+            ['一天不看浑身难受系列5',''],
+            ['一天不看浑身难受系列6',''],
+            ['一天不看浑身难受系列7',''],
+            ['一天不看浑身难受系列8',''],
+            ['一天不看浑身难受系列9',''],
+            ['一天不看浑身难受系列10',''],
+            ['一天不看浑身难受系列11',''],
+            ['一天不看浑身难受系列12',''],
+
       ]
     }
   }
@@ -34,7 +34,7 @@ class ExampleOne extends Component {
     const element = (data, index) => (
       <TouchableOpacity onPress={() => this._alertIndex(index)}>
         <View style={styles.btn}>
-          <Text style={styles.btnText}>button</Text>
+          <Text style={styles.btnText}>继续观看</Text>
         </View>
       </TouchableOpacity>
     );
@@ -49,7 +49,7 @@ class ExampleOne extends Component {
               <TableWrapper key={index} style={styles.row}>
                 {
                   rowData.map((cellData, cellIndex) => (
-                    <Cell key={cellIndex} data={cellIndex === 4 ? element(cellData, index) : cellData} textStyle={styles.text}/>
+                    <Cell key={cellIndex} data={cellIndex === 1 ? element(cellData, index) : cellData} textStyle={styles.text}/>
                   ))
                 }
               </TableWrapper>
@@ -63,12 +63,12 @@ class ExampleOne extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: { width : '100%', padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+  container: { width : '100%', backgroundColor: '#fff' },
   head: { height: 40, backgroundColor: '#808B97' },
   text: { margin: 6 },
-  row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
+  row: { paddingLeft : '25%', flexDirection: 'row', backgroundColor: 'white' },
   btn: { width: 58, height: 18, backgroundColor: '#78B7BB',  borderRadius: 2 },
   btnText: { textAlign: 'center', color: '#fff' }
 });
 
-export default ExampleOne;
+export {ExampleOne};
