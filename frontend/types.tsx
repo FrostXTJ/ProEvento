@@ -8,6 +8,7 @@ export type BottomTabParamList = {
   TabTwo: undefined;
   Home: undefined;
   Login: undefined;
+  Register: undefined;
 };
 
 export type TabOneParamList = {
@@ -25,3 +26,7 @@ export type HomeParamList = {
 export type LoginParamList = {
   LoginScreen: undefined;
 };
+
+export type RegisterParamList = {
+  RegisterScreen : undefined;
+}

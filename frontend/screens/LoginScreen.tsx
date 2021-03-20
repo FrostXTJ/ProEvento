@@ -10,11 +10,7 @@ import { Text } from '../components/Themed';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const AppButton = ({onPress, title}) => (
-    <TouchableOpacity onPress={onPress} style={{}}>
-      <Text style={{}}>{title}</Text>
-    </TouchableOpacity>
-  );
+  
   return (
     <SafeAreaView style={styles.container}>
         <Image style={styles.image} source={require("../assets/images/logo.png")}></Image>

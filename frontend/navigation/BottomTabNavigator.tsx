@@ -9,12 +9,14 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import HomeScreen from '../screens/HomeScreen';
 import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 import {
   BottomTabParamList,
   TabOneParamList,
   TabTwoParamList,
   HomeParamList,
-  LoginParamList
+  LoginParamList,
+  RegisterParamList
 } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -50,6 +52,13 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Login"
         component={LoginNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Register"
+        component={RegisterNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -119,5 +128,19 @@ function LoginNavigator() {
         options={{ headerTitle: 'Login' }}
       />
     </LoginStack.Navigator>
+  );
+}
+
+const RegisterStack = createStackNavigator<RegisterParamList>();
+
+function RegisterNavigator() {
+  return (
+    <RegisterStack.Navigator>
+      <RegisterStack.Screen
+        name="RegisterScreen"
+        component={RegisterScreen}
+        options={{ headerTitle: 'Register' }}
+      />
+    </RegisterStack.Navigator>
   );
 }
