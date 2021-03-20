@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 public class TagController {
-
     @Autowired
     private TagService tagService;
 
@@ -21,7 +20,7 @@ public class TagController {
     }
 
     @GetMapping("/api/tag")
-    public Tag getTagById(@RequestParam("tag_id") long tagId) {
+    public Tag getTagById(long tagId) {
         Tag tag = tagService.getTagById(tagId);
         return tag;
     }

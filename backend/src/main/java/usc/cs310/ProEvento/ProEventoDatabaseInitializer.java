@@ -85,7 +85,7 @@ public class ProEventoDatabaseInitializer {
             testEventOne.setTwilioRoomUrl("");
             testEventOne.setTag(tagMusic);
             testEventOne.setDateTime(LocalDateTime.of(2021, 5, 1, 12, 0, 0));
-            testUserTommy.hostEvent(testEventOne);
+            testEventOne.setHost(testUserTommy);
             testUserTuring.registerEvent(testEventOne);
 
             Event testEventTwo = new Event();
@@ -95,8 +95,8 @@ public class ProEventoDatabaseInitializer {
             testEventTwo.setStatus("open for registration");
             testEventTwo.setTwilioRoomUrl("");
             testEventTwo.setTag(tagGame);
+            testEventTwo.setHost(testUserTuring);
             testEventTwo.setDateTime(LocalDateTime.of(2021, 12, 21, 10, 0, 0));
-            testUserTommy.hostEvent(testEventTwo);
 
             Invitation testInvitation = new Invitation();
             testInvitation.setSender(testUserTommy);

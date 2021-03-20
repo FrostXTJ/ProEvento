@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @Table(name = "event")
 public class Event implements Serializable {
-    private static final long serialVersionUID = 5343525354995512808L;
+    private static final long serialVersionUID = -3182082255534849397L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +49,12 @@ public class Event implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private User host;
 
-    @ManyToMany(mappedBy = "registeredEvents", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_registered_event",
+            joinColumns = { @JoinColumn(name = "event_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
     private Set<User> guests;
 
     public void addGuest(User guest) {

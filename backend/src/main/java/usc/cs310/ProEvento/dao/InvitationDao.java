@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import usc.cs310.ProEvento.model.Event;
 import usc.cs310.ProEvento.model.Invitation;
 
 import java.util.List;
@@ -50,7 +49,7 @@ public class InvitationDao {
     public List<Invitation> selectInvitationsByReceiverId(long receiverId) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Invitation i JOIN i.receivers r WHERE r.id = :receiverId");
+            Query query = session.createQuery("SELECT i FROM Invitation i JOIN i.receivers r WHERE r.id = :receiverId");
             query.setParameter("receiverId", receiverId);
             List<Invitation> invitations = (List<Invitation>) query.list();
             session.getTransaction().commit();

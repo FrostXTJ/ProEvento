@@ -9,7 +9,6 @@ import usc.cs310.ProEvento.model.Account;
 
 @Repository
 public class AccountDao {
-
     @Autowired
     private SessionFactory sessionFactory;
 

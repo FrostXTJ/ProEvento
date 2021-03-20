@@ -17,8 +17,6 @@ public class Account implements Serializable {
     @JsonAlias({"id", "accountId"})
     private long id;
 
-    private String password;
-
     @Column(unique = true)
     @Size(max = 255)
     private String email;
@@ -27,7 +25,9 @@ public class Account implements Serializable {
     @Size(max = 15)
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private String password;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private User user;
 
@@ -38,14 +38,6 @@ public class Account implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -62,6 +54,14 @@ public class Account implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public User getUser() {

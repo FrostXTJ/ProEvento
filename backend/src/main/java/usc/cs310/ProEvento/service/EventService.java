@@ -41,19 +41,13 @@ public class EventService {
     }
 
     public List<Event> getUserRegisteredEvents(long userId) {
-        User user = userDao.selectUserById(userId);
-        if (user != null) {
-            return new ArrayList<>(user.getRegisteredEvents());
-        }
-        return Collections.emptyList();
+        List<Event> events = eventDao.selectEventsByGuestId(userId);
+        return events;
     }
 
     public List<Event> getUserHostEvents(long userId) {
-        User user = userDao.selectUserById(userId);
-        if (user != null) {
-            return new ArrayList<>(user.getHostEvents());
-        }
-        return Collections.emptyList();
+        List<Event> events = eventDao.selectEventsByHostId(userId);
+        return events;
     }
 
     public List<Event> getAllEvents() {
@@ -92,7 +86,7 @@ public class EventService {
         Event event = eventDao.selectEventById(eventId);
         if (user != null && event != null) {
             user.registerEvent(event);
-            return userDao.updateUser(user);
+            return eventDao.updateEvent(event);
         }
         return false;
     }
@@ -102,7 +96,7 @@ public class EventService {
         Event event = eventDao.selectEventById(eventId);
         if (user != null && event != null) {
             user.unregisterEvent(event);
-            return userDao.updateUser(user);
+            return eventDao.updateEvent(event);
         }
         return false;
     }
@@ -112,7 +106,7 @@ public class EventService {
         Event event = eventDao.selectEventById(eventId);
         if (user != null && event != null
         && event.getStatus().equals("streaming")
-        && user.getRegisteredEvents().contains(event)) {
+        && event.getGuests().contains(user)) {
             user.joinEvent(event);
             return userDao.updateUser(user);
         }

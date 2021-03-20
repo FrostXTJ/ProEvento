@@ -31,7 +31,8 @@ public class EventController {
 
     @GetMapping("/api/event/user_host_events")
     public List<Event> getUserHostEvents(@RequestParam long userId) {
-        return eventService.getUserHostEvents(userId);
+        List<Event> events = eventService.getUserHostEvents(userId);
+        return events;
     }
 
     @GetMapping("/api/event/all_events")
