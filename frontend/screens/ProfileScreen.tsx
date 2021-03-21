@@ -1,26 +1,61 @@
+//Environment Setup
 import * as React from 'react';
-import { StyleSheet,Image, TouchableOpacity, ImageBackground} from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet,Image, TouchableOpacity, ImageBackground,Alert} from 'react-native';
 import { Text,Header, Icon  } from "react-native-elements";
 import { View} from '../components/Themed';
 import { ExampleOne } from '../screens/history.js';
-export default function ProfileScreen() {
+import axios from 'axios';
+import Video from "react-native-video";
 
+
+export default function ProfileScreen() {
+  //Setup React Native Hook
+  const [userId, setUserId] = useState(null); //The null placeholder should contains a user object
+  //setUserId should be a function to change userId when switching between owner user and other users
+  const [userBio, setUserBio] = useState(null);
+   //setUserBio should be a function to change userId when switching between owner user and other users
+  const [userStatus, setUserStatus] = useState(null);
+   //setUserStatus should be a function to change userId when switching between owner user and other users
+
+  var testId = 1;
   var photo = () => {};    // Accessing User Photo
   var name = () => {};      //Accessing User Name
   var user = null; //If this is the user own page
   var fetch =() =>{}; // tells whether the current use is in the following list
   var follow = 1;       // tells whether the current use is in the following list
   var followLogic = () =>{}; //unfollow or follow the user
-  var setLogic = () =>{}; //change user profile
-  var history = () => {}//Accessing User History
+  var setLogic = () =>  Alert.alert('You have changed your profile!'); //change user profile
+
+  //Accessing User Information
+  useEffect(
+  () => {
+   axios.get('http://3.133.124.52:8080/api/user?userId=1')
+    .then (function (response) {
+        //console.log(response['data']);
+        var bio = response['data']['biography'].toString();
+        setUserBio(bio);
+        var stat = response['data']['status'].toString();
+        setUserStatus(stat);
+
+    })
+    .catch ( function (error) {
+        console.log(error);
+    });
+    }
+    );
+
+  //Page Rendering
 
   return (
     <View style={styles.container}>
 
+
      <View style = {styles.container1}>
-         <ImageBackground source={require("../assets/images/background.jpeg")} style={styles.imageBackground}>
+        <ImageBackground source={require("../assets/images/background.jpeg")} style={styles.imageBackground}>
 
             <View style = {styles.containerProfile}>
+
                 <Image
                 style={styles.avatar}
                 source={require("../assets/images/user.jpeg")} />
@@ -31,6 +66,20 @@ export default function ProfileScreen() {
                 style={{}}
                 >
                     Yuming Fei
+                </Text>
+                <Text
+                h4
+                h4Style={styles.status}
+                style={{}}
+                >
+                   Status : {userStatus}
+                </Text>
+                <Text
+                h4
+                h4Style={styles.bio}
+                style={{}}
+                >
+                   Bio:  {userBio}
                 </Text>
             </View>
 
@@ -52,13 +101,12 @@ export default function ProfileScreen() {
 
                         }
              </View>
-         </ImageBackground>
+             </ImageBackground>
+
      </View>
 
 
-      <View style = {styles.container3}>
-        <Text style = {styles.textHeader}> Attended History </Text>
-     </View>
+
 
      <View style = {styles.container4}>
         <ExampleOne/>
@@ -67,12 +115,6 @@ export default function ProfileScreen() {
     </View>
   );
 
-}
-
-const settingPage = () => {
-  return (
-    console.log("change setting")
-  );
 }
 
 const styles = StyleSheet.create({
@@ -95,13 +137,6 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
 
     },
-    container3: {
-        top : '0%',
-        width : '100%',
-        alignItems: 'center',
-        backgroundColor : 'orange',
-
-    },
     container4: {
         height : '50%',
         width : '100%',
@@ -120,6 +155,9 @@ const styles = StyleSheet.create({
          width: '100%',
          height: '100%',
     },
+    backgroundVideo: {
+
+    },
     settingStyle:{
         width: 20,
         height:20,
@@ -128,6 +166,18 @@ const styles = StyleSheet.create({
     name: {
         color: 'white',
         marginTop: 30,
+        alignSelf: 'center',
+    },
+    status: {
+        color: 'white',
+        marginTop: 10,
+        fontSize : 18,
+        alignSelf: 'center',
+    },
+    bio: {
+        color: 'white',
+        marginTop: 10,
+        fontSize : 18,
         alignSelf: 'center',
     },
     textHeader: {
