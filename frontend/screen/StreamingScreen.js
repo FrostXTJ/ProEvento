@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function StreamingScreen() {
+const StreamingScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Streaming</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -17,3 +17,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default StreamingScreen;
