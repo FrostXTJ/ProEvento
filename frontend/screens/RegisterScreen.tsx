@@ -14,17 +14,53 @@ export default function LoginScreen() {
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
 
+  const RegisterAuthentication = (email: String, password: String, username: String, firstname: String, lastname: String) => {
+
+    fetch("http://3.133.124.52:8080/api/account/register", {
+
+      method: "POST",
+      headers:{
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({
+
+        "email" : email,
+        "password" : password,
+        "user":{
+          "username" : username
+        }
+      })
+
+    }).then((response) => {
+
+      if (response.status == 200){
+
+        alert("Register suceed");
+      }
+      else{
+
+        alert("Register failed");
+      }
+    })
+
+  }
+
   return (
     <ScrollView>
       <SafeAreaView style = {styles.container}>
           <Image style={styles.image} source={require("../assets/images/logo.png")}></Image>
-          
+
           <StatusBar style="auto" />
           <View style={styles.form}>
             <TextInput style={styles.input}
             placeholder="Username"
             placeholderTextColor="#003f5c"
-            onChangeText={(username) => setUsername(username)}>
+            onChangeText={(username) => 
+            {
+              setUsername(username)
+              
+            }
+            }>
             </TextInput>
           </View>
 
@@ -77,7 +113,7 @@ export default function LoginScreen() {
         <View style={styles.row1}> 
           <TouchableOpacity style={styles.button} 
             onPress = {() => {
-              alert("Register clicked")
+              RegisterAuthentication(email, password, username, firstname, lastname);
             }}>
             <Text style={{fontSize: 20}}>Register</Text>
           </TouchableOpacity>

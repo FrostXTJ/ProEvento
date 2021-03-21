@@ -10,6 +10,48 @@ import { Text } from '../components/Themed';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const LoginAuthentication = (email:String, password:String) => {
+
+    
+    if (email == null || email.trim().length == 0){
+
+      alert("Please enter your email or phone number");
+      return;
+    }
+    if (password == null || password.trim().length == 0){
+
+      alert("Please enter your password");
+      return;
+    }
+    fetch("http://3.133.124.52:8080/api/account/login", {
+
+      method: "POST",
+      headers:{
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({
+
+        "email" : email,
+        "password" : password,
+        
+      })
+
+    }).then((response) => {
+
+      if (response.status == 200){
+
+        alert("Login suceed");
+        sessionStorage.setItem("user", JSON.stringify(response));
+      }
+      else{
+
+        alert("Login failed");
+      }
+    }).catch((error) => {
+      alert(error);
+    })
+  }
   
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +88,7 @@ export default function LoginScreen() {
       <View style={styles.row1}> 
         <TouchableOpacity style={styles.button} 
           onPress = {() => {
-            alert("login clicked")
+            LoginAuthentication(email, password);
           }}>
           <Text style={{fontSize: 20}}>Login</Text>
         </TouchableOpacity>
