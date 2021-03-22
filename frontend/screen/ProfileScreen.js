@@ -65,8 +65,6 @@ const ProfileScreen = ({ navigation, route }) => {
       <Button title="Follow" />
     );
 
-  console.log(profileUser.username);
-
   return (
     <View style={styles.container}>
       <Divider height={80} backgroundColor="white" />
