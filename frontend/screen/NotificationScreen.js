@@ -22,8 +22,8 @@ const NotificationCard = props => {
   );
 }
 
-const NotificationScreen = (props) => {
-  const { myUser } = props;
+const NotificationScreen = ({navigation, route}) => {
+  const myUser = route.params.myAccount.user;
   const [ notificationCards, setNotificationCards ] = useState([]);
 
   useEffect(() => {
