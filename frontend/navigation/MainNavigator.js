@@ -13,7 +13,11 @@ export const MainNavigator = props => {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        initialParams={{ myAccount }}
+      />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}

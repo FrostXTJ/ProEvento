@@ -15,6 +15,7 @@ const LoginScreen = ({ navigation, route }) => {
         setMyAccount(account);
       },
       error => {
+        console.log(error);
         setMyAccount(null);
       }
     );
