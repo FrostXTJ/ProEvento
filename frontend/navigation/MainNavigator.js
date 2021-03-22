@@ -9,17 +9,21 @@ import TestScreen from "../screen/TestScreen";
 const Tab = createBottomTabNavigator();
 
 export const MainNavigator = props => {
-  const { setMyAccount } = props;
+    const { myAccount, setMyAccount } = props;
 
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-      <Tab.Screen name="Notification" component={NotificationScreen} />
-      <Tab.Screen name="Streaming" component={StreamingScreen} />
-      <Tab.Screen name="Test">
-        {props => <TestScreen {...props} setMyAccount={setMyAccount} />}
-      </Tab.Screen>
-    </Tab.Navigator>
-  );
+    console.log(myAccount);
+
+    return (
+        <Tab.Navigator>
+            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Notification">
+                {props => <NotificationScreen {...props} myUser={myAccount.user} />}
+            </Tab.Screen>
+            <Tab.Screen name="Streaming" component={StreamingScreen} />
+            <Tab.Screen name="Test">
+                {props => <TestScreen {...props} setMyAccount={setMyAccount} />}
+            </Tab.Screen>
+        </Tab.Navigator>
+    );
 };

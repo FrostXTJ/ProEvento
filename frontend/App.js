@@ -10,17 +10,15 @@ export default function App() {
   const [myUse, SetMyUser] = useState(null);
 
   const appContent =
-    myAccount === null ? (
-      <LoginNavigator setMyAccount={setMyAccount} />
-    ) : (
-      <MainNavigator setMyAccount={setMyAccount} />
-    );
-
-  console.log(appContent);
+      myAccount === null ? (
+          <LoginNavigator setMyAccount={setMyAccount} />
+      ) : (
+          <MainNavigator myAccount={myAccount} setMyAccount={setMyAccount} />
+      );
 
   return (
-    <NavigationContainer>
-      { appContent }
-    </NavigationContainer>
+      <NavigationContainer>
+        { appContent }
+      </NavigationContainer>
   );
 }
