@@ -16,8 +16,6 @@ export default function App() {
       <MainNavigator setMyAccount={setMyAccount} />
     );
 
-  console.log(appContent);
-
   return (
     <NavigationContainer>
       { appContent }
