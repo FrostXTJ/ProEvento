@@ -7,16 +7,14 @@ import { LoginNavigator } from "./navigation/LoginNavigator";
 
 export default function App() {
   const [myAccount, setMyAccount] = useState(null);
-  const [myUse, SetMyUser] = useState(null);
 
   const appContent =
     myAccount === null ? (
       <LoginNavigator setMyAccount={setMyAccount} />
     ) : (
-      <MainNavigator setMyAccount={setMyAccount} />
+      <MainNavigator setMyAccount={setMyAccount} myAccount={myAccount}/>
     );
 
-  console.log(appContent);
 
   return (
     <NavigationContainer>

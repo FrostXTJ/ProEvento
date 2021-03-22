@@ -3,13 +3,12 @@ import { StyleSheet, Text, View, Button } from "react-native";
 import { login } from "../api/ProEventoAPI";
 
 const LoginScreen = props => {
-  console.log(props);
 
   const { navigation, setMyAccount } = props;
   const fakeLogin = () => {
     const credential = {
-      email: "tommy@usc.edu",
-      password: "uscfighton!",
+      email: "alanturing@mail.com",
+      password: "helloworld123",
     };
     login(
       credential,
@@ -17,6 +16,7 @@ const LoginScreen = props => {
         setMyAccount(account);
       },
       error => {
+        console.log(error);
         setMyAccount(null);
       }
     );

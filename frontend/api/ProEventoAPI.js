@@ -218,3 +218,55 @@ export const searchEventsByName = (
     .then(data => onSuccess(data))
     .catch(error => onFailure(error));
 };
+
+export const getUserRegisteredEvents = (
+  userId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+)=>{
+  fetch(
+    `${PROEVENTO_BACKEND_SERVER}/api/event/user_registered_events?` +
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+    .then(response => response.json())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const unregisterEvent = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/unregister`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const registerEvent = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+
