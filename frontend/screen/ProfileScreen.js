@@ -56,6 +56,7 @@ const ProfileScreen = ({ navigation, route }) => {
       />
     );
 
+    //TODO Follow/Unfollow
   const profileButton =
     myAccount.user.id == profileUser.id ? (
       <Button title="Setting" />
