@@ -32,7 +32,7 @@ const LoginScreen = ({ navigation, route }) => {
       />
       <Input
         placeholder="Password"
-        secureTextEntry="true"
+        secureTextEntry={true}
         onChangeText={input => {
           setPassword(input);
         }}
