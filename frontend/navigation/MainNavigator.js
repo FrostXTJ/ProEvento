@@ -26,7 +26,13 @@ export const MainNavigator = props => {
           profileUser: myAccount.user,
         }}
       />
-      <Tab.Screen name="Notification" component={NotificationScreen} />
+      <Tab.Screen
+        name="Notification"
+        component={NotificationScreen}
+        initialParams={{
+          myAccount: myAccount,
+        }}
+      />
       <Tab.Screen name="Streaming" component={StreamingScreen} />
       <Tab.Screen
         name="Test"
