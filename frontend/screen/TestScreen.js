@@ -17,10 +17,10 @@ import {
   searchEventsByName,
 } from "../api/ProEventoAPI";
 
-const TestScreen = props => {
-  const [testMsg, setTestMsg] = useState("");
+const TestScreen = ({navigation, route}) => {
+  const [ testMsg, setTestMsg ] = useState("");
 
-  const { setMyAccount } = props;
+  const { myAccount, setMyAccount } = route.params;
 
   const onTestConnection = () => {
     testConnection(
@@ -166,6 +166,15 @@ const TestScreen = props => {
     });
   };
 
+  const onTestUserTwoProfile = () => {
+    searchUserById(2, userTwo => {
+      navigation.navigate("Profile", {
+        myAccount: myAccount,
+        profileUser: userTwo
+      })
+    })
+  };
+
   const onLogout = () => {
     setMyAccount(null);
   };
@@ -202,6 +211,7 @@ const TestScreen = props => {
         title="Test Search Event 'CSCI'"
         onPress={onTestSearchEventsByName}
       />
+      <Button title="See User 2 Profile" onPress={onTestUserTwoProfile} />
       <Button title="Logout" onPress={onLogout} />
     </View>
   );

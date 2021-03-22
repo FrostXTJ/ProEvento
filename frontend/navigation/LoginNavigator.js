@@ -10,12 +10,12 @@ export const LoginNavigator = props => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Login">
-        {props => <LoginScreen {...props} setMyAccount={setMyAccount} />}
-      </Stack.Screen>
-      <Stack.Screen name="Register">
-        {props => <RegisterScreen {...props} setMyAccount={setMyAccount} />}
-      </Stack.Screen>
+      <Stack.Screen name="Login" component={LoginScreen} initialParams={{
+        setMyAccount: setMyAccount
+      }} />
+      <Stack.Screen name="Register" component={RegisterScreen} initialParams={{
+        setMyAccount: setMyAccount
+      }} />
     </Stack.Navigator>
   );
 };

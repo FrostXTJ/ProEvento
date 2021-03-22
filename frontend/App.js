@@ -13,12 +13,8 @@ export default function App() {
     myAccount === null ? (
       <LoginNavigator setMyAccount={setMyAccount} />
     ) : (
-      <MainNavigator setMyAccount={setMyAccount} />
+      <MainNavigator myAccount={myAccount} setMyAccount={setMyAccount} />
     );
 
-  return (
-    <NavigationContainer>
-      { appContent }
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{appContent}</NavigationContainer>;
 }

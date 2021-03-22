@@ -218,3 +218,35 @@ export const searchEventsByName = (
     .then(data => onSuccess(data))
     .catch(error => onFailure(error));
 };
+
+export const getUserRegisteredEvents = (
+  userId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+    `${PROEVENTO_BACKEND_SERVER}/api/event/user_registered_events?` +
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+    .then(response => response.json())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const getUserHostEvents = (
+  userId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+    `${PROEVENTO_BACKEND_SERVER}/api/event/user_host_events?` +
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+    .then(response => response.json())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};

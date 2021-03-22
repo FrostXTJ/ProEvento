@@ -1,14 +1,14 @@
-import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Button } from "react-native";
+import { Input, Icon } from "react-native-elements";
 import { login } from "../api/ProEventoAPI";
 
-const LoginScreen = props => {
-  const { navigation, setMyAccount } = props;
-  const fakeLogin = () => {
-    const credential = {
-      email: "tommy@usc.edu",
-      password: "uscfighton!",
-    };
+const LoginScreen = ({ navigation, route }) => {
+  const { setMyAccount } = route.params;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onLogin = credential => {
     login(
       credential,
       account => {
@@ -22,8 +22,27 @@ const LoginScreen = props => {
 
   return (
     <View style={styles.container}>
-      <Text>Login</Text>
-      <Button title="Log in" onPress={fakeLogin} />
+      <Input
+        placeholder="E-mail"
+        onChangeText={input => {
+          setEmail(input);
+        }}
+        leftIcon={<Icon name="email" size={24} color="black" />}
+      />
+      <Input
+        placeholder="Password"
+        secureTextEntry="true"
+        onChangeText={input => {
+          setPassword(input);
+        }}
+        leftIcon={<Icon name="lock" size={24} color="black" />}
+      />
+      <Button
+        title="Log in"
+        onPress={() => {
+          onLogin({ email: email, password: password });
+        }}
+      />
       <Button
         title="Sign up a new account"
         onPress={() => navigation.navigate("Register")}
