@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 
-import { Card, ListItem, Button, Icon } from 'react-native-elements'
+import { Card, Button } from 'react-native-elements'
 
 const NotificationCard = props => {
   const { content, senderName, eventName } = props;

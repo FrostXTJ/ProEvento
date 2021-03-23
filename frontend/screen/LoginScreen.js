@@ -21,6 +21,23 @@ const LoginScreen = ({ navigation, route }) => {
     );
   };
 
+  // TODO Delete this
+  const fakeLogin = () => {
+    const credential = {
+      email: "tommy@usc.edu",
+      password: "uscfighton!",
+    };
+    login(
+      credential,
+      account => {
+        setMyAccount(account);
+      },
+      error => {
+        setMyAccount(null);
+      }
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Input
@@ -41,7 +58,9 @@ const LoginScreen = ({ navigation, route }) => {
       <Button
         title="Log in"
         onPress={() => {
-          onLogin({ email: email, password: password });
+          // TODO Delete this
+          fakeLogin();
+          // onLogin({ email: email, password: password });
         }}
       />
       <Button

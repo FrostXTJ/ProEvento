@@ -2,30 +2,39 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, Icon, Divider, Button, Card } from "react-native-elements";
 import EventCard from "../components/EventCard";
+import EventOverlay from "../components/EventOverlay";
 import {
   getUserHostEvents,
   getUserRegisteredEvents,
   getFollowing,
+  follow,
+  unfollow,
 } from "../api/ProEventoAPI";
 
 const ProfileScreen = ({ navigation, route }) => {
   const { myAccount, profileUser } = route.params;
+  const [refresh, setRefresh] = useState(false);
   const [hostEvents, setHostEvents] = useState([]);
   const [registeredEvents, setRegisteredEvents] = useState([]);
   const [followed, setFollowed] = useState(false);
+  const [eventOverlayVisible, setEventOverlayVisible] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
+  // Get profileUser's host events.
   useEffect(() => {
     getUserHostEvents(profileUser.id, eventList => {
       setHostEvents(eventList);
     });
-  }, [profileUser]);
+  }, [profileUser, refresh]);
 
+  // Get profileUser's registered events.
   useEffect(() => {
     getUserRegisteredEvents(profileUser.id, eventList => {
       setRegisteredEvents(eventList);
     });
-  }, [profileUser]);
+  }, [profileUser, refresh]);
 
+  // Check if current user follows the profile user.
   useEffect(() => {
     getFollowing(myAccount.user.id, following => {
       following.forEach(user => {
@@ -34,14 +43,33 @@ const ProfileScreen = ({ navigation, route }) => {
         }
       });
     });
-  }, [myAccount.user]);
+  }, [profileUser, refresh]);
+
+  const toggleEventOverlay = event => {
+    if (eventOverlayVisible) {
+      setSelectedEvent(null);
+    } else {
+      setSelectedEvent(event);
+    }
+    setEventOverlayVisible(!eventOverlayVisible);
+  };
 
   const hostEventCards = hostEvents.map(event => (
-    <EventCard key={event.id} event={event} />
+    <EventCard
+      key={event.id}
+      event={event}
+      navigation={navigation}
+      toggleOverlay={toggleEventOverlay}
+    />
   ));
 
   const registeredEventCards = registeredEvents.map(event => (
-    <EventCard key={event.id} event={event} />
+    <EventCard
+      key={event.id}
+      event={event}
+      navigation={navigation}
+      toggleOverlay={toggleEventOverlay}
+    />
   ));
 
   const goBackToMyProfileButton =
@@ -56,22 +84,56 @@ const ProfileScreen = ({ navigation, route }) => {
       />
     );
 
-    //TODO Follow/Unfollow
   const profileButton =
     myAccount.user.id == profileUser.id ? (
       <Button title="Setting" />
     ) : followed ? (
-      <Button title="Unfollow" />
+      <Button
+        title="Unfollow"
+        onPress={() => {
+          unfollow(
+            {
+              followerId: myAccount.user.id,
+              followeeId: profileUser.id,
+            },
+            response => {
+              if (response === "success") {
+                setFollowed(false);
+              }
+            }
+          );
+        }}
+      />
     ) : (
-      <Button title="Follow" />
+      <Button
+        title="Follow"
+        onPress={() => {
+          follow(
+            {
+              followerId: myAccount.user.id,
+              followeeId: profileUser.id,
+            },
+            response => {
+              if (response === "success") {
+                setFollowed(true);
+              }
+            }
+          );
+        }}
+      />
     );
 
   return (
-    <View style={styles.container}>
+    <View>
       <Divider height={80} backgroundColor="white" />
       {goBackToMyProfileButton}
       <ScrollView>
-        <View style={styles.container}>
+        <View style={styles.userInfo}>
+          <Button
+            title="Refresh"
+            type="clear"
+            onPress={() => setRefresh(!refresh)}
+          />
           <Icon name="user" type="font-awesome" size="75" />
           {profileButton}
           <Text h1>{profileUser.username}</Text>
@@ -85,22 +147,28 @@ const ProfileScreen = ({ navigation, route }) => {
           <Text h3>Registered Events</Text>
           <View>{registeredEventCards}</View>
         </View>
+        <Divider height={40} />
       </ScrollView>
+      <EventOverlay
+        event={selectedEvent}
+        currentUser={myAccount.user}
+        isVisible={eventOverlayVisible}
+        toggleOverlay={toggleEventOverlay}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  userInfo: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
   events: {
-    flex: 0,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
+    paddingStart: "5%",
+    paddingEnd: "5%",
   },
 });
 
