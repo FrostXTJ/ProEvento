@@ -32,7 +32,7 @@ const ProfileScreen = ({ navigation, route }) => {
     getUserRegisteredEvents(profileUser.id, eventList => {
       setRegisteredEvents(eventList);
     });
-  }, [profileUser, refresh]);
+  });
 
   // Check if current user follows the profile user.
   useEffect(() => {
