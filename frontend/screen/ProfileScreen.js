@@ -37,11 +37,13 @@ const ProfileScreen = ({ navigation, route }) => {
   // Check if current user follows the profile user.
   useEffect(() => {
     getFollowing(myAccount.user.id, following => {
+      const followedProfileUser = false;
       following.forEach(user => {
         if (user.id === profileUser.id) {
-          setFollowed(true);
+          followedProfileUser = true;
         }
       });
+      setFollowed(followedProfileUser);
     });
   }, [profileUser, refresh]);
 

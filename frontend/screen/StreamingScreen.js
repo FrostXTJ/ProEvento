@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, Linking, Button } from "react-native";
-import EventCreationOverlay from "../components/eventCreationOverlay"
+import EventCreationOverlay from "../components/eventCreationOverlay";
 import { TWILIO_SERVER_URL } from "../api/TwilioAPI";
 
-const StreamingScreen = ({navigation, route}) => {
-  // TODO ADD event creation.
+const StreamingScreen = ({ navigation, route }) => {
   const { myAccount } = route.params;
-  const [eventCreationOverlayVisible, setEventCreationOverlayVisible] = useState(false);
+  const [
+    eventCreationOverlayVisible,
+    setEventCreationOverlayVisible,
+  ] = useState(false);
 
   const toggleEventCreationOverlay = () => {
     setEventCreationOverlayVisible(!eventCreationOverlayVisible);
@@ -25,8 +27,13 @@ const StreamingScreen = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <Text>Streaming</Text>
-      <Button title="Start Streaming" onPress={linkTwilioServer} />
-      {/* <EventCreationOverlay isVisible={eventCreationOverlayVisible} currentUser={myAccount.user} toggleOver /> */}
+      <Button title="Host a new Event" onPress={toggleEventCreationOverlay} />
+      <Button title="Join an event" onPress={linkTwilioServer} />
+      <EventCreationOverlay
+        isVisible={eventCreationOverlayVisible}
+        currentUser={myAccount.user}
+        toggleOverlay={toggleEventCreationOverlay}
+      />
     </View>
   );
 };

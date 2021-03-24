@@ -1,37 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { Overlay, Text, Button, Input } from "react-native-elements";
+import {
+  Overlay,
+  Text,
+  Button,
+  Input,
+  ButtonGroup,
+} from "react-native-elements";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   searchEventById,
+  getFollowers,
   getUserHostEvents,
   getAllTags,
-  hostEvent
+  hostEvent,
+  sendInvitation,
 } from "../api/ProEventoAPI";
 
 const getDifference = (oldEventList, newEventList) => {
   if (oldEventList.length >= newEventList.length) {
     return null;
   }
-  newEventList.forEach(newEvent => {
+  for (const i in newEventList) {
     let found = false;
-    for (const oldEvent in oldEventList) {
-      if (oldEvent.id === newEvent.id) {
+    for (const j in oldEventList) {
+      if (oldEventList[j].id === newEventList[i].id) {
         found = true;
       }
     }
     if (!found) {
-      return newEvent;
+      return newEventList[i];
     }
-  });
+  }
   return null;
+};
+
+const dateTimeToString = date => {
+  const iso = date.toISOString();
+  return iso.slice(0, 10) + " " + iso.slice(11, 19);
 };
 
 const EventCreationOverlay = props => {
   const { currentUser, isVisible, toggleOverlay } = props;
-
+  const [eventName, setEventName] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+  const [eventDateTime, setEventDateTime] = useState(new Date(Date.now()));
   const [hostEvents, setHostEvents] = useState([]);
   const [allTags, setAllTags] = useState([]);
-  const [selectedTag, setSelectedTag] = useState(null);
+  const [followers, setFollowers] = useState([]);
+  const [selectedTagIndex, setSelectedTagIndex] = useState(0);
 
   // Get user's host events.
   useEffect(() => {
@@ -44,9 +61,47 @@ const EventCreationOverlay = props => {
   useEffect(() => {
     getAllTags(tags => {
       setAllTags(tags);
-    })
-  })
+    });
+  }, []);
 
+  // Get all followers.
+  useEffect(() => {
+    getFollowers(currentUser.id, users => {
+      setFollowers(users);
+    });
+  });
+
+  const onHostEvent = () => {
+    toggleOverlay();
+    const oldEvents = hostEvents;
+    const event = {
+      name: eventName,
+      description: eventDescription,
+      thumbnaiUrl: "",
+      tag: { id: allTags[selectedTagIndex].id },
+      host: { id: currentUser.id },
+      dateTime: dateTimeToString(eventDateTime),
+    };
+
+    hostEvent(event, response => {
+      getUserHostEvents(currentUser.id, newHostEvents => {
+        let newEvent = null;
+        newEvent = getDifference(hostEvents, newHostEvents);
+
+        if (newEvent != null) {
+          sendInvitation({
+            content: `${currentUser.username} invites you to ${newEvent.name}. Let's check it out!`,
+            dateTime: dateTimeToString(new Date(Date.now())),
+            sender: { id: currentUser.id },
+            event: { id: newEvent.id },
+            receivers: followers,
+          }, () => {
+            setHostEvents(newHostEvents);
+          });
+        }
+      });
+    });
+  };
 
   return (
     <Overlay
@@ -54,9 +109,56 @@ const EventCreationOverlay = props => {
       onBackdropPress={toggleOverlay}
       overlayStyle={styles.overlay}
     >
-      <View>
-          <Input placeholder="Event Name" />
-          <Input placeholder="Event Description" />
+      <View style={styles.container}>
+        <Text style={styles.title}>Host a new Event</Text>
+        <Input
+          placeholder="Event Name"
+          onChangeText={input => {
+            setEventName(input);
+          }}
+        />
+        <Input
+          placeholder="Event Description"
+          onChangeText={input => {
+            setEventDescription(input);
+          }}
+        />
+        <ButtonGroup
+          buttons={allTags.map(tag => (
+            <Text key={tag.id}>{tag.name}</Text>
+          ))}
+          selectedIndex={selectedTagIndex}
+          onPress={index => setSelectedTagIndex(index)}
+        />
+        <DateTimePicker
+          style={styles.datetimepicker}
+          value={eventDateTime}
+          mode={"date"}
+          display="default"
+          onChange={(e, selectedDate) => {
+            const datetime = new Date(eventDateTime);
+            datetime.setFullYear(selectedDate.getFullYear());
+            datetime.setMonth(selectedDate.getMonth());
+            datetime.setDate(selectedDate.getDate());
+            setEventDateTime(datetime);
+          }}
+        />
+        <DateTimePicker
+          style={styles.datetimepicker}
+          value={eventDateTime}
+          mode={"time"}
+          is24Hour={true}
+          display="default"
+          onChange={(e, selectedTime) => {
+            const datetime = new Date(eventDateTime);
+            datetime.setHours(selectedTime.getHours());
+            datetime.setMinutes(selectedTime.getMinutes());
+            datetime.setSeconds(selectedTime.getSeconds());
+            setEventDateTime(datetime);
+          }}
+        />
+
+        <Button title="host" onPress={onHostEvent} />
       </View>
     </Overlay>
   );
@@ -64,8 +166,9 @@ const EventCreationOverlay = props => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
+    paddingBottom: 24,
   },
   overlay: {
     width: "80%",
@@ -74,15 +177,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  endButton: {
-    backgroundColor: "red",
+  container: {
+    width: "100%",
+    height: "80%",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  startButton: {
-    backgroundColor: "green",
-  },
-  image: {
-    width: 300,
-    height: 300,
+  datetimepicker: {
+    width: "90%",
+    backgroundColor: "white",
   },
 });
 
