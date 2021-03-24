@@ -16,7 +16,7 @@ const NotificationCard = props => {
     getUserRegisteredEvents(userId, events => {
       setRegisteredEvents(events);
     });
-  });
+  }, []);
 
   const checkEventInList = (event, list) => {
     let result = false;
@@ -92,6 +92,7 @@ const NotificationCard = props => {
 const NotificationScreen = ({ navigation, route }) => {
   const myUser = route.params.myAccount.user;
   const [notificationCards, setNotificationCards] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     fetch(
       "http://3.15.22.198:8080/api/invitation/invitations_by_receiver?" +
@@ -120,9 +121,19 @@ const NotificationScreen = ({ navigation, route }) => {
       .catch(error => {
         console.log(error);
       });
-  }, []);
+  }, [refresh]);
 
-  return <View style={styles.container}>{notificationCards}</View>;
+  return (
+    <View style={styles.container}>
+      <Button
+        title="Refresh"
+        onPress={() => {
+          setRefresh(!refresh);
+        }}
+      />
+      {notificationCards}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
