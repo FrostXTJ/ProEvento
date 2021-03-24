@@ -37,7 +37,7 @@ const ProfileScreen = ({ navigation, route }) => {
   // Check if current user follows the profile user.
   useEffect(() => {
     getFollowing(myAccount.user.id, following => {
-      const followedProfileUser = false;
+      let followedProfileUser = false;
       following.forEach(user => {
         if (user.id === profileUser.id) {
           followedProfileUser = true;
@@ -136,7 +136,7 @@ const ProfileScreen = ({ navigation, route }) => {
             type="clear"
             onPress={() => setRefresh(!refresh)}
           />
-          <Icon name="user" type="font-awesome" size="75" />
+          <Icon name="user" type="font-awesome" size={75} />
           {profileButton}
           <Text h1>{profileUser.username}</Text>
           <Text>{profileUser.biography}</Text>
