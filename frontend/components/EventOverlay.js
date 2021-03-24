@@ -22,17 +22,23 @@ const checkEventInList = (event, list) => {
 };
 
 const EventOverlay = props => {
-  const { event, setEvent, currentUser, isVisible, toggleOverlay } = props;
+  const { event, setEvent, currentUser, isVisible, toggleOverlay, imageNum} = props;
 
   const [registeredEvents, setRegisteredEvents] = useState([]);
   const [hostEvents, setHostEvents] = useState([]);
+  //const [imageNum, setImageNum] = useState(0)
+  //get a random number for event profile
+  // useEffect(()=>{
+  //   const randomImageIdentifier = Math.floor(Math.random() * 100 + 1);
+  //   setImageNum(randomImageIdentifier)
+  // }, []);
 
   // Get user's registered events.
   useEffect(() => {
     getUserRegisteredEvents(currentUser.id, events => {
       setRegisteredEvents(events);
     });
-  }, []);
+  });
 
   // Get user's host events.
   useEffect(() => {
@@ -140,7 +146,7 @@ const EventOverlay = props => {
     }
   }
 
-  const randomImageIdentifier = Math.floor(Math.random() * 100 + 1);
+  
 
   return (
     <Overlay
@@ -156,7 +162,7 @@ const EventOverlay = props => {
           <Text>{event.description}</Text>
           <Image
             source={{
-              uri: `https://picsum.photos/300/300?random=${randomImageIdentifier}`,
+              uri: `https://picsum.photos/300/300?random=${imageNum}`,
             }}
             style={styles.image}
           />

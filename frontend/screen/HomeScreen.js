@@ -48,9 +48,21 @@ export default function HomeScreen({ route, navigation }) {
 
   // Handle search events.
   useEffect(() => {
-    let newEventList = eventList.filter(event => {
-      return event.name.includes(search);
-    });
+    let regex = /\d\d\d\d-\d\d-\d\d/;
+    let newEventList = eventList;
+    if (regex.test(search))
+    {
+      //check if search is in date format
+      newEventList = eventList.filter(event => {
+        return (event.dateTime.substring(0, 10) == search);
+      });
+    }
+    else
+    {
+      newEventList = eventList.filter(event => {
+        return event.name.includes(search);
+      });
+    }
     newEventList.sort(function (a, b) {
       if (a.dateTime < b.dateTime) {
         return -1;
@@ -130,7 +142,7 @@ export default function HomeScreen({ route, navigation }) {
         <Text style={styles.title}>Current Events</Text>
         <TextInput
           style={{ height: 40 }}
-          placeholder="Search for Events or Users"
+          placeholder="Search by Events or Users or Dates"
           onChangeText={search => handleSearch(search)}
           defaultValue={search}
         />
@@ -155,6 +167,7 @@ export default function HomeScreen({ route, navigation }) {
           event={selectedEvent}
           toggleOverlay={toggleEventOverlay}
           setEvent={setSelectedEvent}
+          imageNum = {Math.floor(Math.random() * 100 + 1)}
         />
       </View>
     );
