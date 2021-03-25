@@ -153,6 +153,7 @@ const ProfileScreen = ({ navigation, route }) => {
       </ScrollView>
       <EventOverlay
         event={selectedEvent}
+        setEvent={setSelectedEvent}
         currentUser={myAccount.user}
         isVisible={eventOverlayVisible}
         toggleOverlay={toggleEventOverlay}
