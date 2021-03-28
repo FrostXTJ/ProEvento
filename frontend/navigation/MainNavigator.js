@@ -33,7 +33,13 @@ export const MainNavigator = props => {
           myAccount: myAccount,
         }}
       />
-      <Tab.Screen name="Streaming" component={StreamingScreen} />
+      <Tab.Screen
+        name="Streaming"
+        component={StreamingScreen}
+        initialParams={{
+          myAccount: myAccount,
+        }}
+      />
       <Tab.Screen
         name="Test"
         component={TestScreen}

@@ -9,7 +9,6 @@ import {
   unregisterEvent,
   startEvent,
   endEvent,
-  searchUserById,
 } from "../api/ProEventoAPI";
 
 const checkEventInList = (event, list) => {

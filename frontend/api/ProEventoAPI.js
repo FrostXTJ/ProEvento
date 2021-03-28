@@ -251,6 +251,23 @@ export const getUserHostEvents = (
     .catch(error => onFailure(error));
 };
 
+export const registerEvent = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
 export const unregisterEvent = (
   body,
   onSuccess = defaultOnSuccessCallback,
@@ -268,12 +285,12 @@ export const unregisterEvent = (
     .catch(error => onFailure(error));
 };
 
-export const registerEvent = (
+export const hostEvent = (
   body,
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
-  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/register`, {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/host`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -342,6 +359,23 @@ export const leaveEvent = (
   onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/leave`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const sendInvitation = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/invitation/send`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

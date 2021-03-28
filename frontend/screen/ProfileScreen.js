@@ -37,11 +37,13 @@ const ProfileScreen = ({ navigation, route }) => {
   // Check if current user follows the profile user.
   useEffect(() => {
     getFollowing(myAccount.user.id, following => {
+      let followedProfileUser = false;
       following.forEach(user => {
         if (user.id === profileUser.id) {
-          setFollowed(true);
+          followedProfileUser = true;
         }
       });
+      setFollowed(followedProfileUser);
     });
   }, [profileUser, refresh]);
 
@@ -134,7 +136,7 @@ const ProfileScreen = ({ navigation, route }) => {
             type="clear"
             onPress={() => setRefresh(!refresh)}
           />
-          <Icon name="user" type="font-awesome" size="75" />
+          <Icon name="user" type="font-awesome" size={75} />
           {profileButton}
           <Text h1>{profileUser.username}</Text>
           <Text>{profileUser.biography}</Text>
@@ -151,6 +153,7 @@ const ProfileScreen = ({ navigation, route }) => {
       </ScrollView>
       <EventOverlay
         event={selectedEvent}
+        setEvent={setSelectedEvent}
         currentUser={myAccount.user}
         isVisible={eventOverlayVisible}
         toggleOverlay={toggleEventOverlay}
