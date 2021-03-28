@@ -7,8 +7,13 @@ import usc.cs310.ProEvento.dao.UserDao;
 import usc.cs310.ProEvento.model.Event;
 import usc.cs310.ProEvento.model.User;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +43,17 @@ public class EventService {
 
     public List<Event> getEventsByName(String name) {
         return eventDao.selectEventsByName(name);
+    }
+
+    public List<Event> getEventByDate(String dateString) {
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = formatter.parse(dateString);
+            return eventDao.selectEventsByDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     public List<Event> getUserRegisteredEvents(long userId) {

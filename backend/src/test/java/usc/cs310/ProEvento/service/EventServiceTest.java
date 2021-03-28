@@ -12,4 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class EventServiceTest {
     @Autowired
     private EventService eventService;
+
+    @Test
+    public void testT() {
+        Assertions.assertTrue(true);
+    }
 }
