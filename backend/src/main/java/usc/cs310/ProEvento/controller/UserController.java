@@ -7,8 +7,6 @@ import usc.cs310.ProEvento.model.requestbody.FollowRequestBody;
 import usc.cs310.ProEvento.model.requestbody.UserSetTagRequestBody;
 import usc.cs310.ProEvento.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -17,13 +15,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/api/user")
-    public User getUserById(@RequestParam long userId,
-                            HttpServletRequest request,
-                            HttpServletResponse response) {
+    public User getUserById(@RequestParam long userId) {
         User user = userService.getUserBydId(userId);
-        if (user == null) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
         return user;
     }
 
@@ -43,58 +36,50 @@ public class UserController {
     }
 
     @PostMapping("/api/user/follow")
-    public boolean follow(@RequestBody FollowRequestBody requestBody,
-                                  HttpServletRequest request,
-                                  HttpServletResponse response) {
+    public String follow(@RequestBody FollowRequestBody requestBody) {
         boolean success = userService.followUser(
                 requestBody.followerId,
                 requestBody.followeeId
         );
-        if (!success) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        if (success) {
+            return "success";
         }
-        return success;
+        return "failure";
     }
 
     @PostMapping("/api/user/unfollow")
-    public boolean unfollow(@RequestBody FollowRequestBody requestBody,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
+    public String unfollow(@RequestBody FollowRequestBody requestBody) {
         boolean success = userService.unfollowUser(
                 requestBody.followerId,
                 requestBody.followeeId
         );
-        if (!success) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        if (success) {
+            return "success";
         }
-        return success;
+        return "failure";
     }
 
     @PostMapping("api/user/add_tag")
-    public boolean addTag(@RequestBody UserSetTagRequestBody requestBody,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
+    public String addTag(@RequestBody UserSetTagRequestBody requestBody) {
         boolean success = userService.addTag(
                 requestBody.userId,
                 requestBody.tagId
         );
-        if (!success) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        if (success) {
+            return "success";
         }
-        return success;
+        return "failure";
     }
 
     @PostMapping("api/user/remove_tag")
-    public boolean removeTag(@RequestBody UserSetTagRequestBody requestBody,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
+    public String removeTag(@RequestBody UserSetTagRequestBody requestBody) {
         boolean success = userService.removeTag(
                 requestBody.userId,
                 requestBody.tagId
         );
-        if (!success) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        if (success) {
+            return "success";
         }
-        return success;
+        return "failure";
     }
 }

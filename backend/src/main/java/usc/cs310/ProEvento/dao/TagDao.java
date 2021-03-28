@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 public class TagDao {
-
     @Autowired
     private SessionFactory sessionFactory;
 

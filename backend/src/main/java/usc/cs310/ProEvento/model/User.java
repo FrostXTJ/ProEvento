@@ -1,5 +1,6 @@
 package usc.cs310.ProEvento.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -11,10 +12,11 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
-    private static final long serialVersionUID = -8118218803075062550L;
+    private static final long serialVersionUID = -1381503967343439764L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias({"id", "userId"})
     private Long id;
 
     private String username;
@@ -54,19 +56,6 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "following", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<User> followers;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "host", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private Set<Event> hostEvents;
-
-    @JsonIgnore
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_registered_event",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "event_id") }
-    )
-    private Set<Event> registeredEvents;
-
     public void follow(User otherUser) {
         if (this.following == null) {
             this.following = new HashSet<>();
@@ -84,24 +73,11 @@ public class User implements Serializable {
     }
 
     public void registerEvent(Event event) {
-        if (this.registeredEvents == null) {
-            this.registeredEvents = new HashSet<>();
-        }
-        this.registeredEvents.add(event);
         event.addGuest(this);
     }
 
     public void unregisterEvent(Event event) {
-        this.registeredEvents.remove(event);
         event.removeGuest(this);
-    }
-
-    public void hostEvent(Event event) {
-        if (this.hostEvents == null) {
-            this.hostEvents = new HashSet<>();
-        }
-        event.setHost(this);
-        this.hostEvents.add(event);
     }
 
     public void joinEvent(Event event) {
@@ -193,22 +169,6 @@ public class User implements Serializable {
 
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
-    }
-
-    public Set<Event> getHostEvents() {
-        return hostEvents;
-    }
-
-    public void setHostEvents(Set<Event> hostEvents) {
-        this.hostEvents = hostEvents;
-    }
-
-    public Set<Event> getRegisteredEvents() {
-        return registeredEvents;
-    }
-
-    public void setRegisteredEvents(Set<Event> registeredEvents) {
-        this.registeredEvents = registeredEvents;
     }
 
     @Override

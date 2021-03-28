@@ -1,7 +1,9 @@
 package usc.cs310.ProEvento.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,10 +15,11 @@ import java.util.Set;
 @Entity
 @Table(name = "event")
 public class Event implements Serializable {
-    private static final long serialVersionUID = 5343525354995512808L;
+    private static final long serialVersionUID = -3182082255534849397L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias({"id", "eventId"})
     private long id;
 
     @Column(name = "like_count")
@@ -34,6 +37,9 @@ public class Event implements Serializable {
     @Column(name = "twilio_room_url")
     private String twilioRoomUrl;
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonAlias({"dateTime", "datetime"})
     @Column(name = "datetime")
     private LocalDateTime dateTime;
 
@@ -43,7 +49,12 @@ public class Event implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private User host;
 
-    @ManyToMany(mappedBy = "registeredEvents", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_registered_event",
+            joinColumns = { @JoinColumn(name = "event_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
     private Set<User> guests;
 
     public void addGuest(User guest) {

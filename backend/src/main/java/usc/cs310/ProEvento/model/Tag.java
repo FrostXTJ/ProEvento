@@ -1,5 +1,7 @@
 package usc.cs310.ProEvento.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,6 +13,7 @@ public class Tag implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonAlias({"id", "tagId"})
     private long id;
 
     private String name;

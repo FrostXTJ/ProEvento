@@ -9,7 +9,6 @@ import usc.cs310.ProEvento.model.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-
 public class ProEventoDatabaseInitializer {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(ProEventoConfig.class);
@@ -28,6 +27,9 @@ public class ProEventoDatabaseInitializer {
             Tag tagDance = new Tag();
             tagDance.setName("Dance");
             tagDance.setDescription("Let's dance!");
+            Tag tagTech = new Tag();
+            tagTech.setName("Tech");
+            tagTech.setDescription("Tech nerds");
 
             Account testAccountTommy = new Account();
             testAccountTommy.setEmail("tommy@usc.edu");
@@ -83,7 +85,7 @@ public class ProEventoDatabaseInitializer {
             testEventOne.setTwilioRoomUrl("");
             testEventOne.setTag(tagMusic);
             testEventOne.setDateTime(LocalDateTime.of(2021, 5, 1, 12, 0, 0));
-            testUserTommy.hostEvent(testEventOne);
+            testEventOne.setHost(testUserTommy);
             testUserTuring.registerEvent(testEventOne);
 
             Event testEventTwo = new Event();
@@ -93,28 +95,26 @@ public class ProEventoDatabaseInitializer {
             testEventTwo.setStatus("open for registration");
             testEventTwo.setTwilioRoomUrl("");
             testEventTwo.setTag(tagGame);
+            testEventTwo.setHost(testUserTuring);
             testEventTwo.setDateTime(LocalDateTime.of(2021, 12, 21, 10, 0, 0));
-            testUserTommy.hostEvent(testEventTwo);
 
-            Notification testNotification = new Notification();
-            testNotification.setSender(testUserTommy);
-            testNotification.setContent("I am going to host a brand new event! Let's check it out!");
-            testNotification.setEvent(testEventOne);
-            testNotification.setDateTime(LocalDateTime.of(2021, 03, 15, 13, 10, 10));
-            testNotification.setReceivers(testUserTommy.getFollowers());
+            Invitation testInvitation = new Invitation();
+            testInvitation.setSender(testUserTommy);
+            testInvitation.setContent("I am going to host a brand new event! Let's check it out!");
+            testInvitation.setEvent(testEventOne);
+            testInvitation.setDateTime(LocalDateTime.of(2021, 03, 15, 13, 10, 10));
+            testInvitation.setReceivers(testUserTommy.getFollowers());
 
             session.save(tagGame);
             session.save(tagMusic);
             session.save(tagDance);
+            session.save(tagTech);
             session.save(testAccountTommy);
             session.save(testAccountTuring);
             session.save(testAccountNeumann);
-//            session.save(testUserTommy);
-//            session.save(testUserTuring);
-//            session.save(testUserNeumann);
             session.save(testEventOne);
             session.save(testEventTwo);
-            session.save(testNotification);
+            session.save(testInvitation);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

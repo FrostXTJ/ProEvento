@@ -62,6 +62,34 @@ public class EventDao {
         }
     }
 
+    public List<Event> selectEventsByGuestId(long guestId) {
+        try (Session session = sessionFactory.openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createQuery("SELECT e FROM Event e JOIN e.guests g WHERE g.id = :guestId");
+            query.setParameter("guestId", guestId);
+            List<Event> events = (List<Event>) query.list();
+            session.getTransaction().commit();
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Event> selectEventsByHostId(long hostId) {
+        try (Session session = sessionFactory.openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createQuery("SELECT e FROM Event e JOIN e.host h WHERE h.id = :hostId");
+            query.setParameter("hostId", hostId);
+            List<Event> events = (List<Event>) query.list();
+            session.getTransaction().commit();
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
     // TODO: Implement this function.
     public List<Event> selectEventsByTag(Tag tag) {
         return Collections.emptyList();

@@ -54,6 +54,7 @@ public class AccountService {
             } else {
                 account = accountDao.selectAccountByPhoneNumber(phoneNumber);
             }
+            account.setPassword("******");
             return account;
         }
         return null;
@@ -79,6 +80,8 @@ public class AccountService {
         if (account == null || !password.equals(account.getPassword())) {
             return null;
         }
+        // Hide password.
+        account.setPassword("******");
         return account;
     }
 
@@ -88,6 +91,8 @@ public class AccountService {
         if (account == null || !account.getPassword().equals(password)) {
             return null;
         }
+        // Hide password.
+        account.setPassword("******");
         return account;
     }
 

@@ -5,18 +5,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import usc.cs310.ProEvento.model.Account;
+import usc.cs310.ProEvento.model.Invitation;
+
+import java.util.List;
 
 @Repository
-public class AccountDao {
+public class InvitationDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public boolean createAccount(Account account) {
+    public boolean createInvitation(Invitation invitation) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.saveOrUpdate(account);
+            session.saveOrUpdate(invitation);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -32,55 +34,41 @@ public class AccountDao {
         }
     }
 
-    public Account selectAccountById(long accountId) {
+    public Invitation selectInvitationsById(long invitationId) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Account account = (Account) session.get(Account.class, accountId);
+            Invitation invitations = (Invitation) session.get(Invitation.class, invitationId);
             session.getTransaction().commit();
-            return account;
+            return invitations;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public Account selectAccountByEmail(String accountEmail) {
+    public List<Invitation> selectInvitationsByReceiverId(long receiverId) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Account a WHERE a.email = :email");
-            query.setParameter("email", accountEmail);
-            Account account = (Account) query.uniqueResult();
+            Query query = session.createQuery("SELECT i FROM Invitation i JOIN i.receivers r WHERE r.id = :receiverId");
+            query.setParameter("receiverId", receiverId);
+            List<Invitation> invitations = (List<Invitation>) query.list();
             session.getTransaction().commit();
-            return account;
+            return invitations;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public Account selectAccountByPhoneNumber(String phoneNumber) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Query query = session.createQuery("FROM Account a WHERE a.phoneNumber = :phoneNumber");
-            query.setParameter("phoneNumber", phoneNumber);
-            Account account = (Account) query.uniqueResult();
-            session.getTransaction().commit();
-            return account;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public boolean updateInvitation(Invitation invitation) {
+        return createInvitation(invitation);
     }
 
-    public boolean updateAccount(Account account) {
-        return createAccount(account);
-    }
-
-    public boolean deleteAccount(Account account) {
+    public boolean deleteInvitation(Invitation invitation) {
         Session session = sessionFactory.openSession();
         try {
-            session.beginTransaction();
-            session.delete(account);
+            session.getTransaction().begin();
+            session.delete(invitation);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {

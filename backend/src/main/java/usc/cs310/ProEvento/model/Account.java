@@ -1,7 +1,6 @@
 package usc.cs310.ProEvento.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonAlias;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -15,9 +14,8 @@ public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias({"id", "accountId"})
     private long id;
-
-    private String password;
 
     @Column(unique = true)
     @Size(max = 255)
@@ -27,7 +25,9 @@ public class Account implements Serializable {
     @Size(max = 15)
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private String password;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(unique = true)
     private User user;
 
@@ -38,14 +38,6 @@ public class Account implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -62,6 +54,14 @@ public class Account implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public User getUser() {
