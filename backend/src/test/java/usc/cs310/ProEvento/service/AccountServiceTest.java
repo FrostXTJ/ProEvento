@@ -1,4 +1,5 @@
 package usc.cs310.ProEvento.service;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class AccountServiceTest {
     private AccountService accountService;
 
     @Test
-    public void loginTestOne(){
+    public void loginTestOne() {
         System.out.println("Testing login with correct email and password");
 
         Account account = new Account();
@@ -29,7 +30,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void loginTestTwo(){
+    public void loginTestTwo() {
         System.out.println("Testing login with wrong email or password");
         Account account = new Account();
         account.setEmail("yuxizhou@usc.edu");
@@ -41,7 +42,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void registerTestOne(){
+    public void registerTestOne() {
         System.out.println("Testing register with an unused email, password and user info");
         Account account = new Account();
 
@@ -70,7 +71,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void registerTestTwo(){
+    public void registerTestTwo() {
         System.out.println("Testing register with a taken email");
         Account account = new Account();
         account.setEmail("yuxizhou@usc.edu");

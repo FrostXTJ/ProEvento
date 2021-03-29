@@ -83,7 +83,7 @@ class EventServiceTest {
         event.setTag(tag);
         User user = userService.getUserBydId(1);
         event.setHost(user);
-        event.setDateTime(LocalDateTime.of(2020,12,1, 12,30));
+        event.setDateTime(LocalDateTime.of(2020, 12, 1, 12, 30));
         eventService.hostEvent(event);
         eventList = eventService.getEventsByName(name);
         int after_size = eventList.size();

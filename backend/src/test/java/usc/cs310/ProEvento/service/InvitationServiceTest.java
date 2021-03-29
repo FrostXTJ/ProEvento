@@ -26,8 +26,7 @@ class InvitationServiceTest {
     private EventService eventService;
 
     @Test
-    public void testCreateInvitation()
-    {
+    public void testCreateInvitation() {
         User user_1 = userService.getUserBydId(1);
         Assertions.assertNotNull(user_1);
         User user_2 = userService.getUserBydId(2);
@@ -36,7 +35,7 @@ class InvitationServiceTest {
         Assertions.assertNotNull(event);
         Invitation invitation = new Invitation();
         invitation.setContent("Test Invitation");
-        invitation.setDateTime(LocalDateTime.of(2020,12,1, 12,30));
+        invitation.setDateTime(LocalDateTime.of(2020, 12, 1, 12, 30));
         invitation.setSender(user_1);
         invitation.setEvent(event);
         Set<User> receivers = new HashSet<User>();
@@ -49,8 +48,7 @@ class InvitationServiceTest {
     }
 
     @Test
-    public void testGetInvitation()
-    {
+    public void testGetInvitation() {
         User user_1 = userService.getUserBydId(1);
         List<Invitation> invitationsList = invitationService.getInvitationsByReceiverId(user_1.getId());
         int size_before = invitationsList.size();
@@ -59,7 +57,7 @@ class InvitationServiceTest {
         Assertions.assertNotNull(event);
         Invitation invitation = new Invitation();
         invitation.setContent("Test Adding an Invitation");
-        invitation.setDateTime(LocalDateTime.of(2020,12,1, 12,30));
+        invitation.setDateTime(LocalDateTime.of(2020, 12, 1, 12, 30));
         invitation.setSender(user_2);
         invitation.setEvent(event);
         Set<User> receivers = new HashSet<User>();
