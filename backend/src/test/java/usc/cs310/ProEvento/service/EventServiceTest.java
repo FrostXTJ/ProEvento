@@ -1,20 +1,66 @@
 package usc.cs310.ProEvento.service;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import usc.cs310.ProEvento.model.Event;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 class EventServiceTest {
     @Autowired
     private EventService eventService;
+    @Autowired
+    private UserService userService;
 
-    @Test
-    public void testT() {
-        Assertions.assertTrue(true);
+    @ParameterizedTest
+    @ValueSource(strings = {"2021-03-27", "2021-04-01", "2021-05-01"})
+    public void getEventsByDateValidInputTest(String dateString) {
+        List<Event> results = eventService.getEventByDate(dateString);
+        int year = Integer.parseInt(dateString.substring(0, 4));
+        int month = Integer.parseInt(dateString.substring(5, 7));
+        int day = Integer.parseInt(dateString.substring(8, 10));
+
+        for (Event e : results) {
+            Assertions.assertEquals(e.getDateTime().getYear(), year);
+            Assertions.assertEquals(e.getDateTime().getMonthValue(), month);
+            Assertions.assertEquals(e.getDateTime().getDayOfMonth(), day);
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "xxxx-yy-zz", "1999/1/1"})
+    public void getEventsByDateInvalidInputTest(String dateString) {
+        // The service should return an empty list if the input is invalid.
+        List<Event> results = eventService.getEventByDate(dateString);
+        Assertions.assertEquals(results.size(), 0);
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = {1, 3, 5, 7, 9, 10, 15, 23})
+    public void startValidEventTest(long eventId) {
+        Boolean success = eventService.startEvent(eventId);
+        Event event = eventService.getEventById(eventId);
+        Assertions.assertTrue(success);
+        Assertions.assertEquals(event.getStatus(), "streaming");
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = {-1, 0, -100})
+    public void startInvalidEventTest(long eventId) {
+        Boolean success = eventService.startEvent(eventId);
+        Assertions.assertFalse(success);
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = {1, 2, 3, 4, 5})
+    public void getUserHostEventsTest(long hostId) {
+        List<Event> results = eventService.getUserHostEvents(hostId);
+        for (Event e : results) {
+            Assertions.assertEquals(e.getHost().getId(), hostId);
+        }
     }
 }
