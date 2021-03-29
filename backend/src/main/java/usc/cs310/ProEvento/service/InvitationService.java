@@ -40,4 +40,6 @@ public class InvitationService {
         return invitationDao.selectInvitationsByReceiverId(receiverId);
     }
 
+
+
 }
