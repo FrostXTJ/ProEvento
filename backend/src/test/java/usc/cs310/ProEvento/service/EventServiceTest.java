@@ -1,12 +1,16 @@
 package usc.cs310.ProEvento.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import usc.cs310.ProEvento.model.Event;
+import usc.cs310.ProEvento.model.Tag;
+import usc.cs310.ProEvento.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
@@ -15,6 +19,8 @@ class EventServiceTest {
     private EventService eventService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TagService tagService;
 
     @ParameterizedTest
     @ValueSource(strings = {"2021-03-27", "2021-04-01", "2021-05-01"})
@@ -62,5 +68,26 @@ class EventServiceTest {
         for (Event e : results) {
             Assertions.assertEquals(e.getHost().getId(), hostId);
         }
+    }
+
+    @Test
+    public void testSearchByEventName() {
+        String name = "CSCI";
+        List<Event> eventList = eventService.getEventsByName(name);
+        int before_size = eventList.size();
+        Event event = new Event();
+        event.setName("CSCI310 is a very good class");
+        event.setThumbnailUrl("");
+        event.setDescription("I am writing test cases for CSCI 310 right now, come help me!");
+        Tag tag = tagService.getTagById(1);
+        event.setTag(tag);
+        User user = userService.getUserBydId(1);
+        event.setHost(user);
+        event.setDateTime(LocalDateTime.of(2020,12,1, 12,30));
+        eventService.hostEvent(event);
+        eventList = eventService.getEventsByName(name);
+        int after_size = eventList.size();
+
+        Assertions.assertEquals(1, after_size - before_size);
     }
 }
