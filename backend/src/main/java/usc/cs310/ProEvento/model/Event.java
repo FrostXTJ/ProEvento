@@ -78,9 +78,7 @@ public class Event implements Serializable {
         this.status = "started";
     }
 
-    public void end() {
-        this.status = "terminated";
-    }
+    public void end() { this.status = "terminated"; }
 
     public void cancel() {
         this.status = "cancelled";
