@@ -26,7 +26,7 @@ class InvitationServiceTest {
     private EventService eventService;
 
     @Test
-    public void testCreateInvitation() {
+    public void createInvitationTest() {
         User user_1 = userService.getUserBydId(1);
         Assertions.assertNotNull(user_1);
         User user_2 = userService.getUserBydId(2);
@@ -48,7 +48,7 @@ class InvitationServiceTest {
     }
 
     @Test
-    public void testGetInvitation() {
+    public void getInvitationTest() {
         User user_1 = userService.getUserBydId(1);
         List<Invitation> invitationsList = invitationService.getInvitationsByReceiverId(user_1.getId());
         int size_before = invitationsList.size();
@@ -71,5 +71,4 @@ class InvitationServiceTest {
 
         Assertions.assertEquals(1, size_after - size_before);
     }
-
 }

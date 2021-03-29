@@ -71,7 +71,7 @@ class EventServiceTest {
     }
 
     @Test
-    public void testSearchByEventName() {
+    public void searchByEventNameTest() {
         String name = "CSCI";
         List<Event> eventList = eventService.getEventsByName(name);
         int before_size = eventList.size();
