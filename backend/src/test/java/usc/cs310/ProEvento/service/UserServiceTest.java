@@ -4,8 +4,6 @@ import usc.cs310.ProEvento.model.Tag;
 import usc.cs310.ProEvento.model.User;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -118,6 +116,4 @@ class UserServiceTest {
         }
         Assertions.assertEquals("Video Game",name.get(0));
     }
-
-
 }
