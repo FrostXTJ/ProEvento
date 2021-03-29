@@ -8,10 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import usc.cs310.ProEvento.model.Account;
 import usc.cs310.ProEvento.model.User;
 
-import java.nio.charset.Charset;
 import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class AccountServiceTest {
@@ -20,7 +17,6 @@ public class AccountServiceTest {
 
     @Test
     public void loginTestOne(){
-
         System.out.println("Testing login with correct email and password");
 
         Account account = new Account();
@@ -28,7 +24,6 @@ public class AccountServiceTest {
         account.setPassword("123456");
 
         Account login = accountService.loginAccount(account);
-//        System.out.println(acct);
         Assertions.assertNotNull(login);
 
         Assertions.assertTrue(login.getEmail().equals("yuxizhou@usc.edu"));
@@ -37,7 +32,6 @@ public class AccountServiceTest {
 
     @Test
     public void loginTestTwo(){
-
         System.out.println("Testing login with wrong email or password");
         Account account = new Account();
         account.setEmail("yuxizhou@usc.edu");
@@ -50,7 +44,6 @@ public class AccountServiceTest {
 
     @Test
     public void registerTestOne(){
-
         System.out.println("Testing register with an unused email, password and user info");
         Account account = new Account();
 
@@ -76,14 +69,11 @@ public class AccountServiceTest {
         Assertions.assertNotNull(register);
         Assertions.assertEquals(register.getEmail(), account.getEmail());
         Assertions.assertEquals(register.getUser(), account.getUser());
-
     }
 
     @Test
     public void registerTestTwo(){
-
         System.out.println("Testing register with a taken email");
-
         Account account = new Account();
         account.setEmail("yuxizhou@usc.edu");
         account.setPassword("cs310");
@@ -94,5 +84,4 @@ public class AccountServiceTest {
         Account register = accountService.registerAccount(account);
         Assertions.assertNull(register);
     }
-
 }
