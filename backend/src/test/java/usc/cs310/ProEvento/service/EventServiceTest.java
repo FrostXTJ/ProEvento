@@ -23,7 +23,7 @@ class EventServiceTest {
     private TagService tagService;
 
     @ParameterizedTest
-    @ValueSource(strings = {"2021-03-27", "2021-04-01", "2021-05-01"})
+    @ValueSource(strings = { "2021-03-27", "2021-04-01", "2021-05-01" })
     public void getEventsByDateValidInputTest(String dateString) {
         List<Event> results = eventService.getEventByDate(dateString);
         int year = Integer.parseInt(dateString.substring(0, 4));
@@ -38,7 +38,7 @@ class EventServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"", "xxxx-yy-zz", "1999/1/1"})
+    @ValueSource(strings = { "", "xxxx-yy-zz", "1999/1/1" })
     public void getEventsByDateInvalidInputTest(String dateString) {
         // The service should return an empty list if the input is invalid.
         List<Event> results = eventService.getEventByDate(dateString);
@@ -46,7 +46,7 @@ class EventServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(longs = {1, 3, 5, 7, 9, 10, 15, 23})
+    @ValueSource(longs = { 1, 3, 5, 7, 9, 10, 15, 23 })
     public void startValidEventTest(long eventId) {
         Boolean success = eventService.startEvent(eventId);
         Event event = eventService.getEventById(eventId);
@@ -55,14 +55,14 @@ class EventServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(longs = {-1, 0, -100})
+    @ValueSource(longs = { -1, 0, -100 })
     public void startInvalidEventTest(long eventId) {
         Boolean success = eventService.startEvent(eventId);
         Assertions.assertFalse(success);
     }
 
     @ParameterizedTest
-    @ValueSource(longs = {1, 2, 3, 4, 5})
+    @ValueSource(longs = { 1, 2, 3, 4, 5 })
     public void getUserHostEventsTest(long hostId) {
         List<Event> results = eventService.getUserHostEvents(hostId);
         for (Event e : results) {
@@ -89,5 +89,32 @@ class EventServiceTest {
         int after_size = eventList.size();
 
         Assertions.assertEquals(1, after_size - before_size);
+    }
+
+    @Test
+    public void testUsersCanJoinAnEvent() {
+        User user = userService.getUserBydId(3); // User "Neumann"
+        Event event = eventService.getEventById(16); // Event "Best Film Music"
+        user.joinEvent(event); // Join the event
+
+        // Test both users' current event and status.
+        Assertions.assertEquals("In an event", user.getStatus());
+        Assertions.assertEquals(event, user.getCurrentEvent());
+        user.leaveEvent(event);
+    }
+
+    @Test
+    public void testUsersCanLeaveAnEvent() {
+        User user = userService.getUserBydId(6); // User "Shannon"
+        Event event = eventService.getEventById(10); // Event "Who am I?"
+        user.joinEvent(event); // Event "Who am I?"
+
+        // Test both users' current event and status.
+        Assertions.assertEquals("In an event", user.getStatus());
+        Assertions.assertEquals(event, user.getCurrentEvent());
+
+        user.leaveEvent(event);
+        Assertions.assertEquals("Free", user.getStatus());
+        Assertions.assertEquals(null, user.getCurrentEvent());
     }
 }
