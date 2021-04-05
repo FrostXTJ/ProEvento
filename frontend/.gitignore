@@ -62,3 +62,6 @@ buck-out/
 
 # Expo CLI
 /.expo
+
+# environment
+.env
