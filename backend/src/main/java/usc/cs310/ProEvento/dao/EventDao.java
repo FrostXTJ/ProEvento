@@ -9,6 +9,7 @@ import usc.cs310.ProEvento.model.Event;
 import usc.cs310.ProEvento.model.Tag;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -81,6 +82,20 @@ public class EventDao {
             session.getTransaction().begin();
             Query query = session.createQuery("SELECT e FROM Event e JOIN e.host h WHERE h.id = :hostId");
             query.setParameter("hostId", hostId);
+            List<Event> events = (List<Event>) query.list();
+            session.getTransaction().commit();
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+    public List<Event> selectEventsByDate(Date date) {
+        try (Session session = sessionFactory.openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createQuery("FROM Event e WHERE DATE(e.dateTime) = :date");
+            query.setParameter("date", date);
             List<Event> events = (List<Event>) query.list();
             session.getTransaction().commit();
             return events;
