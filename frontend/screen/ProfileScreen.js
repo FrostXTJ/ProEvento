@@ -9,6 +9,7 @@ import {
   getFollowing,
   follow,
   unfollow,
+  deactivate, //newly added
 } from "../api/ProEventoAPI";
 
 const ProfileScreen = ({ navigation, route }) => {
@@ -125,6 +126,32 @@ const ProfileScreen = ({ navigation, route }) => {
       />
     );
 
+    //newly added
+    const deactivateButton =
+    myAccount.user.id === profileUser.id ? (
+      <Button title="Deactivate"
+        style = {{marginHorizontal: 10}}
+          onPress = {() => {
+            deactivate(
+              {
+                //yuming
+                //传入myAccount.user.id
+              },
+              response => {
+                if (response === "success") {
+                  //yuming
+                  //if deactivate, should return to login page?
+                }
+              }
+            );
+          }}
+      />
+    ) : (
+      null
+    );
+
+
+
   return (
     <View>
       <Divider height={80} backgroundColor="white" />
@@ -137,7 +164,11 @@ const ProfileScreen = ({ navigation, route }) => {
             onPress={() => setRefresh(!refresh)}
           />
           <Icon name="user" type="font-awesome" size={75} />
-          {profileButton}
+          {/* newly added */}
+            <View style = {styles.buttons}>
+              {profileButton}
+              {deactivateButton}
+            </View>
           <Text h1>{profileUser.username}</Text>
           <Text>{profileUser.biography}</Text>
         </View>
@@ -172,6 +203,13 @@ const styles = StyleSheet.create({
   events: {
     paddingStart: "5%",
     paddingEnd: "5%",
+  },
+
+  buttons: {
+    flex:1, 
+    flexDirection:'row', 
+    alignItems:'flex-end',
+    marginHorizontal: 10,
   },
 });
 
