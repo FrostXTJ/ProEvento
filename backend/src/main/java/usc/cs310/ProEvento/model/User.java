@@ -17,8 +17,9 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonAlias({"id", "userId"})
-    private Long id;
+    private long id;
 
+    @Column(columnDefinition = "TEXT", unique = true)
     private String username;
 
     @Column(name = "avatar_url")
@@ -31,6 +32,7 @@ public class User implements Serializable {
     @Column(name = "enable_notification")
     private boolean enableNotifications;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "current_event_id")
     private Event currentEvent;
@@ -91,11 +93,11 @@ public class User implements Serializable {
     }
 
     // Getters and Setters
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -171,18 +173,7 @@ public class User implements Serializable {
         this.followers = followers;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", avatarUrl='" + avatarUrl + '\'' +
-                ", biography='" + biography + '\'' +
-                ", Status='" + status + '\'' +
-                ", enableNotifications=" + enableNotifications +
-                '}';
-    }
-
+    // equals, hashCode, and toString override.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -194,5 +185,17 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, username, avatarUrl, biography, status, enableNotifications);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", biography='" + biography + '\'' +
+                ", Status='" + status + '\'' +
+                ", enableNotifications=" + enableNotifications +
+                '}';
     }
 }

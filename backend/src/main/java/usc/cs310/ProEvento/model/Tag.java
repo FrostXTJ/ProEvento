@@ -45,15 +45,7 @@ public class Tag implements Serializable {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
+    // equals, hashCode, and toString override.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,5 +57,14 @@ public class Tag implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description);
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
