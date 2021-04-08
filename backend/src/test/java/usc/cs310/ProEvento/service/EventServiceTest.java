@@ -77,7 +77,7 @@ class EventServiceTest {
         int before_size = eventList.size();
         Event event = new Event();
         event.setName("CSCI310 is a very good class");
-        event.setThumbnailUrl("");
+        event.setCoverImageUrl("");
         event.setDescription("I am writing test cases for CSCI 310 right now, come help me!");
         Tag tag = tagService.getTagById(1);
         event.setTag(tag);

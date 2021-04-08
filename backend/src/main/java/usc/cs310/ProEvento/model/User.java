@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -19,7 +20,8 @@ public class User implements Serializable {
     @JsonAlias({"id", "userId"})
     private long id;
 
-    @Column(columnDefinition = "TEXT", unique = true)
+    @Column(unique = true)
+    @Size(max = 255)
     private String username;
 
     @Column(name = "avatar_url")
@@ -70,8 +72,12 @@ public class User implements Serializable {
     }
 
     public void unfollow(User otherUser) {
-        this.following.remove(otherUser);
-        otherUser.followers.remove(this);
+        if (this.following != null) {
+            this.following.remove(otherUser);
+        }
+        if (otherUser.followers != null) {
+            otherUser.followers.remove(this);
+        }
     }
 
     public void registerEvent(Event event) {

@@ -1,16 +1,17 @@
 package usc.cs310.ProEvento.model;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "group")
-public class Group implements Serializable {
+@Table(name = "usergroup")
+public class UserGroup implements Serializable {
     private static final long serialVersionUID = 508821383278178031L;
 
     @Id
@@ -18,7 +19,8 @@ public class Group implements Serializable {
     @JsonAlias({"id", "groupId"})
     private long id;
 
-    @Column(columnDefinition = "TEXT", unique = true)
+    @Column(unique = true)
+    @Size(max = 255)
     private String name;
 
     private String description;
@@ -26,7 +28,7 @@ public class Group implements Serializable {
     @Column(name = "avatar_url")
     private String avatarUrl;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "founder_id")
     private User founder;
 
@@ -35,18 +37,21 @@ public class Group implements Serializable {
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_group",
+            name = "group_member_mapping",
             joinColumns = { @JoinColumn(name = "group_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
     private Set<User> members;
 
     public void addMember(User user) {
-        members.add(user);
+        if (this.members == null) {
+            this.members = new HashSet<>();
+        }
+        this.members.add(user);
     }
 
     public void removeMember(User user) {
-        if (members.contains(user)) {
+        if (members != null) {
             members.remove(user);
         }
     }
@@ -113,8 +118,8 @@ public class Group implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Group group = (Group) o;
-        return id == group.id && Objects.equals(name, group.name) && Objects.equals(description, group.description) && Objects.equals(avatarUrl, group.avatarUrl);
+        UserGroup userGroup = (UserGroup) o;
+        return id == userGroup.id && Objects.equals(name, userGroup.name) && Objects.equals(description, userGroup.description) && Objects.equals(avatarUrl, userGroup.avatarUrl);
     }
 
     @Override

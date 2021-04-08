@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -25,7 +26,8 @@ public class Event implements Serializable {
     @Column(name = "like_count")
     private int likeCount;
 
-    @Column(columnDefinition = "TEXT", unique = true)
+    @Column(unique = true)
+    @Size(max = 255)
     private String name;
 
     @Column(name = "cover_image_url")

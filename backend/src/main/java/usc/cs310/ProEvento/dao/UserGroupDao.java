@@ -5,21 +5,21 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import usc.cs310.ProEvento.model.Group;
+import usc.cs310.ProEvento.model.UserGroup;
 
 import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class GroupDao {
+public class UserGroupDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public boolean createGroup(Group group) {
+    public boolean createGroup(UserGroup userGroup) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.saveOrUpdate(group);
+            session.saveOrUpdate(userGroup);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -35,54 +35,54 @@ public class GroupDao {
         }
     }
 
-    public Group selectGroupById(long groupId) {
+    public UserGroup selectGroupById(long groupId) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Group group = (Group) session.get(Group.class, groupId);
+            UserGroup userGroup = (UserGroup) session.get(UserGroup.class, groupId);
             session.getTransaction().commit();
-            return group;
+            return userGroup;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public List<Group> selectGroupsByName(String name) {
+    public List<UserGroup> selectGroupsByName(String name) {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
-            Query query = session.createQuery("FROM Group g WHERE g.name LIKE :name");
+            Query query = session.createQuery("FROM UserGroup g WHERE g.name LIKE :name");
             query.setParameter("name", '%' + name + '%');
-            List<Group> groups = (List<Group>) query.list();
+            List<UserGroup> userGroups = (List<UserGroup>) query.list();
             session.getTransaction().commit();
-            return groups;
+            return userGroups;
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    public List<Group> selectGroupsByMemberId(long memberId) {
+    public List<UserGroup> selectGroupsByMemberId(long memberId) {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
-            Query query = session.createQuery("SELECT g FROM Group g JOIN g.members m WHERE m.id = :memberId");
+            Query query = session.createQuery("SELECT g FROM UserGroup g JOIN g.members m WHERE m.id = :memberId");
             query.setParameter("memberId", memberId);
-            List<Group> groups = (List<Group>) query.list();
+            List<UserGroup> userGroups = (List<UserGroup>) query.list();
             session.getTransaction().commit();
-            return groups;
+            return userGroups;
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    public List<Group> selectGroupsByFounderId(long founderId) {
+    public List<UserGroup> selectGroupsByFounderId(long founderId) {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
-            Query query = session.createQuery("SELECT g FROM Group g JOIN g.founder f WHERE f.id = :founderId");
+            Query query = session.createQuery("SELECT g FROM UserGroup g JOIN g.founder f WHERE f.id = :founderId");
             query.setParameter("founderId", founderId);
-            List<Group> groups = (List<Group>) query.list();
+            List<UserGroup> userGroups = (List<UserGroup>) query.list();
             session.getTransaction().commit();
-            return groups;
+            return userGroups;
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
@@ -90,32 +90,32 @@ public class GroupDao {
     }
 
     // TODO: Implement this function.
-    public List<Group> selectGroupsByTag(long tagId) {
+    public List<UserGroup> selectGroupsByTag(long tagId) {
         return Collections.emptyList();
     }
 
-    public List<Group> selectAllGroups() {
+    public List<UserGroup> selectAllGroups() {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Group");
-            List<Group> groups = (List<Group>) query.list();
+            Query query = session.createQuery("FROM UserGroup");
+            List<UserGroup> userGroups = (List<UserGroup>) query.list();
             session.getTransaction().commit();
-            return groups;
+            return userGroups;
         } catch (Exception e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    public boolean updateGroup(Group group) {
-        return this.createGroup(group);
+    public boolean updateGroup(UserGroup userGroup) {
+        return this.createGroup(userGroup);
     }
 
-    public boolean deleteGroup(Group group) {
+    public boolean deleteGroup(UserGroup userGroup) {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.delete(group);
+            session.delete(userGroup);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
