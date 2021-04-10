@@ -20,9 +20,7 @@ public class UserController {
         return user;
     }
 
-    @GetMapping("/api:/user/users_by_name")
-
-
+    @GetMapping("/api/user/users_by_name")
     public List<User> getUsersByName(@RequestParam String username) {
         return userService.getUsersByName(username);
     }

@@ -3,6 +3,7 @@ package usc.cs310.ProEvento.model;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,9 +17,8 @@ public class Tag implements Serializable {
     @JsonAlias({"id", "tagId"})
     private long id;
 
+    @Size(max = 255)
     private String name;
-
-    private String description;
 
     // Getters and Setters
     public long getId() {
@@ -37,12 +37,18 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    // equals, hashCode, and toString override.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tag tag = (Tag) o;
+        return id == tag.id && Objects.equals(name, tag.name);
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -50,20 +56,6 @@ public class Tag implements Serializable {
         return "Tag{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tag tag = (Tag) o;
-        return id == tag.id && Objects.equals(name, tag.name) && Objects.equals(description, tag.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description);
     }
 }
