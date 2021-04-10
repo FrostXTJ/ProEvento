@@ -17,11 +17,11 @@ public class Account implements Serializable {
     @JsonAlias({"id", "accountId"})
     private long id;
 
-    @Column(unique = true)
+    @Column(columnDefinition = "Text", unique = true)
     @Size(max = 255)
     private String email;
 
-    @Column(name = "phone_number", unique = true)
+    @Column(name = "phone_number", columnDefinition = "Text", unique = true)
     @Size(max = 15)
     private String phoneNumber;
 
