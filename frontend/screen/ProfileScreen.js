@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { Text, Icon, Divider, Button, Card } from "react-native-elements";
+import { Text, Icon, Divider, Button } from "react-native-elements";
 import EventCard from "../components/EventCard";
 import EventOverlay from "../components/EventOverlay";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../api/ProEventoAPI";
 
 const ProfileScreen = ({ navigation, route }) => {
-  const { myAccount, profileUser } = route.params;
+  const { myAccount, profileUser} = route.params; //probably addd set my account? --yifan zhuang
   const [refresh, setRefresh] = useState(false);
   const [hostEvents, setHostEvents] = useState([]);
   const [registeredEvents, setRegisteredEvents] = useState([]);
@@ -89,7 +89,9 @@ const ProfileScreen = ({ navigation, route }) => {
 
   const profileButton =
     myAccount.user.id == profileUser.id ? (
-      <Button title="Setting" />
+      <Button title="Setting" 
+        onPress={() => navigation.navigate("ProfileSetting")} //newly added
+      />
     ) : followed ? (
       <Button
         title="Unfollow"
