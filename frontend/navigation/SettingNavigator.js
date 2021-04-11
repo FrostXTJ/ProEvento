@@ -24,6 +24,7 @@ const SettingNavigator = ({ navigation, route }) => {
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} initialParams={{
             myAccount: myAccount,
             profileUser: myAccount.user,
+            setMyAccount : setMyAccount,
         }} />
     </Stack.Navigator>
   );

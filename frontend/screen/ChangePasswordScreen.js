@@ -4,7 +4,7 @@ import { Input, Icon } from "react-native-elements";
 import {changePassword} from "../api/ProEventoAPI";
 
 const ChangePasswordScreen = ({navigation, route}) => {
-    const {myAccount, profileUser} = route.params;
+    const {myAccount, profileUser,setMyAccount} = route.params;
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,7 +15,8 @@ const ChangePasswordScreen = ({navigation, route}) => {
         changePassword(
             credential,
             account => {
-                myAccount(account);
+                setMyAccount(account);
+                console.log("You've changed your password successfully!");
                 setSuccess("You've successfully changed your password.");
                 setError(null);
             },

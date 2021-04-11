@@ -125,7 +125,7 @@ const ProfileScreen = ({ navigation, route }) => {
       />
     );
 
-  const profileButton =
+  const settingButton =
     myAccount.user.id == profileUser.id ? (
       <Button title="Setting"
               buttonStyle = {styles.buttons}
@@ -134,8 +134,13 @@ const ProfileScreen = ({ navigation, route }) => {
 
         })} //newly added
       />
-    ) : followed ? (
+    ) : (null);
+
+  const followButton = myAccount.user.id != profileUser.id ?
+
+      (followed ? (
       <Button
+
         title="Unfollow"
         onPress={() => {
           unfollow(
@@ -153,6 +158,7 @@ const ProfileScreen = ({ navigation, route }) => {
       />
     ) : (
       <Button
+
         title="Follow"
         onPress={() => {
           follow(
@@ -168,7 +174,7 @@ const ProfileScreen = ({ navigation, route }) => {
           );
         }}
       />
-    );
+    )) : (null);
 
     //newly added
     const deactivateButton =
@@ -199,14 +205,14 @@ const ProfileScreen = ({ navigation, route }) => {
     const hostedEvents = shouldShowHosted ? (
         <View>
             <Text h3>Hosted Events</Text>
-            <View>{hostEventCards}</View>
+            {hostEvents.length != 0 ? <View>{hostEventCards}</View> : <Text h6>- No Hosted Events</Text>}
         </View>
     ) : (null);
 
     const registered = shouldShowRegistered ? (
         <View>
             <Text h3>Registered Events</Text>
-            <View>{registeredEventCards}</View>
+            {registeredEvents.length != 0 ? <View>{registeredEventCards}</View> : <Text h6>- No Registered Events</Text> }
         </View>
     ) : (null);
 
@@ -214,7 +220,7 @@ const ProfileScreen = ({ navigation, route }) => {
 
         <View>
             <Text h3>Following List</Text>
-            <View>{followingCards}</View>
+            {followings.length != 0 ? <View>{followingCards}</View> : <Text h6>- No Following List</Text>}
         </View>
 
     ) : (null);
@@ -222,7 +228,7 @@ const ProfileScreen = ({ navigation, route }) => {
     const follower = shouldShowFollower ? (
         <View>
             <Text h3>Follower List</Text>
-            <View>{followerCards}</View>
+            {followed.length != 0 ? <View>{followerCards}</View> : <Text h6>- No Followers</Text>}
         </View>
     ):(null);
 
@@ -279,26 +285,33 @@ const ProfileScreen = ({ navigation, route }) => {
 
   return (
     <View>
-      <Divider height={80} backgroundColor="white" />
+      <Divider height={30} backgroundColor="white" />
       {goBackToMyProfileButton}
       <ScrollView>
+          <View style = {styles.buttons}>
+              <Button
+                  buttonStyle = {styles.buttons}
+                  titleStyle={styles.buttonsBody}
+                  title="Refresh"
+                  type="clear"
+                  onPress={() => setRefresh(!refresh)}
+              />
+              {settingButton}
+              {deactivateButton}
+
+          </View>
         <View style={styles.userInfo}>
-          <Button
-            title="Refresh"
-            type="clear"
-            onPress={() => setRefresh(!refresh)}
-          />
+
+
           <Icon name="user" type="font-awesome" size={75} />
           <Text h1>{profileUser.username}</Text>
           <Text>{profileUser.biography}</Text>
+            {followButton}
           <View style = {styles.buttons1}>
               {button1}{button2}{button3}{button4}
           </View>
             {/* newly added */}
-                <View style = {styles.buttons}>
-                    {profileButton}
-                    {deactivateButton}
-                </View>
+
         </View>
 
         <Divider height={40} backgroundColor="white" />
@@ -308,7 +321,7 @@ const ProfileScreen = ({ navigation, route }) => {
           {followL}
           {follower}
         </ScrollView>
-        <Divider height={40} />
+
       </ScrollView>
       <EventOverlay
         event={selectedEvent}
@@ -327,6 +340,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+        padding:20,
   },
   events: {
     paddingStart: "5%",
@@ -337,29 +351,33 @@ const styles = StyleSheet.create({
     flex:1,
     flexDirection:'row',
     alignItems:'flex-end',
-    marginHorizontal: 60,
-    marginVertical: 10,
+      justifyContent: 'flex-end',
 
+
+    backgroundColor: "white",
 
   },
   buttons1: {
     flex:1,
     flexDirection:'row',
     alignItems:'flex-end',
-    marginHorizontal: 5,
-    backgroundColor: "orange",
+    marginHorizontal: 1,
+      marginTop: 15,
+    backgroundColor: "white",
     borderRadius : 5,
-
-
-
   },
   buttonsTitle: {
     color: "black",
     fontSize: 14,
     fontWeight : 'bold',
+      borderWidth : 1,
+      padding : 10,
+      borderColor : 'blue',
+      borderRadius : 10,
+
   },
     buttonsBody: {
-        color: "white",
+        color: "black",
         fontSize: 14,
     },
 
