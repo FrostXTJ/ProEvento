@@ -5,15 +5,22 @@ import ProfileSettingScreen from "../screen/ProfileSettingScreen";
 
 const Stack = createStackNavigator();
 
-export const SettingNavigator = props => {
-  const { setMyAccount  } = props;
-
-  return (
+const SettingNavigator = ({ navigation, route }) => {
+    const { myAccount, setMyAccount } = route.params;
+    return (
     <Stack.Navigator>
+
       <Stack.Screen name="Profile" component={ProfileScreen} initialParams={{
+          myAccount: myAccount,
+          profileUser: myAccount.user,
       }} />
+
       <Stack.Screen name="ProfileSetting" component={ProfileSettingScreen} initialParams={{
+          myAccount: myAccount,
+          profileUser: myAccount.user,
       }} />
     </Stack.Navigator>
   );
 };
+
+export {SettingNavigator};

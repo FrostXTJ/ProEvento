@@ -3,7 +3,7 @@ import { StyleSheet, View, Button } from "react-native";
 import { Input, Icon } from "react-native-elements";
 
 const ProfileSettingScreen = ({navigation, route}) => {
-  const { } = route.params;
+  const {myAccount, profileUser} = route.params;
 
   
   return (
