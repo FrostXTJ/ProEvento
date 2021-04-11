@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert, ScrollView, Image} from "react-native";
 
-import { Card, Button } from "react-native-elements";
+import { Card, Button, Avatar, ListItem } from "react-native-elements";
 import {
   registerEvent,
   unregisterEvent,
@@ -53,7 +53,7 @@ const NotificationCard = props => {
   };
 
   return (
-    <Card containerStyle={{ width: 350 }}>
+    <Card containerStyle={{ width: 350, borderRadius: 20 }}>
       <Card.Title>{eventName}</Card.Title>
       <Text style={{ fontWeight: "bold" }}>From {senderName}</Text>
       <Card.Divider />
@@ -123,26 +123,118 @@ const NotificationScreen = ({ navigation, route }) => {
       });
   }, [refresh]);
 
+
+    const users = [
+        {
+            name: 'Tommy Trojan',
+            avatar: 'https://d3jycsk0m72ya7.cloudfront.net/images/2018/2/8/usc_day_in_troy_mcgillen_012917_3907.jpg',
+            message: 'Lets be friends!',
+        },
+    ]
   return (
-    <View style={styles.container}>
-      <Button
-        title="Refresh"
-        onPress={() => {
-          setRefresh(!refresh);
-        }}
-      />
-      {notificationCards}
-    </View>
+      <ScrollView>
+          <View style={styles.container}>
+              <Button style={styles.refreshButton}
+                  title="Refresh"
+                  onPress={() => {
+                      setRefresh(!refresh);
+                  }}
+              />
+              {/*Temp format for follow request and group request*/}
+              <Card containerStyle={{ width: 350, borderRadius: 20}}>
+                  <Card.Title>Group Name</Card.Title>
+                  <Text style={{ fontWeight: "bold" }}>{"From senderName"}</Text>
+                  <Card.Divider />
+                  <Text style={{ marginBottom: 10 }}>{"Some request messages go in here"}</Text>
+                  <View style={styles.buttonContainer}>
+                      <Button
+                          buttonStyle={{
+                              width: "80%",
+                              marginTop: "10%",
+                          }}
+                          title="Approve"
+                          // onPress={() => {
+                          //     Approve the request
+                          // }}
+                      />
+                      <Button
+                          buttonStyle={{
+                              width: "80%",
+                              marginTop: "10%",
+                              marginLeft: "auto"
+                          }}
+                          title="Decline"
+                          // onPress={() => {
+                          //     Decline the request
+                          // }}
+                      />
+                  </View>
+              </Card>
+              <Card containerStyle={{ width: 350, borderRadius: 20}}>
+                  <View>
+                      {
+                          users.map((u, i) => {
+                              return (
+                                  <View key={i} style={styles.followContainer}>
+                                      <Avatar
+                                          size={"medium"}
+                                          rounded
+                                          source={{
+                                              uri:
+                                              u.avatar,
+                                          }}
+                                          onPress={() => {
+                                              alert("Direct to the profile!")
+                                          }}
+                                      />
+                                      <ListItem.Content style={{ marginLeft: '3%'}}>
+                                          <ListItem.Title style={{ fontWeight: 'bold' }}>{u.name}</ListItem.Title>
+                                          <ListItem.Subtitle>{u.message}</ListItem.Subtitle>
+                                      </ListItem.Content>
+                                      <View style={styles.buttonContainer}>
+                                          <Button
+                                              buttonStyle={{
+                                                  width: "85%",
+                                                  marginLeft: "10%",
+                                              }}
+                                              title="Follow"
+                                              onPress={() => {
+                                                  alert("Will follow this person")
+                                              }}
+                                          />
+                                      </View>
+                                  </View>
+                              );
+                          })
+                      }
+                  </View>
+              </Card>
+              {notificationCards}
+          </View>
+      </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    refreshButton: {
+        marginTop: "10%"
+    },
+    buttonContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    followContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 });
 
 export default NotificationScreen;

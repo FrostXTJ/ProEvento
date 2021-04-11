@@ -386,3 +386,35 @@ export const sendInvitation = (
     .then(data => onSuccess(data))
     .catch(error => onFailure(error));
 };
+
+export const getGroupsByFounder = (
+    userId,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+      `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_founder?` +
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+};
+
+export const getGroupsByMember = (
+    userId,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+      `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_member?` +
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+};
