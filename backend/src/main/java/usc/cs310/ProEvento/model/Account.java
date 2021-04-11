@@ -17,11 +17,11 @@ public class Account implements Serializable {
     @JsonAlias({"id", "accountId"})
     private long id;
 
-    @Column(unique = true)
+    @Column(columnDefinition = "Text", unique = true)
     @Size(max = 255)
     private String email;
 
-    @Column(name = "phone_number", unique = true)
+    @Column(name = "phone_number", columnDefinition = "Text", unique = true)
     @Size(max = 15)
     private String phoneNumber;
 
@@ -72,16 +72,7 @@ public class Account implements Serializable {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
-    }
-
+    // equals, hashCode, and toString override.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,4 +85,15 @@ public class Account implements Serializable {
     public int hashCode() {
         return Objects.hash(id, password, email, phoneNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
+
 }

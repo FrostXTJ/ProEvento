@@ -16,7 +16,6 @@ public class AccountService {
     }
 
     public Account registerAccount(Account account) {
-
         String email = account.getEmail();
         String phoneNumber = account.getPhoneNumber();
         String password = account.getPassword();

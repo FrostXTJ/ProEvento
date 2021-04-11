@@ -91,15 +91,7 @@ public class Invitation implements Serializable {
         this.receivers = receivers;
     }
 
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", dateTime=" + dateTime +
-                '}';
-    }
-
+    // equals, hashCode, and toString override.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,5 +103,14 @@ public class Invitation implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, content, dateTime);
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", dateTime=" + dateTime +
+                '}';
     }
 }

@@ -66,6 +66,11 @@ public class EventService {
         return events;
     }
 
+    public Event getUserCurrentEvent(long userId) {
+        User user = userDao.selectUserById(userId);
+        return user.getCurrentEvent();
+    }
+
     public List<Event> getAllEvents() {
         return eventDao.selectAllEvents();
     }

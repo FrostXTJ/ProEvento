@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -25,17 +26,16 @@ public class Event implements Serializable {
     @Column(name = "like_count")
     private int likeCount;
 
+    @Column(unique = true)
+    @Size(max = 255)
     private String name;
 
-    @Column(name = "thumbnail_url")
-    private String thumbnailUrl;
+    @Column(name = "cover_image_url")
+    private String coverImageUrl;
 
     private String description;
 
     private String status;
-
-    @Column(name = "twilio_room_url")
-    private String twilioRoomUrl;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -109,12 +109,12 @@ public class Event implements Serializable {
         this.name = name;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
     }
 
     public String getDescription() {
@@ -131,14 +131,6 @@ public class Event implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getTwilioRoomUrl() {
-        return twilioRoomUrl;
-    }
-
-    public void setTwilioRoomUrl(String twilioRoomUrl) {
-        this.twilioRoomUrl = twilioRoomUrl;
     }
 
     public LocalDateTime getDateTime() {
@@ -173,32 +165,30 @@ public class Event implements Serializable {
         this.guests = guests;
     }
 
+    // equals, hashCode, and toString override.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return id == event.id && likeCount == event.likeCount && Objects.equals(name, event.name) && Objects.equals(coverImageUrl, event.coverImageUrl) && Objects.equals(description, event.description) && Objects.equals(status, event.status) && Objects.equals(dateTime, event.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, likeCount, name, coverImageUrl, description, status, dateTime);
+    }
+
     @Override
     public String toString() {
         return "Event{" +
                 "id=" + id +
                 ", likeCount=" + likeCount +
                 ", name='" + name + '\'' +
-                ", thumbnailUrl='" + thumbnailUrl + '\'' +
+                ", coverImageUrl='" + coverImageUrl + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
-                ", twilioRoomUrl='" + twilioRoomUrl + '\'' +
                 ", dateTime=" + dateTime +
-                ", tag=" + tag +
-                ", host=" + host +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return id == event.id && likeCount == event.likeCount && Objects.equals(name, event.name) && Objects.equals(thumbnailUrl, event.thumbnailUrl) && Objects.equals(description, event.description) && Objects.equals(status, event.status) && Objects.equals(twilioRoomUrl, event.twilioRoomUrl) && Objects.equals(dateTime, event.dateTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, likeCount, name, thumbnailUrl, description, status, twilioRoomUrl, dateTime);
     }
 }
