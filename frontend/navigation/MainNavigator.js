@@ -26,6 +26,7 @@ export const MainNavigator = props => {
         initialParams={{
           myAccount: myAccount,
           profileUser: myAccount.user,
+            setMyAccount: setMyAccount,
         }}
       />
       <Tab.Screen
