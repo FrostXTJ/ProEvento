@@ -7,6 +7,7 @@ import { images } from '../../assets';
 import { TwilioService } from '../../services/twilio-service';
 import { LoadingOverlay } from '../../components/loading-overlay';
 import { useApp } from '../../app-context';
+import { sendGroupNotification } from "../../api/ProEventoAPI";
 
 export function ChatCreateScreen() {
   const [channelName, setChannelName] = useState('');
@@ -39,6 +40,11 @@ export function ChatCreateScreen() {
       .finally(() => setLoading(false));
   };
 
+  const onSendRequest = () =>{
+    //send request to group owner 
+    sendGroupNotification("dummy");
+  };
+
   return (
     <View style={styles.screen}>
       <Image style={styles.logo} source={images.message} />
@@ -46,11 +52,15 @@ export function ChatCreateScreen() {
         value={channelName}
         onChangeText={setChannelName}
         style={styles.input}
-        placeholder="Channel Name"
+        placeholder="Group Name"
         placeholderTextColor={colors.ghost}
       />
+      <TouchableOpacity style={styles.button} onPress={onSendRequest}>
+        <Text style={styles.buttonText}>Request to Join</Text>
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.button} onPress={onCreateOrJoin}>
-        <Text style={styles.buttonText}>Create Or Join</Text>
+        <Text style={styles.buttonText}>Create a new group</Text>
       </TouchableOpacity>
       {loading && <LoadingOverlay />}
     </View>
@@ -87,6 +97,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 10
   },
   buttonText: {
     fontSize: 17,

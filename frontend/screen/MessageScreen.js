@@ -21,21 +21,21 @@ export const routes = {
     },
     ChatList: {
       name: 'chat-list',
-      title: 'Chat List',
+      title: 'Joined Groups',
     },
     ChatRoom: {
       name: 'chat-room',
-      title: 'Chat Room',
+      title: 'Chat room',
     },
     ChatCreat: {
       name: 'chat-create',
-      title: 'New Channel',
+      title: 'New Group',
     },
   };
 
 const MessageScreen = ({ navigation, route }) => {
     const { myAccount } = route.params;
-
+    //const username = myAccount.user.username;
     const screenOptions = (title) => ({
         title,
         headerStyle: {
@@ -51,15 +51,18 @@ const MessageScreen = ({ navigation, route }) => {
         // <NavigationContainer>
           <AppProvider>
             <Stack.Navigator>
-              <Stack.Screen
+              {/* <Stack.Screen
                 name={routes.Welcome.name}
                 options={screenOptions(routes.Welcome.title)}
                 component={WelcomeScreen}
-              />
+              /> */}
               <Stack.Screen
                 name={routes.ChatList.name}
                 options={screenOptions(routes.ChatList.title)}
                 component={ChatListScreen}
+                initialParams={{
+                  myAccount: myAccount,
+                }}
               />
               <Stack.Screen
                 name={routes.ChatRoom.name}

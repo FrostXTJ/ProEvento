@@ -19,6 +19,7 @@ import {
 
 const TestScreen = ({navigation, route}) => {
   const [ testMsg, setTestMsg ] = useState("");
+  const [channelName, setChannelName] = useState('');
 
   const { myAccount, setMyAccount } = route.params;
 
