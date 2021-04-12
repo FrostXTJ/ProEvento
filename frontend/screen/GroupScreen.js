@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {StyleSheet, Text, View, Alert, ScrollView, Image, TextInput} from "react-native";
-
-import { Button, Avatar, ListItem, Divider, Overlay } from "react-native-elements";
+import {Button, Avatar, ListItem, Divider, Overlay, Input, Icon} from "react-native-elements";
 import {getGroupsByFounder, getGroupsByMember} from "../api/ProEventoAPI";
 
 const GroupScreen = ({ route, navigation, props }) => {
     const myUser = route.params.myAccount.user;
     const [groupList, setGroupList] = useState([]);
+
+    const [groupName, setGroupName] = useState("");
+    const [description, setDescription] = useState("");
 
     const [visible, setVisible] = useState(false);
     const toggleOverlay = () => {
@@ -46,9 +48,22 @@ const GroupScreen = ({ route, navigation, props }) => {
                         onPress={toggleOverlay}
                     />
                     <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={styles.overlay}>
-                        <View>
-                            <Text>Group Name:</Text>
-                            <TextInput style={styles.title}/>
+                        <View style={styles.group}>
+                            <Input
+                                placeholder="Group Name"
+                                onChangeText={input => {
+                                    setGroupName(input);
+                                }}
+                                leftIcon={<Icon name="<GroupOutlined />" size={24} color="black" />}
+                            />
+                            <Input
+                                placeholder="Description"
+                                secureTextEntry={true}
+                                onChangeText={input => {
+                                    setDescription(input);
+                                }}
+                                leftIcon={<Icon name="lock" size={24} color="black" />}
+                            />
                         </View>
                     </Overlay>
                 </View>
@@ -125,6 +140,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
     },
+    group: {
+        width: "85%"
+    }
 });
 
 export default GroupScreen;

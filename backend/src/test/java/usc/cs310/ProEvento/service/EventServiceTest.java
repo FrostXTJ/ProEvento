@@ -17,18 +17,6 @@ class EventServiceTest {
     @Autowired
     private UserService userService;
 
-    @Test
-    public void testUsersCanJoinAnEvent() {
-        User user = userService.getUserBydId(3); // User "Neumann"
-        Event event = eventService.getEventById(16); // Event "Best Film Music"
-        user.joinEvent(event); // Join the event
-
-        // Test both users' current event and status.
-        Assertions.assertEquals("In an event", user.getStatus());
-        Assertions.assertEquals(event, user.getCurrentEvent());
-
-        user.leaveEvent(event);
-    }
 //    @Test
 //    public void testUsersCanJoinAnEvent() {
 //        User user = userService.getUserBydId(3); // User "Neumann"
