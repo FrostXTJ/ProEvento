@@ -37,7 +37,7 @@ public class ProEventoConfig {
 
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
-//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");  // Used for creating new tables.
+       // hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");  // Used for creating new tables.
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "validate");  // Used for validating database schemes.
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return hibernateProperties;

@@ -7,6 +7,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import usc.cs310.ProEvento.model.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ProEventoDatabaseInitializer {
@@ -92,6 +94,7 @@ public class ProEventoDatabaseInitializer {
             testEventOne.setDateTime(LocalDateTime.of(2021, 5, 1, 12, 0, 0));
             testEventOne.setHost(testUserTommy);
             testUserTuring.registerEvent(testEventOne);
+            testEventOne.cancel();
 
             Event testEventTwo = new Event();
             testEventTwo.setName("The First Video Game!");
@@ -108,6 +111,8 @@ public class ProEventoDatabaseInitializer {
             testInvitation.setEvent(testEventOne);
             testInvitation.setDateTime(LocalDateTime.of(2021, 03, 15, 13, 10, 10));
             testInvitation.setReceivers(testUserTommy.getFollowers());
+
+
 
             UserGroup testUserGroupUSC = new UserGroup();
             testUserGroupUSC.setName("USC Group");
@@ -126,6 +131,31 @@ public class ProEventoDatabaseInitializer {
             testUserGroupCS.setTag(tagTech);
             testUserGroupCS.addMember(testUserNeumann);
 
+            EventNotification testEventNotification = new EventNotification();
+            testEventNotification.setContent("Event Hosted by Tommy has been cancelled");
+            testEventNotification.setSender(testUserTommy);
+            testEventNotification.setEvent(testEventOne);
+            testEventNotification.setDateTime(LocalDateTime.now());
+            testEventNotification.setType("cancel");
+            Set<User> s = new HashSet<>();
+            s.add(testUserTuring);
+            testEventNotification.setReceivers(s);
+
+            FollowRequestNotification testFollowRequestNotification = new FollowRequestNotification();
+            testFollowRequestNotification.setSender(testUserNeumann);
+            testFollowRequestNotification.setReceivers(Set.of(testUserTuring, testUserTommy));
+            testFollowRequestNotification.setDateTime(LocalDateTime.now());
+            testFollowRequestNotification.setContent("Neumann tries to follow you");
+
+
+            GroupRequestNotification testGroupRequestNotification= new GroupRequestNotification();
+            testGroupRequestNotification.setUserGroup(testUserGroupCS);
+            testGroupRequestNotification.setDateTime(LocalDateTime.now());
+            testGroupRequestNotification.setSender(testUserTommy);
+            testGroupRequestNotification.setReceivers(Set.of(testUserGroupCS.getFounder()));
+            testGroupRequestNotification.setContent("Tommy tries to join group");
+
+
             session.beginTransaction();
             session.save(tagGame);
             session.save(tagMusic);
@@ -142,7 +172,10 @@ public class ProEventoDatabaseInitializer {
             session.save(testAccountNeumann);
             session.save(testEventOne);
             session.save(testEventTwo);
+            session.save(testEventNotification);
             session.save(testInvitation);
+            session.save(testFollowRequestNotification);
+            session.save(testGroupRequestNotification);
             session.save(testUserGroupUSC);
             session.save(testUserGroupCS);
             session.getTransaction().commit();
