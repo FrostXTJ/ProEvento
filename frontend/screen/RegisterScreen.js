@@ -75,16 +75,20 @@ const RegisterScreen = ({navigation, route}) => {
       }else{
           setError2(null);
           //register logic
-          register({
-              email : email,
-              password : password,
-              user : {
-                  username :name,
-                  enableNotifications: true,
-                  tags: userTagList
-              }
-          });
-
+          if (name != null && password != null && passwordRepeat != null){
+              register({
+                      email : email,
+                      password : password,
+                      user : {
+                          username :name,
+                          enableNotifications: true,
+                          tags: userTagList
+                      }
+                  },
+                  success => {
+                      setMyAccount(success);
+                  });
+          }
       }
   };
 
@@ -125,6 +129,7 @@ const RegisterScreen = ({navigation, route}) => {
       onChangeText={input => {
           setName(input);
       }}
+
       leftIcon={<Icon name="people" size={24} color="black" />}
   />
 
