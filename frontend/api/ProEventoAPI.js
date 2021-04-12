@@ -370,6 +370,7 @@ export const leaveEvent = (
     .catch(error => onFailure(error));
 };
 
+//dummy function
 export const sendInvitation = (
   body,
   onSuccess = defaultOnSuccessCallback,
@@ -387,35 +388,35 @@ export const sendInvitation = (
     .catch(error => onFailure(error));
 };
 
-export const getUserJoinedGroup = (
-  userId,
-  onSuccess = defaultOnSuccessCallback,
-  onFailure = defaultOnFailureCallback
+
+export const getGroupsByFounder = (
+    userId,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
 ) => {
   fetch(
-    `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_member?` +
+      `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_founder?` +
       new URLSearchParams({
         userId: userId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
 };
 
-export const sendGroupNotification = (
-  body,
-  onSuccess = defaultOnSuccessCallback,
-  onFailure = defaultOnFailureCallback
+export const getGroupsByMember = (
+    userId,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
 ) => {
-  fetch(`${PROEVENTO_BACKEND_SERVER}/api/user/sendGroupNotification`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+  fetch(
+      `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_member?` +
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
 };

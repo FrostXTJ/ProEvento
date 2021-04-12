@@ -102,19 +102,11 @@ class EventServiceTest {
         Assertions.assertEquals(event, user.getCurrentEvent());
         user.leaveEvent(event);
     }
-
     @Test
     public void testUsersCanLeaveAnEvent() {
 //        User user = userService.getUserBydId(6); // User "Shannon"
 //        Event event = eventService.getEventById(10); // Event "Who am I?"
 //        user.joinEvent(event); // Event "Who am I?"
-//
-//        // Test both users' current event and status.
-//        Assertions.assertEquals("In an event", user.getStatus());
-//        Assertions.assertEquals(event, user.getCurrentEvent());
-//
-//        user.leaveEvent(event);
-//        Assertions.assertEquals("Free", user.getStatus());
-//        Assertions.assertEquals(null, user.getCurrentEvent());
-    }
+//    }
+
 }

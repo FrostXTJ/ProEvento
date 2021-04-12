@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screen/HomeScreen";
 import ProfileScreen from "../screen/ProfileScreen";
 import NotificationScreen from "../screen/NotificationScreen";
+import GroupScreen from "../screen/GroupScreen";
 import StreamingScreen from "../screen/StreamingScreen";
 import MessageScreen from "../screen/MessageScreen";
 import TestScreen from "../screen/TestScreen";
@@ -33,6 +34,13 @@ export const MainNavigator = props => {
         initialParams={{
           myAccount: myAccount,
         }}
+      />
+      <Tab.Screen
+          name="Group"
+          component={GroupScreen}
+          initialParams={{
+              myAccount: myAccount,
+          }}
       />
       <Tab.Screen
         name="Streaming"

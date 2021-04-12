@@ -11,7 +11,7 @@ import { useApp } from '../../app-context';
 //import { ChatListLoader } from './components/chat-list-loader';
 import { ChatListEmpty } from './components/chat-list-empty';
 import { ChatListItem } from './components/chat-list-item';
-import {getUserJoinedGroup} from "../../api/ProEventoAPI";
+import {getGroupsByMember} from "../../api/ProEventoAPI";
 
 export function ChatListScreen({ navigation, route }) {
   const { myAccount } = route.params;
@@ -63,7 +63,7 @@ export function ChatListScreen({ navigation, route }) {
 
   useEffect(() => {
     //get group names of the group that 
-    getUserJoinedGroup(userId, groups=>{
+    getGroupsByMember(userId, groups=>{
       getToken(username)
       .then((token) => TwilioService.getInstance().getChatClient(token))
       .then(() => TwilioService.getInstance().addTokenListener(getToken))
