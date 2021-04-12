@@ -247,10 +247,11 @@ const ProfileScreen = ({ navigation, route }) => {
         </View>
     ):(null);
 
+    var numberOfHosted = hostEvents.length + " Hosted";
     const button1 = (<Button
         buttonStyle = {styles.buttons1}
         titleStyle={styles.buttonsTitle}
-        title="Hosted"
+        title={numberOfHosted}
         onPress={() => {
             setShouldShowHosted(!shouldShowHosted);
             setShouldShowRegistered(false);
@@ -258,9 +259,9 @@ const ProfileScreen = ({ navigation, route }) => {
             setShouldShowFollower(false);
         }}
     />);
-
+    var numberOfRegistered = registeredEvents.length + " Registered";
     const button2 = (<Button
-        title="Registered"
+        title={numberOfRegistered}
         buttonStyle = {styles.buttons1}
         titleStyle={styles.buttonsTitle}
         onPress={() => {
@@ -271,8 +272,9 @@ const ProfileScreen = ({ navigation, route }) => {
         }}
     />);
 
+    var numberOfFollowings = followings.length + " Followings";
     const button3 = (<Button
-        title="Followings"
+        title={numberOfFollowings}
         buttonStyle = {styles.buttons1}
         titleStyle={styles.buttonsTitle}
         onPress={() => {
@@ -283,8 +285,9 @@ const ProfileScreen = ({ navigation, route }) => {
         }}
     />);
 
+    var numberOfFollowers = followers.length + " Followers";
     const button4 = (<Button
-        title="Followers"
+        title={numberOfFollowers}
         buttonStyle = {styles.buttons1}
         titleStyle={styles.buttonsTitle}
         onPress={() => {
@@ -433,7 +436,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
 
     borderWidth : 1,
-    padding : 10,
+    padding : 5,
     borderColor : 'orange',
     borderRadius: 5,
 
