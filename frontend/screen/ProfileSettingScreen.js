@@ -7,6 +7,9 @@ const ProfileSettingScreen = ({navigation, route}) => {
     const onLogout = () => {
         setMyAccount(null);
     };
+    const deactivate = () => {
+
+    }; //account deactivation logic
   return (
 
     <View style={styles.container}>
@@ -70,6 +73,18 @@ const ProfileSettingScreen = ({navigation, route}) => {
               <Icon name="chevron-right" size={40} color="orange" />
           </View>
       </TouchableOpacity>
+
+        <Divider style={{ width: "100%", margin: 1 }} />
+        <TouchableOpacity
+            style = {styles.button}
+            onPress={deactivate}
+        >
+            <View  style = {styles.setting}>
+
+                <Text style = {styles.text}>Deactivate</Text>
+                <Icon name="chevron-right" size={40} color="orange" />
+            </View>
+        </TouchableOpacity>
 
     </View>
 

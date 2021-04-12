@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { Text, Icon, Divider, Button } from "react-native-elements";
+import { Image,Text, Icon, Divider, Button } from "react-native-elements";
 import EventCard from "../components/EventCard";
 import UserCard from "../components/UserCard";
 import EventOverlay from "../components/EventOverlay";
@@ -30,6 +30,7 @@ const ProfileScreen = ({ navigation, route }) => {
   const [shouldShowFollowing, setShouldShowFollowing] = useState(false);
   const [shouldShowFollower, setShouldShowFollower] = useState(false);
 
+  //badge counter
   //Get profileUsers's follower
     useEffect(() => {
 
@@ -117,6 +118,8 @@ const ProfileScreen = ({ navigation, route }) => {
     myAccount.user.id === profileUser.id ? null : (
       <Button
         title="Go Back to My Profile"
+        buttonStyle = {styles.buttons}
+        titleStyle={styles.buttonsBody}
         onPress={() => {
           navigation.setParams({
             profileUser: myAccount.user,
@@ -177,41 +180,47 @@ const ProfileScreen = ({ navigation, route }) => {
     )) : (null);
 
     //newly added
-    const deactivateButton =
-    myAccount.user.id === profileUser.id ? (
-      <Button
-          title="Deactivate"
-          buttonStyle = {styles.buttons}
-          titleStyle={styles.buttonsBody}
-          onPress = {() => {
-            deactivate(
-              {
-                //yuming
-                //传入myAccount.user.id
-              },
-              response => {
-                if (response === "success") {
-                  //yuming
-                  //if deactivate, should return to login page?
-                }
-              }
-            );
-          }}
-      />
-    ) : (
-      null
-    );
+    // const deactivateButton =
+    // myAccount.user.id === profileUser.id ? (
+    //   <Button
+    //       title="Deactivate"
+    //       buttonStyle = {styles.buttons}
+    //       titleStyle={styles.buttonsBody}
+    //       onPress = {() => {
+    //         deactivate(
+    //           {
+    //             //yuming
+    //             //传入myAccount.user.id
+    //           },
+    //           response => {
+    //             if (response === "success") {
+    //               //yuming
+    //               //if deactivate, should return to login page?
+    //             }
+    //           }
+    //         );
+    //       }}
+    //   />
+    // ) : (
+    //   null
+    // );
 
     const hostedEvents = shouldShowHosted ? (
-        <View>
-            <Text h3>Hosted Events</Text>
+        <View >
+            <View style = {styles.title}>
+                <Text h3>Hosted Events</Text>
+                <Icon  name="archive" type="font-awesome" size={30} />
+            </View>
             {hostEvents.length != 0 ? <View>{hostEventCards}</View> : <Text h6>- No Hosted Events</Text>}
         </View>
     ) : (null);
 
     const registered = shouldShowRegistered ? (
         <View>
-            <Text h3>Registered Events</Text>
+            <View style = {styles.title}>
+                <Text h3>Registered Events</Text>
+                <Icon  name="archive" type="font-awesome" size={30} />
+            </View>
             {registeredEvents.length != 0 ? <View>{registeredEventCards}</View> : <Text h6>- No Registered Events</Text> }
         </View>
     ) : (null);
@@ -219,7 +228,10 @@ const ProfileScreen = ({ navigation, route }) => {
     const followL = shouldShowFollowing ? (
 
         <View>
-            <Text h3>Following List</Text>
+            <View style = {styles.title}>
+                <Text h3>Following List</Text>
+                <Icon  name="male" type="font-awesome" size={35} />
+            </View>
             {followings.length != 0 ? <View>{followingCards}</View> : <Text h6>- No Following List</Text>}
         </View>
 
@@ -227,8 +239,11 @@ const ProfileScreen = ({ navigation, route }) => {
 
     const follower = shouldShowFollower ? (
         <View>
+            <View style = {styles.title}>
             <Text h3>Follower List</Text>
-            {followed.length != 0 ? <View>{followerCards}</View> : <Text h6>- No Followers</Text>}
+            <Icon  name="male" type="font-awesome" size={40} />
+        </View>
+            {followers.length != 0 ? <View>{followerCards}</View> : <Text h6>- No Followers</Text>}
         </View>
     ):(null);
 
@@ -286,9 +301,10 @@ const ProfileScreen = ({ navigation, route }) => {
   return (
     <View>
       <Divider height={30} backgroundColor="white" />
-      {goBackToMyProfileButton}
+
       <ScrollView>
           <View style = {styles.buttons}>
+              {goBackToMyProfileButton}
               <Button
                   buttonStyle = {styles.buttons}
                   titleStyle={styles.buttonsBody}
@@ -296,22 +312,70 @@ const ProfileScreen = ({ navigation, route }) => {
                   type="clear"
                   onPress={() => setRefresh(!refresh)}
               />
+
               {settingButton}
-              {deactivateButton}
+
+
 
           </View>
         <View style={styles.userInfo}>
 
 
-          <Icon name="user" type="font-awesome" size={75} />
-          <Text h1>{profileUser.username}</Text>
+            {/*<Image*/}
+            {/*    style={styles.avatar}*/}
+            {/*    source={require("../assets/user.jpeg")} />*/}
+            <Icon  name="android" color="red" type="font-awesome" size={100} />
+          <Text h4>{profileUser.username}</Text>
           <Text>{profileUser.biography}</Text>
             {followButton}
           <View style = {styles.buttons1}>
               {button1}{button2}{button3}{button4}
           </View>
             {/* newly added */}
-
+            <View style = {styles.badges}>
+                <ScrollView horizontal={true}>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="archive" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeFunCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="ban" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeCoolCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="bath" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeHelpfulCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="bell" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeLovelyCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="battery-full" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeCharmingCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="apple" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeAwesomeCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="bomb" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeEnergeticCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="bolt" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeDullCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="car" type="font-awesome" size={20} />
+                    <Text>{profileUser.badgeRudeCount}</Text>
+                </View>
+                <View style = {styles.singleBadge}>
+                    <Icon style = {styles.badgesBody} name="anchor" type="font-awesome" size={20} />
+                    <Text>1</Text>
+                </View>
+                </ScrollView>
+            </View>
         </View>
 
         <Divider height={40} backgroundColor="white" />
@@ -352,8 +416,6 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'flex-end',
       justifyContent: 'flex-end',
-
-
     backgroundColor: "white",
 
   },
@@ -369,16 +431,41 @@ const styles = StyleSheet.create({
   buttonsTitle: {
     color: "black",
     fontSize: 14,
-    fontWeight : 'bold',
-      borderWidth : 1,
-      padding : 10,
-      borderColor : 'blue',
-      borderRadius : 10,
+
+    borderWidth : 1,
+    padding : 10,
+    borderColor : 'orange',
+    borderRadius: 5,
 
   },
     buttonsBody: {
         color: "black",
         fontSize: 14,
+    },
+    title : {
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent : "space-between",
+    },
+    avatar:{
+        width:180,
+        height:180,
+        borderRadius: 90,
+        alignSelf: 'auto',
+    },
+    badges :{
+        flex:1,
+        flexDirection:'row',
+        alignItems: 'flex-end',
+        paddingLeft : 10,
+    },
+    badgesBody : {
+        margin:20,
+        alignSelf : 'center',
+    },
+    singleBadge : {
+        alignItems : 'center',
     },
 
 });
