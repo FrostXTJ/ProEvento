@@ -11,11 +11,10 @@ import java.util.List;
 
 @RestController
 public class GroupRequestNotificationController {
-
     @Autowired
     GroupRequestNotificationService groupRequestNotificationService;
 
-    @PostMapping("api/groupRequestNotification/send")
+    @PostMapping("api/group_notification/send")
     public String sendGroupRequestNotification(@RequestBody GroupRequestNotification notification,
                                                HttpServletRequest request,
                                                HttpServletResponse response){
@@ -23,28 +22,22 @@ public class GroupRequestNotificationController {
         boolean result = groupRequestNotificationService.sendGroupRequestNotification(notification);
 
         if (!result){
-
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "failure";
         }
         else{
-
             return "success";
         }
     }
 
-    @GetMapping ("api/groupRequestNotification/get")
-    public List<GroupRequestNotification> getGroupNotificationByReceiverId(@RequestParam long id,
+    @GetMapping ("api/group_notification/by_receiver_id")
+    public List<GroupRequestNotification> getGroupNotificationByReceiverId(@RequestParam long userId,
                                                                            HttpServletRequest request,
                                                                            HttpServletResponse response){
-
-        List<GroupRequestNotification> result = groupRequestNotificationService.getGroupRequestNotificationByReceiverId(id);
-
+        List<GroupRequestNotification> result = groupRequestNotificationService.getGroupRequestNotificationByReceiverId(userId);
         if (result == null || result.size() == 0){
-
             response.setStatus(201);
         }
-
         return result;
     }
 }

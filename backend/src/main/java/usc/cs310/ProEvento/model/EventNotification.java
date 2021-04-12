@@ -41,7 +41,6 @@ public class EventNotification{
     )
     private Set<User> receivers;
 
-
     @Column(name = "type")
     private String type;
 

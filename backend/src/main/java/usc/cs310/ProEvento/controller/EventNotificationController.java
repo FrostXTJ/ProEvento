@@ -11,37 +11,29 @@ import java.util.List;
 
 @RestController
 public class EventNotificationController {
-
     @Autowired
     EventNotificationService eventNotificationService;
 
-    @PostMapping("api/eventNotification/send")
+    @PostMapping("/api/event_notification/send")
     public String sendEventNotification(@RequestBody EventNotification notification,
                                                    HttpServletRequest request,
                                                    HttpServletResponse response){
-
         boolean result = eventNotificationService.sendEventNotification(notification);
-
         if (!result){
-
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "failure";
         }
-
         return "success";
     }
 
-    @GetMapping ("api/eventNotification/getByReceiverId")
-    public List<EventNotification> getEventNotificationByReceiverId(@RequestParam long id,
+    @GetMapping ("/api/event_notification/by_receiver_id")
+    public List<EventNotification> getEventNotificationByReceiverId(@RequestParam long userId,
                                                                     HttpServletRequest request,
                                                                     HttpServletResponse response){
-
-        List<EventNotification> result = eventNotificationService.getEventNotificationByReceiverId(id);
+        List<EventNotification> result = eventNotificationService.getEventNotificationByReceiverId(userId);
         if (result == null || result.size() == 0){
-
             response.setStatus(201);
         }
-
         return result;
     }
 }

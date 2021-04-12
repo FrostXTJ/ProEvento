@@ -70,7 +70,7 @@ public class EventNotificationDAO {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
             Query query = session.createQuery("SELECT e FROM EventNotification e JOIN e.receivers r WHERE r.id = :receiverId");
-            query.setParameter("receiverId", '%' + receiverId + '%');
+            query.setParameter("receiverId", receiverId);
             List<EventNotification> notifications = (List<EventNotification>) query.list();
             session.getTransaction().commit();
             return notifications;
