@@ -5490,6 +5490,13 @@ react-native-size-matters@^0.3.1:
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
   integrity sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw==
 
+react-native-tag-selector@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-tag-selector/-/react-native-tag-selector-0.0.3.tgz#001ca49d6456c5a8e3d0ad228055ef4f24f9b1b3"
+  integrity sha512-M/bq9q3KxAMhGZk5SQ8gOB1DWJYCNymVLQvOvM7BUQJLIDa4cRs88stJFOWMmEqFhjTjuTt5yIIy8/rAbxmvFQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-vector-icons@^8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-8.1.0.tgz#e8ee2b17bc4d9f636da1c6f67feee8e2a850c3d8"
