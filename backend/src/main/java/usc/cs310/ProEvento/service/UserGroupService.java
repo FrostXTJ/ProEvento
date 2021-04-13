@@ -27,6 +27,7 @@ public class UserGroupService {
                 || userDao.selectUserById(userGroup.getFounder().getId()) == null) {
             return false;
         }
+        userGroup.addMember(userGroup.getFounder());
         return userGroupDao.createGroup(userGroup);
     }
 
