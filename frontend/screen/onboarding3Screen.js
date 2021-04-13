@@ -8,19 +8,20 @@ const onboarding3Screen = ({navigation}) => {
         <ImageBackground source={require("../assets/background.jpeg")} style={styles.imageBackground}>
             <View style = {styles.container1}>
                 <Text style = {styles.header}>Are you ready to have your first ProEvento account !</Text>
-                <TouchableOpacity
-                            onPress={() => {
-                                navigation.navigate("Register");
-                            }
-                            } //newly added
-                            >
-                            <View style = {styles.button}>
-                                <Text style = {styles.body}>Register Now !</Text>
-                                <Icon  name="arrow-right"  color = "orange" type="font-awesome" size={60} />
-                            </View>
-                            </TouchableOpacity>
 
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate("Register");
+                    }
+                    } //newly added
+                >
+                    <View style = {styles.button}>
+                        <Text style = {styles.body}>Register Now !</Text>
+                        <Icon  name="arrow-right"  color = "orange" type="font-awesome" size={60} />
+                    </View>
+                </TouchableOpacity>
             </View>
+
 
 
 
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header : {
-    fontSize : 60,
+    fontSize : 40,
     fontWeight : 'bold',
     color : 'white',
   },
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
   body : {
     fontWeight : 'bold',
-    color : 'black',
+    color : 'white',
     margin : 5,
     fontSize : 30,
   },
@@ -63,10 +64,12 @@ const styles = StyleSheet.create({
       width : '100%',
       justifyContent : "center",
       alignItems: "center",
-      paddingTop : '40%',
-      padding:10,
+      paddingTop:'50%',
+
+      margin:0,
 
   },
+
 
   text1 : {
       width:'100%',

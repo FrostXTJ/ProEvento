@@ -7,7 +7,7 @@ const onboarding2Screen = ({navigation}) => {
         <View style = {styles.container}>
         <ImageBackground source={require("../assets/background.jpeg")} style={styles.imageBackground}>
             <View style = {styles.container1}>
-                <Text style = {styles.header}>With Proevento !</Text>
+                <Text style = {styles.header}>With ProEvento !</Text>
 
                 <Text style = {styles.text1}>-  You can broadcast live media</Text>
                 <Text style = {styles.text1}>- You can explore live events </Text>
@@ -79,8 +79,6 @@ const styles = StyleSheet.create({
       width:'100%',
       color : 'white',
       fontSize : 20,
-      backgroundColor : 'orange',
-      borderWidth : 0.1,
       borderRadius : 20,
       overflow : 'hidden',
       fontWeight : 'bold',

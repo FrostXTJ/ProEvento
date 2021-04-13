@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation, route }) => {
         title="Log in"
         onPress={() => {
           // TODO Delete this
-          fakeLogin();
+           fakeLogin();
           //onLogin({ email: email, password: password });
         }}
       />

@@ -6,6 +6,7 @@ import NotificationScreen from "../screen/NotificationScreen";
 import StreamingScreen from "../screen/StreamingScreen";
 import TestScreen from "../screen/TestScreen";
 import {SettingNavigator} from  "../navigation/SettingNavigator";
+import {HomeNavigator} from "./HomeNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,8 +18,11 @@ export const MainNavigator = props => {
     <Tab.Navigator>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
-        initialParams={{ myAccount }}
+        component={HomeNavigator}
+        initialParams={{ myAccount : myAccount,
+                            profileUser : myAccount.user,
+
+        }}
       />
       <Tab.Screen
         name="Profile"

@@ -1,5 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "../screen/HomeScreen";
 import ProfileScreen from "../screen/ProfileScreen";
 import ProfileSettingScreen from "../screen/ProfileSettingScreen";
 import ChangePasswordScreen from "../screen/ChangePasswordScreen";
@@ -17,13 +18,11 @@ const SettingNavigator = ({ navigation, route }) => {
 
       <Stack.Screen name="ProfileSetting" component={ProfileSettingScreen} initialParams={{
           myAccount: myAccount,
-          profileUser: myAccount.user,
           setMyAccount : setMyAccount,
       }} />
 
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} initialParams={{
             myAccount: myAccount,
-            profileUser: myAccount.user,
             setMyAccount : setMyAccount,
         }} />
     </Stack.Navigator>

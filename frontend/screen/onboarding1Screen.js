@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
            resizeMode: 'contain',
            width: '100%',
            height: '100%',
+
       },
 
   container1 : {
@@ -78,9 +79,7 @@ const styles = StyleSheet.create({
   text1 : {
       width:'100%',
       color : 'white',
-      fontSize : 20,
-      backgroundColor : 'orange',
-      borderWidth : 0.1,
+      fontSize : 23,
       borderRadius : 20,
       overflow : 'hidden',
       fontWeight : 'bold',

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {StyleSheet, View, Button, Text, TouchableOpacity,ScrollView } from "react-native";
-import { Input, Icon } from "react-native-elements";
+import {Input, Icon, Divider} from "react-native-elements";
 import {
     getFollowers,
     searchUsersByUsername,
@@ -204,13 +204,12 @@ const RegisterScreen = ({navigation, route}) => {
             <Text style = {styles.text2}>Register now</Text>
         </TouchableOpacity>
 
-
+        <Divider height={20} backgroundColor="white" />
         <View style = {styles.container3}>
+
         <ScrollView>
         <View style = {styles.container2}>
-            {userTagList.length == 0 ?  <Text h1>You've choosen 0 tag</Text> :
-                <Text h1>You've choosen {userTagList.length} tags</Text>
-            }
+
 
             {tagList.map(tag => (
                 <TouchableOpacity
@@ -236,6 +235,9 @@ const RegisterScreen = ({navigation, route}) => {
 
         </View>
         </ScrollView>
+            {userTagList.length == 0 ?  <Text style = {styles.text4}>You've choosen 0 tag</Text> :
+                <Text style = {styles.text4}>You've choosen {userTagList.length} tags</Text>
+            }
         </View>
 
     </View>
@@ -264,7 +266,7 @@ const styles = StyleSheet.create({
     container2 :{
         width : '100%',
         flexDirection : 'column',
-        paddingTop: '10%',
+        paddingHorizontal: '15%',
         alignItems: "center",
     },
     container3 :{
@@ -288,6 +290,9 @@ const styles = StyleSheet.create({
         margin : 10,
         borderColor : 'black',
         width : '100%',
+    },
+    text4 : {
+        alignSelf: 'center',
     },
     text3 : {
         fontSize : 13,

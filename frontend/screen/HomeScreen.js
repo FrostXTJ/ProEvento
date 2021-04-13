@@ -13,7 +13,7 @@ import UserCard from "../components/UserCard";
 import { getAllEvents, searchUsersByUsername } from "../api/ProEventoAPI";
 
 export default function HomeScreen({ route, navigation }) {
-  const { myAccount } = route.params;
+  const { myAccount} = route.params;
   const [refresh, setRefresh] = useState(false);
   const [eventList, setEventList] = useState([]);
   const [shownEventList, setShownEventList] = useState([]);
