@@ -65,7 +65,7 @@ const LoginScreen = ({ navigation, route }) => {
       />
       <Button
         title="Sign up a new account"
-        onPress={() => navigation.navigate("Register")}
+        onPress={() => navigation.navigate("onboard1")}
       />
     </View>
   );

@@ -3,7 +3,7 @@ import { StyleSheet, View,ScrollView } from "react-native";
 import { Text,Icon, Card, Button } from "react-native-elements";
 
 const UserCard = props => {
-  const { user, navigation, children } = props;
+  const { user, navigation } = props;
   return (
     <Card>
       {/*<Card.Title>{user.username}</Card.Title>*/}
@@ -17,7 +17,6 @@ const UserCard = props => {
             }
         ></Button>
       <Text style = {styles.bio}>Bio:  {user.biography}</Text>
-      {children}
 
       <Text style = {styles.tagH}>Tags: </Text>
 

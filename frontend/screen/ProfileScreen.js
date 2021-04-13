@@ -299,7 +299,7 @@ const ProfileScreen = ({ navigation, route }) => {
     />);
 
 
-
+    console.log(profileUser);
 
   return (
     <View>
@@ -433,12 +433,13 @@ const styles = StyleSheet.create({
   },
   buttonsTitle: {
     color: "black",
-    fontSize: 14,
+    fontSize: 16,
 
     borderWidth : 1,
-    padding : 5,
-    borderColor : 'orange',
+    padding : 1,
+    borderColor : 'white',
     borderRadius: 5,
+    textDecorationLine: 'underline',
 
   },
     buttonsBody: {

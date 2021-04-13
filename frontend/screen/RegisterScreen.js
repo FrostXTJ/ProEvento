@@ -34,7 +34,20 @@ const RegisterScreen = ({navigation, route}) => {
     const [tag8,setTag8] = useState(false);
     const [tag9,setTag9] = useState(false);
     const [tag10,setTag10] = useState(false);
-    var l = [0,tag1,tag2,tag3,tag4,tag5,tag6,tag7,tag8,tag9,tag10];
+    const [tag11,setTag11] = useState(false);
+    const [tag12,setTag12] = useState(false);
+    const [tag13,setTag13] = useState(false);
+    const [tag14,setTag14] = useState(false);
+    const [tag15,setTag15] = useState(false);
+    const [tag16,setTag16] = useState(false);
+    const [tag17,setTag17] = useState(false);
+    const [tag18,setTag18] = useState(false);
+    const [tag19,setTag19] = useState(false);
+    const [tag20,setTag20] = useState(false);
+    const [tag21,setTag21] = useState(false);
+
+    var l = [0,tag1,tag2,tag3,tag4,tag5,tag6,tag7,tag8,tag9,tag10,tag11,tag12,tag13,
+    tag14,tag15,tag16,tag17,tag18,tag19,tag20,tag21];
 
   //User Tag List
     const [userTagList,setUserTagList] =   useState([]);
@@ -49,7 +62,7 @@ const RegisterScreen = ({navigation, route}) => {
                 console.log("Retrieve tags failed");
             },
             );
-    }, []);
+    }, [setMyAccount]);
 
     //Tag State
 
@@ -103,6 +116,18 @@ const RegisterScreen = ({navigation, route}) => {
       if (id == 8) setTag8(!tag8);
       if (id == 9) setTag9(!tag9);
       if (id == 10) setTag10(!tag10);
+      if (id == 11) setTag11(!tag11);
+      if (id == 12) setTag12(!tag12);
+      if (id == 13) setTag13(!tag13);
+      if (id == 14) setTag14(!tag14);
+      if (id == 15) setTag15(!tag15);
+      if (id == 16) setTag16(!tag16);
+      if (id == 17) setTag17(!tag17);
+      if (id == 18) setTag18(!tag18);
+      if (id == 19) setTag19(!tag19);
+      if (id == 20) setTag20(!tag20);
+      if (id == 21) setTag21(!tag21);
+
 
   };
 
