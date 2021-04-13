@@ -2,6 +2,7 @@ package usc.cs310.ProEvento.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import usc.cs310.ProEvento.model.EventNotification;
 import usc.cs310.ProEvento.model.FollowRequestNotification;
 import usc.cs310.ProEvento.service.FollowRequestNotificationService;
 
@@ -17,25 +18,23 @@ public class FollowRequestNotificationController {
     @PostMapping("/api/follow_notification/send")
     public String sendFollowRequestNotification(@RequestBody FollowRequestNotification notification,
                                                 HttpServletRequest request,
-                                                HttpServletResponse response){
+                                                HttpServletResponse response) {
 
         boolean result = followRequestNotificationService.sendFollowRequestNotification(notification);
-        if (!result){
+        if (!result) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "failure";
-        }
-        else{
-
+        } else {
             return "success";
         }
     }
 
-    @GetMapping ("/api/follow_notification/by_receiver_id")
+    @GetMapping("/api/follow_notification/by_receiver_id")
     public List<FollowRequestNotification> getFollowRequestNotificationByReceiverId(@RequestParam long userId,
                                                                                     HttpServletRequest request,
-                                                                                    HttpServletResponse response){
+                                                                                    HttpServletResponse response) {
         List<FollowRequestNotification> result = followRequestNotificationService.getFollowRequestsByReceiverId(userId);
-        if (result == null || result.size() == 0){
+        if (result == null || result.size() == 0) {
             response.setStatus(201);
         }
         return result;

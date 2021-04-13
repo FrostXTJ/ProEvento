@@ -16,22 +16,22 @@ public class EventNotificationController {
 
     @PostMapping("/api/event_notification/send")
     public String sendEventNotification(@RequestBody EventNotification notification,
-                                                   HttpServletRequest request,
-                                                   HttpServletResponse response){
+                                        HttpServletRequest request,
+                                        HttpServletResponse response) {
         boolean result = eventNotificationService.sendEventNotification(notification);
-        if (!result){
+        if (!result) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "failure";
         }
         return "success";
     }
 
-    @GetMapping ("/api/event_notification/by_receiver_id")
+    @GetMapping("/api/event_notification/by_receiver_id")
     public List<EventNotification> getEventNotificationByReceiverId(@RequestParam long userId,
                                                                     HttpServletRequest request,
-                                                                    HttpServletResponse response){
+                                                                    HttpServletResponse response) {
         List<EventNotification> result = eventNotificationService.getEventNotificationByReceiverId(userId);
-        if (result == null || result.size() == 0){
+        if (result == null || result.size() == 0) {
             response.setStatus(201);
         }
         return result;

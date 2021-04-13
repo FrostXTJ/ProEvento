@@ -17,25 +17,23 @@ public class GroupRequestNotificationController {
     @PostMapping("api/group_notification/send")
     public String sendGroupRequestNotification(@RequestBody GroupRequestNotification notification,
                                                HttpServletRequest request,
-                                               HttpServletResponse response){
-
+                                               HttpServletResponse response) {
         boolean result = groupRequestNotificationService.sendGroupRequestNotification(notification);
 
-        if (!result){
+        if (!result) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return "failure";
-        }
-        else{
+        } else {
             return "success";
         }
     }
 
-    @GetMapping ("api/group_notification/by_receiver_id")
+    @GetMapping("api/group_notification/by_receiver_id")
     public List<GroupRequestNotification> getGroupNotificationByReceiverId(@RequestParam long userId,
                                                                            HttpServletRequest request,
-                                                                           HttpServletResponse response){
+                                                                           HttpServletResponse response) {
         List<GroupRequestNotification> result = groupRequestNotificationService.getGroupRequestNotificationByReceiverId(userId);
-        if (result == null || result.size() == 0){
+        if (result == null || result.size() == 0) {
             response.setStatus(201);
         }
         return result;
