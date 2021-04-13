@@ -162,7 +162,7 @@ public class ProEventoDatabaseInitializer {
 
             FollowRequestNotification testFollowRequestNotification = new FollowRequestNotification();
             testFollowRequestNotification.setSender(testUserNeumann);
-            testFollowRequestNotification.setReceivers(Set.of(testUserTuring, testUserTommy));
+            testFollowRequestNotification.setReceivers(Set.of(testUserTuring));
             testFollowRequestNotification.setDateTime(LocalDateTime.now());
             testFollowRequestNotification.setContent("Neumann wants to follow you");
 

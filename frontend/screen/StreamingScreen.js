@@ -29,6 +29,7 @@ const StreamingScreen = ({ navigation, route }) => {
       <Text>Streaming</Text>
       <Button title="Host a new Event" onPress={toggleEventCreationOverlay} />
       <Button title="Join an event" onPress={linkTwilioServer} />
+      <Button title="🤣" onPress={() => {console.log("Fun")}}/>
       <EventCreationOverlay
         isVisible={eventCreationOverlayVisible}
         currentUser={myAccount.user}

@@ -1758,6 +1758,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-picker/picker@^1.15.0":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.15.0.tgz#f571a8b013e001a840db905b21ec18e9d205f01b"
+  integrity sha512-TYdhavldt3ami860fVgYv2mf0d1u5YhMQ6kTw+soX/a1rYbpRCRjdz01sEQXwCW8oL7/lzHakOFnwqCo6JazDw==
+
 "@react-navigation/bottom-tabs@^5.11.8":
   version "5.11.8"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.11.8.tgz#0af8d5859b1ad781bdd86e8236ceaed60dc355fe"

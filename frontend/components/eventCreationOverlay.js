@@ -7,6 +7,7 @@ import {
   Input,
   ButtonGroup,
 } from "react-native-elements";
+import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   searchEventById,
@@ -61,6 +62,7 @@ const EventCreationOverlay = props => {
   useEffect(() => {
     getAllTags(tags => {
       setAllTags(tags);
+      // setSelectedTag(tags[0]);
     });
   }, []);
 
@@ -77,30 +79,33 @@ const EventCreationOverlay = props => {
     const event = {
       name: eventName,
       description: eventDescription,
-      thumbnaiUrl: "",
-      tag: { id: allTags[selectedTagIndex].id },
+      coverImageUrl: "",
+      tag: { id: selectedTag },
       host: { id: currentUser.id },
       dateTime: dateTimeToString(eventDateTime),
     };
 
-    hostEvent(event, response => {
-      getUserHostEvents(currentUser.id, newHostEvents => {
-        let newEvent = null;
-        newEvent = getDifference(hostEvents, newHostEvents);
+    // hostEvent(event, response => {
+    //   getUserHostEvents(currentUser.id, newHostEvents => {
+    //     let newEvent = null;
+    //     newEvent = getDifference(hostEvents, newHostEvents);
 
-        if (newEvent != null) {
-          sendInvitation({
-            content: `${currentUser.username} invites you to ${newEvent.name}. Let's check it out!`,
-            dateTime: dateTimeToString(new Date(Date.now())),
-            sender: { id: currentUser.id },
-            event: { id: newEvent.id },
-            receivers: followers,
-          }, () => {
-            setHostEvents(newHostEvents);
-          });
-        }
-      });
-    });
+    //     if (newEvent != null) {
+    //       sendInvitation(
+    //         {
+    //           content: `${currentUser.username} invites you to ${newEvent.name}. Let's check it out!`,
+    //           dateTime: dateTimeToString(new Date(Date.now())),
+    //           sender: { id: currentUser.id },
+    //           event: { id: newEvent.id },
+    //           receivers: followers,
+    //         },
+    //         () => {
+    //           setHostEvents(newHostEvents);
+    //         }
+    //       );
+    //     }
+    //   });
+    // });
   };
 
   return (
@@ -123,13 +128,22 @@ const EventCreationOverlay = props => {
             setEventDescription(input);
           }}
         />
-        <ButtonGroup
+        {/* <ButtonGroup
           buttons={allTags.map(tag => (
             <Text key={tag.id}>{tag.name}</Text>
           ))}
           selectedIndex={selectedTagIndex}
           onPress={index => setSelectedTagIndex(index)}
-        />
+        /> */}
+        <Picker
+        style = {{height: 150, width: 150}}
+          selectedValue={selectedTagIndex}
+          onValueChange={(tag, tagIndex) => setSelectedTagIndex(tagIndex)}
+        >
+          {allTags.map((tag, idx) =>
+            <Picker.Item key={tag.id} label={tag.name} value={idx} />
+          )}
+        </Picker>
         <DateTimePicker
           style={styles.datetimepicker}
           value={eventDateTime}
