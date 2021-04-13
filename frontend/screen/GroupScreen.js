@@ -37,9 +37,6 @@ const GroupScreen = ({ route, navigation, props }) => {
         }
     }, [search, refresh]);
 
-    const handleSearch = search => {
-        setSearch(search, refresh);
-    };
 
     return (
         <ScrollView>
