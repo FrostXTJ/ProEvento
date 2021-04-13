@@ -3,9 +3,12 @@ import { StyleSheet, Text, View, Alert, ScrollView, Image} from "react-native";
 
 import { Card, Button, Avatar, ListItem } from "react-native-elements";
 import {
-  registerEvent,
-  unregisterEvent,
-  getUserRegisteredEvents,
+    registerEvent,
+    unregisterEvent,
+    getUserRegisteredEvents,
+    getEventNotification,
+    getFollowNotification,
+    getGroupNotification
 } from "../api/ProEventoAPI";
 
 const NotificationCard = props => {
@@ -91,8 +94,20 @@ const NotificationCard = props => {
 
 const NotificationScreen = ({ navigation, route }) => {
   const myUser = route.params.myAccount.user;
-  const [notificationCards, setNotificationCards] = useState([]);
+  const [eventCards, setEventCards] = useState([]);
+  const [followCards, setFollowCards] = useState([]);
+  const [groupCards, setGroupCards] = useState([]);
   const [refresh, setRefresh] = useState(false);
+
+    useEffect(() => {
+        getEventNotification(allEvents => {
+            if (allEvents != null) {
+                setEventCards(allEvents);
+            }
+        });
+    }, [refresh]);
+
+
   useEffect(() => {
     fetch(
       "http://3.15.22.198:8080/api/invitation/invitations_by_receiver?" +
@@ -131,6 +146,7 @@ const NotificationScreen = ({ navigation, route }) => {
             message: 'Lets be friends!',
         },
     ]
+
   return (
       <ScrollView>
           <View style={styles.container}>

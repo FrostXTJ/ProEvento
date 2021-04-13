@@ -1,30 +1,45 @@
 import React, { useEffect, useState } from "react";
 import {StyleSheet, Text, View, Alert, ScrollView, Image, TextInput} from "react-native";
 import {Button, Avatar, ListItem, Divider, Overlay, Input, Icon} from "react-native-elements";
-import {getGroupsByFounder, getGroupsByMember} from "../api/ProEventoAPI";
+import {getAllGroups} from "../api/ProEventoAPI";
 
 const GroupScreen = ({ route, navigation, props }) => {
     const myUser = route.params.myAccount.user;
     const [groupList, setGroupList] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
     const [groupName, setGroupName] = useState("");
     const [description, setDescription] = useState("");
+    const [search, setSearch] = useState("");
 
     const [visible, setVisible] = useState(false);
     const toggleOverlay = () => {
         setVisible(!visible);
     };
 
+    // Get all groups.
     useEffect(() => {
-        getGroupsByFounder(myUser.id, founderGroups => {
-            getGroupsByMember(myUser.id, memberGroups => {
-                if (memberGroups != null) {
-                    const temp = founderGroups.concat(memberGroups);
-                    setGroupList(temp);
-                }
-            });
+        getAllGroups(allGroups => {
+            if (allGroups != null) {
+                setGroupList(allGroups);
+            }
         });
-    }, []);
+    }, [refresh]);
+
+    // Handle search groups.
+    useEffect(() => {
+        let newGroupList = groupList;
+        newGroupList = groupList.filter(group => {
+            return group.name.con
+        });
+        if (search != "") {
+            setGroupList(newGroupList);
+        }
+    }, [search, refresh]);
+
+    const handleSearch = search => {
+        setSearch(search, refresh);
+    };
 
     return (
         <ScrollView>
@@ -70,6 +85,8 @@ const GroupScreen = ({ route, navigation, props }) => {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Search by Names or Categories"
+                    onChangeText={search => handleSearch(search)}
+                    defaultValue={search}
                 />
             </View>
             <View>
@@ -82,7 +99,6 @@ const GroupScreen = ({ route, navigation, props }) => {
                                 rounded
                                 onPress={() => {
                                     alert("Navigate to chat screen");
-                                    // this.props.navigation.navigate('Chat')
                                 }}
                             />
                             <ListItem.Content>
