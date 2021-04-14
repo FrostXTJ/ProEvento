@@ -16,7 +16,6 @@ public class AccountService {
     }
 
     public Account registerAccount(Account account) {
-
         String email = account.getEmail();
         String phoneNumber = account.getPhoneNumber();
         String password = account.getPassword();
@@ -107,15 +106,8 @@ public class AccountService {
         return accountDao.updateAccount(account);
     }
 
-    public boolean deactivateAccount(long accountId){
 
-        Account account = accountDao.selectAccountById(accountId);
-
-        if (account == null || account.isDeactivated()){
-            return false;
-        }
-
-        account.setDeactivated(true);
-        return true;
+    public boolean deactivateAccount(Account account) {
+        return accountDao.deleteAccount(account);
     }
 }

@@ -6,19 +6,17 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "invitation")
-public class Invitation implements Serializable {
-    private static final long serialVersionUID = 415522929849224169L;
+@Table(name = "event_notification")
+public class EventNotification{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonAlias({"id", "invitationId"})
+    @JsonAlias({"id", "notificationId"})
     private long id;
 
     private String content;
@@ -37,11 +35,14 @@ public class Invitation implements Serializable {
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "invitation_user",
-            joinColumns = { @JoinColumn(name = "invitation_id") },
+            name = "event_notification_user",
+            joinColumns = { @JoinColumn(name = "notification_id") },
             inverseJoinColumns = { @JoinColumn(name = "receiver_id") }
     )
     private Set<User> receivers;
+
+    @Column(name = "type")
+    private String type;
 
     public long getId() {
         return id;
@@ -91,26 +92,35 @@ public class Invitation implements Serializable {
         this.receivers = receivers;
     }
 
-    // equals, hashCode, and toString override.
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Invitation that = (Invitation) o;
-        return id == that.id && Objects.equals(content, that.content) && Objects.equals(dateTime, that.dateTime);
+        EventNotification that = (EventNotification) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, content, dateTime);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Notification{" +
+        return "EventNotification{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", dateTime=" + dateTime +
+                ", sender=" + sender +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

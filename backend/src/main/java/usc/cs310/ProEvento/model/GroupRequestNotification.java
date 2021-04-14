@@ -6,19 +6,17 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "invitation")
-public class Invitation implements Serializable {
-    private static final long serialVersionUID = 415522929849224169L;
+@Table (name = "group_request_notification")
+public class GroupRequestNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonAlias({"id", "invitationId"})
+    @JsonAlias({"id", "notificationId"})
     private long id;
 
     private String content;
@@ -32,16 +30,16 @@ public class Invitation implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private User sender;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private Event event;
-
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "invitation_user",
-            joinColumns = { @JoinColumn(name = "invitation_id") },
+            name = "group_notification_user",
+            joinColumns = { @JoinColumn(name = "notification_id") },
             inverseJoinColumns = { @JoinColumn(name = "receiver_id") }
     )
     private Set<User> receivers;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private UserGroup userGroup;
 
     public long getId() {
         return id;
@@ -75,14 +73,6 @@ public class Invitation implements Serializable {
         this.sender = sender;
     }
 
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
     public Set<User> getReceivers() {
         return receivers;
     }
@@ -91,26 +81,34 @@ public class Invitation implements Serializable {
         this.receivers = receivers;
     }
 
-    // equals, hashCode, and toString override.
+    public UserGroup getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(UserGroup userGroup) {
+        this.userGroup = userGroup;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Invitation that = (Invitation) o;
-        return id == that.id && Objects.equals(content, that.content) && Objects.equals(dateTime, that.dateTime);
+        GroupRequestNotification that = (GroupRequestNotification) o;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, content, dateTime);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Notification{" +
+        return "GroupRequestNotification{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", dateTime=" + dateTime +
+                ", sender=" + sender +
                 '}';
     }
 }

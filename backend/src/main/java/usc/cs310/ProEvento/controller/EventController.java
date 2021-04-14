@@ -29,6 +29,11 @@ public class EventController {
         return eventService.getEventByDate(date);
     }
 
+    @GetMapping("/api/event/user_current_event")
+    public Event getUserCurrentEvent(@RequestParam long userId) {
+        return eventService.getUserCurrentEvent(userId);
+    }
+
     @GetMapping("/api/event/user_registered_events")
     public List<Event> getUserRegisteredEvents(@RequestParam long userId) {
         return eventService.getUserRegisteredEvents(userId);
