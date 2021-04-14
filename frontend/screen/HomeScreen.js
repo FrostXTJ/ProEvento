@@ -167,6 +167,7 @@ export default function HomeScreen({ route, navigation }) {
           event={selectedEvent}
           toggleOverlay={toggleEventOverlay}
           setEvent={setSelectedEvent}
+          navigation={navigation}
           imageNum = {Math.floor(Math.random() * 100 + 1)}
         />
       </View>

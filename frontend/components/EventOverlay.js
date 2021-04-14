@@ -9,6 +9,7 @@ import {
   unregisterEvent,
   startEvent,
   endEvent,
+  joinEvent
 } from "../api/ProEventoAPI";
 
 const checkEventInList = (event, list) => {
@@ -22,7 +23,7 @@ const checkEventInList = (event, list) => {
 };
 
 const EventOverlay = props => {
-  const { event, setEvent, currentUser, isVisible, toggleOverlay, imageNum} = props;
+  const { event, setEvent, currentUser, isVisible, toggleOverlay, imageNum, navigation} = props;
 
   const [registeredEvents, setRegisteredEvents] = useState([]);
   const [hostEvents, setHostEvents] = useState([]);
@@ -81,10 +82,28 @@ const EventOverlay = props => {
         eventId: eventId,
       },
       () => {
-        setEvent({ ...event, status: "streaming" });
+        setEvent({ ...event, status: "streaming" })
+        navigation.navigate("Streaming", {
+          currentEvent: event,
+        });
       }
     );
   };
+
+  const onJoinEvent = (userId, eventId) => {
+    joinEvent(
+      {
+        userId: userId,
+        eventId: eventId,
+      },
+      () => {
+        navigation.navigate("Streaming", {
+          currentEvent: event,
+        });
+      }
+    );
+  };
+
 
   const onEndEvent = eventId => {
     endEvent(
@@ -142,11 +161,20 @@ const EventOverlay = props => {
             />
           );
         }
+      } else if (event.status === "streaming") {
+        eventButton = (
+          <Button
+            title="Join"
+            onPress={() => {
+              onJoinEvent(currentUser.id, event.id);
+            }}
+          />
+        );
       }
     }
   }
 
-  
+
 
   return (
     <Overlay

@@ -157,6 +157,7 @@ const ProfileScreen = ({ navigation, route }) => {
         currentUser={myAccount.user}
         isVisible={eventOverlayVisible}
         toggleOverlay={toggleEventOverlay}
+        navigation={navigation}
       />
     </View>
   );

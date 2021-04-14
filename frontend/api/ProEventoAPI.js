@@ -386,3 +386,19 @@ export const sendInvitation = (
     .then(data => onSuccess(data))
     .catch(error => onFailure(error));
 };
+
+export const addBadge = (body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/user/add_badge`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
