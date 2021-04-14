@@ -140,6 +140,10 @@ public class User implements Serializable {
         badgeHelpfulCount++;
     }
 
+    public void addLovelyBadge() {
+        badgeLovelyCount++;
+    }
+
     public void addCharmingBadge() {
         badgeCharmingCount++;
     }
@@ -267,6 +271,14 @@ public class User implements Serializable {
 
     public void setBadgeEnergeticCount(long badgeEnergeticCount) {
         this.badgeEnergeticCount = badgeEnergeticCount;
+    }
+
+    public long getBadgeSmartCount() {
+        return badgeSmartCount;
+    }
+
+    public void setBadgeSmartCount(long badgeSmartCount) {
+        this.badgeSmartCount = badgeSmartCount;
     }
 
     public long getBadgeDullCount() {

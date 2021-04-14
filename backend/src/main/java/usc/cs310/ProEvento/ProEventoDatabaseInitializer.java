@@ -38,6 +38,28 @@ public class ProEventoDatabaseInitializer {
             tagReading.setName("Reading");
             Tag tagLife = new Tag();
             tagLife.setName("Life");
+            Tag tagSports = new Tag();
+            tagSports.setName("Sports");
+            Tag tagRacing = new Tag();
+            tagRacing.setName("Racing");
+            Tag tagHiking = new Tag();
+            tagHiking.setName("Hiking");
+            Tag tagBoardGame = new Tag();
+            tagBoardGame.setName("Board Game");
+            Tag tagLOL = new Tag();
+            tagLOL.setName("League of Legends");
+            Tag tagFortnite = new Tag();
+            tagFortnite.setName("Fortnite");
+            Tag tagFamily = new Tag();
+            tagFamily.setName("Family");
+            Tag tagEntertainment = new Tag();
+            tagEntertainment.setName("Entertainment");
+            Tag tagCar = new Tag();
+            tagCar.setName("Car");
+            Tag tagPolitics = new Tag();
+            tagPolitics.setName("Politics");
+            Tag tagNews = new Tag();
+            tagNews.setName("News");
 
             Account testAccountTommy = new Account();
             testAccountTommy.setEmail("tommy@usc.edu");
@@ -112,16 +134,13 @@ public class ProEventoDatabaseInitializer {
             testInvitation.setDateTime(LocalDateTime.of(2021, 03, 15, 13, 10, 10));
             testInvitation.setReceivers(testUserTommy.getFollowers());
 
-
-
             UserGroup testUserGroupUSC = new UserGroup();
             testUserGroupUSC.setName("USC Group");
             testUserGroupUSC.setFounder(testUserTommy);
             testUserGroupUSC.setDescription("ProEvento group for University of Southern California");
             testUserGroupUSC.setAvatarUrl("");
             testUserGroupUSC.setTag(tagLife);
-            testUserGroupUSC.addMember(testUserNeumann);
-            testUserGroupUSC.addMember(testUserTuring);
+            testUserGroupUSC.setMembers(new HashSet<>(Set.of(testUserTommy, testUserNeumann, testUserTuring)));
 
             UserGroup testUserGroupCS = new UserGroup();
             testUserGroupCS.setName("Computer Scientists Group");
@@ -129,10 +148,10 @@ public class ProEventoDatabaseInitializer {
             testUserGroupCS.setDescription("User group for computer scientists");
             testUserGroupCS.setAvatarUrl("");
             testUserGroupCS.setTag(tagTech);
-            testUserGroupCS.addMember(testUserNeumann);
+            testUserGroupCS.setMembers(new HashSet<>(Set.of(testUserTuring, testUserNeumann))   );
 
             EventNotification testEventNotification = new EventNotification();
-            testEventNotification.setContent("Event Hosted by Tommy has been cancelled");
+            testEventNotification.setContent("Event \'Best Songs for CSCI 310\' hosted by Tommy has been cancelled.");
             testEventNotification.setSender(testUserTommy);
             testEventNotification.setEvent(testEventOne);
             testEventNotification.setDateTime(LocalDateTime.now());
@@ -145,16 +164,14 @@ public class ProEventoDatabaseInitializer {
             testFollowRequestNotification.setSender(testUserNeumann);
             testFollowRequestNotification.setReceivers(Set.of(testUserTuring, testUserTommy));
             testFollowRequestNotification.setDateTime(LocalDateTime.now());
-            testFollowRequestNotification.setContent("Neumann tries to follow you");
-
+            testFollowRequestNotification.setContent("Neumann wants to follow you");
 
             GroupRequestNotification testGroupRequestNotification= new GroupRequestNotification();
             testGroupRequestNotification.setUserGroup(testUserGroupCS);
             testGroupRequestNotification.setDateTime(LocalDateTime.now());
             testGroupRequestNotification.setSender(testUserTommy);
             testGroupRequestNotification.setReceivers(Set.of(testUserGroupCS.getFounder()));
-            testGroupRequestNotification.setContent("Tommy tries to join group");
-
+            testGroupRequestNotification.setContent("Tommy wants to join Computer Scientists Group.");
 
             session.beginTransaction();
             session.save(tagGame);
@@ -167,6 +184,17 @@ public class ProEventoDatabaseInitializer {
             session.save(tagReading);
             session.save(tagFood);
             session.save(tagLife);
+            session.save(tagSports);
+            session.save(tagCar);
+            session.save(tagRacing);
+            session.save(tagHiking);
+            session.save(tagBoardGame);
+            session.save(tagLOL);
+            session.save(tagFortnite);
+            session.save(tagFamily);
+            session.save(tagEntertainment);
+            session.save(tagPolitics);
+            session.save(tagNews);
             session.save(testAccountTommy);
             session.save(testAccountTuring);
             session.save(testAccountNeumann);

@@ -22,6 +22,9 @@ public class UserBadgeService {
             } else if (badge.equals("Helpful") || badge.equals("helpful")) {
                 user.addHelpfulBadge();
                 return userDao.updateUser(user);
+            } else if (badge.equals("Lovely") || badge.equals("lovely")) {
+                user.addLovelyBadge();
+                return userDao.updateUser(user);
             } else if (badge.equals("Charming") || badge.equals("charming")) {
                 user.addCharmingBadge();
                 return userDao.updateUser(user);
