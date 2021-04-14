@@ -106,4 +106,16 @@ public class AccountService {
         account.setPassword(newPassword);
         return accountDao.updateAccount(account);
     }
+
+    public boolean deactivateAccount(long accountId){
+
+        Account account = accountDao.selectAccountById(accountId);
+
+        if (account == null || account.isDeactivated()){
+            return false;
+        }
+
+        account.setDeactivated(true);
+        return true;
+    }
 }
