@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a3ba7119-6e25-4fb6-aca4-f895249b6019" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/frontend/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/assets/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/api/ProEventoAPI.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/api/ProEventoAPI.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/UserCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/UserCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/navigation/LoginNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/navigation/LoginNavigator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/navigation/SettingNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/navigation/SettingNavigator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screen/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screen/HomeScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screen/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screen/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/navigation/HomeNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/navigation/HomeNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/navigation/MainNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/navigation/MainNavigator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/screen/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screen/ProfileScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/screen/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screen/RegisterScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/screen/ProfileSettingScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/screen/ProfileSettingScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,15 +65,13 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -99,6 +92,7 @@
       <workItem from="1618176549090" duration="143000" />
       <workItem from="1618177181106" duration="34196000" />
       <workItem from="1618276863724" duration="10168000" />
+      <workItem from="1618365248276" duration="3289000" />
     </task>
     <servers />
   </component>

@@ -29,7 +29,7 @@ const UserCard = props => {
 
       <Text style = {styles.tagH}>Badges Received: </Text>
         <View style = {styles.badges}>
-            <ScrollView horizontal={true}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style = {styles.singleBadge}>
                 <Icon style = {styles.badgesBody} name="apple" type="font-awesome" size={20} />
                 <Text>{user.badgeFunCount}</Text>

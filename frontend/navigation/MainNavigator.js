@@ -21,18 +21,11 @@ export const MainNavigator = props => {
         component={HomeNavigator}
         initialParams={{ myAccount : myAccount,
                             profileUser : myAccount.user,
+                            setMyAccount : setMyAccount,
 
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={SettingNavigator}
-        initialParams={{
-          myAccount: myAccount,
-          profileUser: myAccount.user,
-            setMyAccount: setMyAccount,
-        }}
-      />
+
       <Tab.Screen
         name="Notification"
         component={NotificationScreen}
@@ -47,6 +40,15 @@ export const MainNavigator = props => {
           myAccount: myAccount,
         }}
       />
+        <Tab.Screen
+            name="Profile"
+            component={SettingNavigator}
+            initialParams={{
+                myAccount: myAccount,
+                profileUser: myAccount.user,
+                setMyAccount: setMyAccount,
+            }}
+        />
       <Tab.Screen
         name="Test"
         component={TestScreen}

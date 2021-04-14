@@ -1,15 +1,49 @@
 import React, {useState} from "react";
-import { StyleSheet, View, Text,Button,TouchableOpacity,ScrollView} from "react-native";
+import { StyleSheet, Alert,View, Text,Button,TouchableOpacity,ScrollView} from "react-native";
 import { Divider,Input, Icon } from "react-native-elements";
+
+import {
+    deactivate
+} from "../api/ProEventoAPI";
 
 const ProfileSettingScreen = ({navigation, route}) => {
   const {myAccount, profileUser,setMyAccount} = route.params;
+
     const onLogout = () => {
         setMyAccount(null);
     };
     const deactivate = () => {
+        Alert.alert(
+            'Are you sure?',
+            'There are a lot of funny events going on right now!',
+            [
+                {text: 'Yes', onPress: () =>
+                    {
+                        deactivate(
+                            {
+                                "id" : myAccount.id,
+                                "user": {
+                                    "id": myAccount.id,
+                                }
+                            },
+                            success => {
+                                setMyAccount(null);
+                                console.log("The user deactivated");
+                            },
+                            failure => {
+                                console.log("Deactivation function failed");
+                            }
+                        )
+                    }},
+                {text: 'No'},
+            ],
+            {
+                cancelable: true
+            }
+        );
 
     }; //account deactivation logic
+
   return (
 
     <View style={styles.container}>

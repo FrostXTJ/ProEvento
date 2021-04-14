@@ -336,7 +336,7 @@ const ProfileScreen = ({ navigation, route }) => {
           </View>
             {/* newly added */}
             <View style = {styles.badges}>
-                <ScrollView horizontal={true}>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 <View style = {styles.singleBadge}>
                     <Icon style = {styles.badgesBody} name="archive" type="font-awesome" size={20} />
                     <Text>{profileUser.badgeFunCount}</Text>
