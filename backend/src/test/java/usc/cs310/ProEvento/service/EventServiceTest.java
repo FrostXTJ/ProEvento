@@ -90,7 +90,7 @@ class EventServiceTest {
 
         Assertions.assertEquals(1, after_size - before_size);
     }
-
+    
     @Test
     public void testUsersCanJoinAnEvent() {
         User user = userService.getUserBydId(3); // User "Neumann"
@@ -102,6 +102,7 @@ class EventServiceTest {
         Assertions.assertEquals(event, user.getCurrentEvent());
         user.leaveEvent(event);
     }
+
     @Test
     public void testUsersCanLeaveAnEvent() {
 //        User user = userService.getUserBydId(6); // User "Shannon"
