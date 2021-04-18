@@ -19,7 +19,8 @@ export function ChatListScreen({ navigation, route }) {
   const userId = myAccount.user.id;
   const [loading, setLoading] = useState(true);
   const { channels, updateChannels } = useApp();
-  const {groups, setGroups} = useState([]);
+  const [refreshed, setRefreshed] = useState(true);
+  //const {groups, setGroups} = useState([]);
   const channelPaginator = useRef();
 
   const onAddChannel = (channel) => {
@@ -30,7 +31,7 @@ export function ChatListScreen({ navigation, route }) {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate(routes.ChatCreat.name)}>
+        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate(routes.ChatCreat.name,  { myAccount: myAccount})}>
           <Text style={styles.addButtonText}>+</Text>
         </TouchableOpacity>
       ),
@@ -62,65 +63,62 @@ export function ChatListScreen({ navigation, route }) {
   );
 
   useEffect(() => {
-    //get group names of the group that 
-    getGroupsByMember(userId, groups=>{
-      getToken(username)
-      .then((token) => TwilioService.getInstance().getChatClient(token))
-      .then(() => TwilioService.getInstance().addTokenListener(getToken))
-      .then(setChannelEvents)
-      .then(getSubscribedChannels)
-      .then(()=>{
-        //find group that is in groups but not in sortedChannels
-        const joinedGroups = sortedChannels.map(channel => channel.name);
-        groups.forEach(group =>{
-          const groupName = group.name;
-          console.log(groupName);
-          console.log(joinedGroups);
-          if (!joinedGroups.includes(groupName))
-          {
-            console.log("need to add");
-            onCreateOrJoin(groupName); 
-          }
-        });
-      })
-      .catch((err) => showMessage({ message: err.message, type: 'danger' }))
-      .finally(() => setLoading(false));
-    });
+    getToken(username)
+    .then((token) => TwilioService.getInstance().getChatClient(token))
+    .then(() => TwilioService.getInstance().addTokenListener(getToken))
+    .then(setChannelEvents)
+    .then(getSubscribedChannels)
+    .catch((err) => showMessage({ message: err.message, type: 'danger' }))
+    .finally(() => setLoading(false)); 
 
     return () => TwilioService.getInstance().clientShutdown();
   }, [username, setChannelEvents, getSubscribedChannels]);
+
+  useEffect(()=>{
+    if (!loading){
+      getGroupsByMember(userId, groups=>{
+        const joinedGroups = sortedChannels.map(channel => channel.name);
+        groups.forEach(group =>{
+          const groupName = group.name;
+          if (!joinedGroups.includes(groupName))
+          {
+            getToken(username)
+            .then((token) => TwilioService.getInstance().getChatClient(token))
+            .then((client) =>
+              client
+              .getChannelByUniqueName(groupName)
+              .then((channel) => (channel.channelState.status !== 'joined' ? channel.join() : channel))
+              .then(onAddChannel)
+              .catch(() =>
+                client.createChannel({ uniqueName: groupName, friendlyName: groupName }).then((channel) => {
+                  onAddChannel(channel);
+                  channel.join();
+                }),
+              ),
+            )
+            .then(() => TwilioService.getInstance().addTokenListener(getToken))
+            .then(setChannelEvents)
+            .then(getSubscribedChannels)
+            .catch((err) => showMessage({ message: err.message, type: 'danger' }));
+            //return () => TwilioService.getInstance().clientShutdown();
+          }
+      });
+      return () => TwilioService.getInstance().clientShutdown();
+    });
+  }
+}, [refreshed, setChannelEvents, getSubscribedChannels]);
 
   const sortedChannels = useMemo(
     () => channels.sort((channelA, channelB) => channelB.lastMessageTime - channelA.lastMessageTime),
     [channels],
   );
 
-  const onCreateOrJoin = (channelName) => {
-    setLoading(true);
-    TwilioService.getInstance()
-      .getChatClient()
-      .then((client) =>
-        client
-          .getChannelByUniqueName(channelName)
-          .then((channel) => (channel.channelState.status !== 'joined' ? channel.join() : channel))
-          .then(onAddChannel)
-          .catch(() =>
-            client.createChannel({ uniqueName: channelName, friendlyName: channelName }).then((channel) => {
-              onAddChannel(channel);
-              channel.join();
-            }),
-          ),
-      )
-     // .then(() => showMessage({ message: 'You have joined.' }))
-      .catch((err) => showMessage({ message: err.message, type: 'danger' }))
-      //.finally(() => setLoading(false));
-  };
-
   return (
     <View style={styles.screen}>
       {loading ? (
         <Text>Loading.... </Text>
       ) : (
+        <View>
         <FlatList
           data={sortedChannels}
           keyExtractor={(item) => item.id}
@@ -132,6 +130,11 @@ export function ChatListScreen({ navigation, route }) {
           )}
           ListEmptyComponent={<ChatListEmpty />}
         />
+
+        <TouchableOpacity style={styles.button1} onPress={()=>{setRefreshed(!refreshed)}}>
+          <Text style={styles.buttonText}>Refresh</Text>
+        </TouchableOpacity>
+      </View>
       )}
     </View>
   );
@@ -153,6 +156,20 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '700',
     lineHeight: 24,
+    color: colors.white,
+  },
+  button1: {
+    width: 100,
+    height: 50,
+    backgroundColor: colors.malibu,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50,
+    marginLeft: 300,
+  },
+  buttonText: {
+    fontSize: 17,
     color: colors.white,
   },
 });

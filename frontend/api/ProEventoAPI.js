@@ -370,12 +370,12 @@ export const leaveEvent = (
     .catch(error => onFailure(error));
 };
 
-//dummy function
 export const sendInvitation = (
   body,
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
+  console.log(JSON.stringify)
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/invitation/send`, {
     method: "POST",
     headers: {
@@ -388,7 +388,6 @@ export const sendInvitation = (
     .catch(error => onFailure(error));
 };
 
-
 export const getGroupsByFounder = (
     userId,
     onSuccess = defaultOnSuccessCallback,
@@ -400,10 +399,11 @@ export const getGroupsByFounder = (
         userId: userId,
       })
   )
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+    .then(response => response.json())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
 };
+
 
 export const getGroupsByMember = (
     userId,
@@ -419,4 +419,55 @@ export const getGroupsByMember = (
       .then(response => response.json())
       .then(data => onSuccess(data))
       .catch(error => onFailure(error));
+};
+
+export const createGroup = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+
+export const sendGroupRequest = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/group_notification/send`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const getGroupsByName = (
+  name,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+    `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_name?` +
+    new URLSearchParams({
+      name: name,
+    })
+)
+    .then(response => response.json())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
 };

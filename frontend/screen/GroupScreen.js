@@ -7,20 +7,14 @@ import {getGroupsByFounder, getGroupsByMember} from "../api/ProEventoAPI";
 const GroupScreen = ({ route, navigation, props }) => {
     const myUser = route.params.myAccount.user;
     const [groupList, setGroupList] = useState([]);
-
     const [visible, setVisible] = useState(false);
     const toggleOverlay = () => {
         setVisible(!visible);
     };
 
     useEffect(() => {
-        getGroupsByFounder(myUser.id, founderGroups => {
-            getGroupsByMember(myUser.id, memberGroups => {
-                if (memberGroups != null) {
-                    const temp = founderGroups.concat(memberGroups);
-                    setGroupList(temp);
-                }
-            });
+        getGroupsByMember(myUser.id, memberGroups => {
+            setGroupList(memberGroups);
         });
     }, []);
 
