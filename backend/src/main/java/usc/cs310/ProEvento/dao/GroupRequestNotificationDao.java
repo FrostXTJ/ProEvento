@@ -5,21 +5,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import usc.cs310.ProEvento.model.EventNotification;
 import usc.cs310.ProEvento.model.FollowRequestNotification;
-import usc.cs310.ProEvento.model.Invitation;
-import usc.cs310.ProEvento.model.User;
+import usc.cs310.ProEvento.model.GroupRequestNotification;
 
+import javax.swing.*;
 import java.util.List;
 
 @Repository
-public class FollowRequestNotificationDAO {
+public class GroupRequestNotificationDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public boolean createFollowRequestNotification(FollowRequestNotification notification){
-
+    public boolean createGroupRequestNotification(GroupRequestNotification notification){
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
@@ -39,11 +37,14 @@ public class FollowRequestNotificationDAO {
         }
     }
 
-    public FollowRequestNotification getFollowRequestNotificationById(long id){
+    public boolean updateGroupNotification(GroupRequestNotification notification){
+        return createGroupRequestNotification(notification);
+    }
 
+    public GroupRequestNotification getGroupRequestNotificationById(long id){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            FollowRequestNotification notification = (FollowRequestNotification) session.get(FollowRequestNotification.class, id);
+            GroupRequestNotification notification = (GroupRequestNotification) session.get(GroupRequestNotification.class, id);
             session.getTransaction().commit();
             return notification;
         } catch (Exception e) {
@@ -52,13 +53,12 @@ public class FollowRequestNotificationDAO {
         }
     }
 
-    public List<FollowRequestNotification> getFollowRequestByReceiverId(long id){
-
+    public List<GroupRequestNotification> getGroupRequestNotificationByReceiverId(long id){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("SELECT i FROM FollowRequestNotification i JOIN i.receivers r WHERE r.id = :receiverId");
+            Query query = session.createQuery("SELECT i FROM GroupRequestNotification i JOIN i.receivers r WHERE r.id = :receiverId");
             query.setParameter("receiverId", id);
-            List<FollowRequestNotification> notifications = (List<FollowRequestNotification>) query.list();
+            List<GroupRequestNotification> notifications = (List<GroupRequestNotification>) query.list();
             session.getTransaction().commit();
             return notifications;
         } catch (Exception e) {
@@ -67,13 +67,7 @@ public class FollowRequestNotificationDAO {
         }
     }
 
-    public boolean updateFollowRequest(FollowRequestNotification notification){
-
-        return createFollowRequestNotification(notification);
-    }
-
-    public boolean deleteFollowRequest(FollowRequestNotification notification){
-
+    public boolean deleteGroupRequestNotification(GroupRequestNotification notification){
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();

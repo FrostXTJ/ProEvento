@@ -12,17 +12,16 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class EventNotificationDAO {
+public class EventNotificationDao {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    public boolean createEventNotification(EventNotification event){
-
+    public boolean createEventNotification(EventNotification notification) {
         Session session = sessionFactory.openSession();
         try {
             session.beginTransaction();
-            session.saveOrUpdate(event);
+            session.saveOrUpdate(notification);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -38,8 +37,7 @@ public class EventNotificationDAO {
         }
     }
 
-    public EventNotification selectEventNotificationById(long notificationId){
-
+    public EventNotification selectEventNotificationById(long notificationId) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             EventNotification notification = (EventNotification) session.get(EventNotification.class, notificationId);
@@ -65,7 +63,7 @@ public class EventNotificationDAO {
         }
     }
 
-    public List<EventNotification> selectEventNotificationByReceiverId(long receiverId){
+    public List<EventNotification> selectEventNotificationByReceiverId(long receiverId) {
 
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
@@ -81,7 +79,7 @@ public class EventNotificationDAO {
 
     }
 
-    public List<EventNotification> selectAllEventNotification(){
+    public List<EventNotification> selectAllEventNotification() {
         try (Session session = sessionFactory.openSession()) {
             session.getTransaction().begin();
             Query query = session.createQuery("FROM EventNotification");
@@ -94,16 +92,15 @@ public class EventNotificationDAO {
         }
     }
 
-    public boolean updateEventNotification(EventNotification event){
-
-        return createEventNotification((event));
+    public boolean updateEventNotification(EventNotification notification) {
+        return createEventNotification(notification);
     }
 
-    public boolean deleteEventNotification(EventNotification event) {
+    public boolean deleteEventNotification(EventNotification notification) {
         Session session = sessionFactory.openSession();
         try {
             session.getTransaction().begin();
-            session.delete(event);
+            session.delete(notification);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {
@@ -118,8 +115,4 @@ public class EventNotificationDAO {
             }
         }
     }
-
-
-
-
 }

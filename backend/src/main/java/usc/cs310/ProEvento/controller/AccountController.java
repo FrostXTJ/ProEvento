@@ -51,4 +51,13 @@ public class AccountController {
         }
         return "failure";
     }
+
+    @PostMapping("/api/account/deactivate")
+    public String deactivate(@RequestBody Account account) {
+        boolean success = accountService.deactivateAccount(account);
+        if (success) {
+            return "success";
+        }
+        return "failure";
+    }
 }
