@@ -18,6 +18,20 @@ export const testConnection = (
     .catch(error => onFailure(error));
 };
 
+export const deactivate =(
+    body,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/account/deactivate`, {
+    method: "POST",
+    body: JSON.stringify(body),
+  })
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+
+};
 export const login = (
   body,
   onSuccess = defaultOnSuccessCallback,

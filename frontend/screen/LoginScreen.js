@@ -59,13 +59,13 @@ const LoginScreen = ({ navigation, route }) => {
         title="Log in"
         onPress={() => {
           // TODO Delete this
-          // fakeLogin();
-          onLogin({ email: email, password: password });
+           fakeLogin();
+          //onLogin({ email: email, password: password });
         }}
       />
       <Button
         title="Sign up a new account"
-        onPress={() => navigation.navigate("Register")}
+        onPress={() => navigation.navigate("onboard1")}
       />
     </View>
   );
