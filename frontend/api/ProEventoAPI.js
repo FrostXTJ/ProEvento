@@ -445,3 +445,56 @@ export const getGroupNotification = (
       .then(data => onSuccess(data))
       .catch(error => onFailure(error));
 };
+
+export const addUserToGroup = (
+    body,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/add_user`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+      .then(response => response.text())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+};
+
+export const removeFollowNotification = (
+    body,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+      `${PROEVENTO_BACKEND_SERVER}/api/follow_notification/remove_receiver`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+};
+
+export const removeGroupNotification = (
+    body,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+      `${PROEVENTO_BACKEND_SERVER}/api/group_notification/remove_receiver`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+};
