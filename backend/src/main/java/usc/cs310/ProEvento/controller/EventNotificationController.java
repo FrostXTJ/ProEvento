@@ -3,6 +3,8 @@ package usc.cs310.ProEvento.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import usc.cs310.ProEvento.model.EventNotification;
+import usc.cs310.ProEvento.model.requestbody.ChangePasswordRequestBody;
+import usc.cs310.ProEvento.model.requestbody.UserNotificationRequestBody;
 import usc.cs310.ProEvento.service.EventNotificationService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,5 +37,17 @@ public class EventNotificationController {
             response.setStatus(201);
         }
         return result;
+    }
+
+    @PostMapping("/api/event_notification/remove_receiver")
+    public String removeEventNotificationReceiver(@RequestBody UserNotificationRequestBody requestBody) {
+        boolean success = eventNotificationService.removeEventNotificationReceiver(
+                requestBody.userId,
+                requestBody.notificationId
+        );
+        if (success) {
+            return "success";
+        }
+        return "failure";
     }
 }

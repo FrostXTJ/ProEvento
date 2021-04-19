@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import usc.cs310.ProEvento.model.EventNotification;
 import usc.cs310.ProEvento.model.FollowRequestNotification;
+import usc.cs310.ProEvento.model.requestbody.UserNotificationRequestBody;
 import usc.cs310.ProEvento.service.FollowRequestNotificationService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,5 +39,17 @@ public class FollowRequestNotificationController {
             response.setStatus(201);
         }
         return result;
+    }
+
+    @PostMapping("/api/follow_notification/remove_receiver")
+    public String removeFollowNotificationReceiver(@RequestBody UserNotificationRequestBody requestBody) {
+        boolean success = followRequestNotificationService.removeFollowRequestReceiver(
+                requestBody.userId,
+                requestBody.notificationId
+        );
+        if (success) {
+            return "success";
+        }
+        return "failure";
     }
 }

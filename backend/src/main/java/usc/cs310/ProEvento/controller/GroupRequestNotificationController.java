@@ -3,6 +3,7 @@ package usc.cs310.ProEvento.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import usc.cs310.ProEvento.model.GroupRequestNotification;
+import usc.cs310.ProEvento.model.requestbody.UserNotificationRequestBody;
 import usc.cs310.ProEvento.service.GroupRequestNotificationService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,5 +38,17 @@ public class GroupRequestNotificationController {
             response.setStatus(201);
         }
         return result;
+    }
+
+    @PostMapping("/api/group_notification/remove_receiver")
+    public String removeGroupNotificationReceiver(@RequestBody UserNotificationRequestBody requestBody) {
+        boolean success = groupRequestNotificationService.removeGroupRequestReceiver(
+                requestBody.userId,
+                requestBody.notificationId
+        );
+        if (success) {
+            return "success";
+        }
+        return "failure";
     }
 }

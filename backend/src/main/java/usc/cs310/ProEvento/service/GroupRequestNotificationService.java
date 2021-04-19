@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import usc.cs310.ProEvento.dao.GroupRequestNotificationDao;
 import usc.cs310.ProEvento.dao.UserDao;
 import usc.cs310.ProEvento.model.GroupRequestNotification;
+import usc.cs310.ProEvento.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GroupRequestNotificationService {
@@ -35,5 +37,17 @@ public class GroupRequestNotificationService {
 
     public boolean deleteGroupRequestNotification(GroupRequestNotification notification) {
         return groupRequestNotificationDao.deleteGroupRequestNotification(notification);
+    }
+
+    public boolean removeGroupRequestReceiver(long userId, long notificationId) {
+        User user = userDao.selectUserById(userId);
+        GroupRequestNotification notification = groupRequestNotificationDao.getGroupRequestNotificationById(notificationId);
+        if (user == null || notification == null || !notification.getReceivers().contains(user)) {
+            return false;
+        }
+        Set<User> receivers = notification.getReceivers();
+        receivers.remove(user);
+        notification.setReceivers(receivers);
+        return groupRequestNotificationDao.updateGroupNotification(notification);
     }
 }

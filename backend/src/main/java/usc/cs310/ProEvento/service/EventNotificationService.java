@@ -6,8 +6,10 @@ import usc.cs310.ProEvento.dao.EventDao;
 import usc.cs310.ProEvento.dao.EventNotificationDao;
 import usc.cs310.ProEvento.dao.UserDao;
 import usc.cs310.ProEvento.model.EventNotification;
+import usc.cs310.ProEvento.model.User;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class EventNotificationService {
@@ -33,15 +35,26 @@ public class EventNotificationService {
         }
     }
 
-    public EventNotification getEventNotificationById(long id) {
-        return eventNotificationDao.selectEventNotificationById(id);
-    }
-
     public List<EventNotification> getEventNotificationByReceiverId(long id) {
         return eventNotificationDao.selectEventNotificationByReceiverId(id);
     }
 
     public boolean deleteEventNotification(EventNotification notification) {
         return eventNotificationDao.deleteEventNotification(notification);
+    }
+    public EventNotification getEventNotificationById(long id){
+        return eventNotificationDao.selectEventNotificationById(id);
+    }
+
+    public boolean removeEventNotificationReceiver(long userId, long notificationId) {
+        User user = userDao.selectUserById(userId);
+        EventNotification notification = eventNotificationDao.selectEventNotificationById(notificationId);
+        if (user == null || notification == null || !notification.getReceivers().contains(user)) {
+            return false;
+        }
+        Set<User> receivers = notification.getReceivers();
+        receivers.remove(user);
+        notification.setReceivers(receivers);
+        return eventNotificationDao.updateEventNotification(notification);
     }
 }
