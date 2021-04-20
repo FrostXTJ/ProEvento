@@ -10,9 +10,15 @@ import {
   getFollowing,
   getFollowers,
   follow,
+  sendFollowRequest,
   unfollow,
   deactivate, //newly added
 } from "../api/ProEventoAPI";
+
+const dateTimeToString = date => {
+  const iso = date.toISOString();
+  return iso.slice(0, 10) + " " + iso.slice(11, 19);
+};
 
 const ProfileScreen = ({ navigation, route }) => {
   const { myAccount, profileUser } = route.params; //probably addd set my account? --yifan zhuang
@@ -149,14 +155,22 @@ const ProfileScreen = ({ navigation, route }) => {
         <Button
           title="Follow"
           onPress={() => {
-            follow(
+            sendFollowRequest(
               {
-                followerId: myAccount.user.id,
-                followeeId: profileUser.id,
+                dateTime: dateTimeToString(new Date(Date.now())),
+                content: `${myAccount.user.username} would like to follow you!`,
+                sender: {
+                  id: myAccount.user.id,
+                },
+                receivers: [
+                  {
+                    id: profileUser.id,
+                  },
+                ],
               },
               response => {
                 if (response === "success") {
-                  setFollowed(true);
+                  alert("Follow Request Sent!");
                 }
               }
             );
@@ -305,8 +319,6 @@ const ProfileScreen = ({ navigation, route }) => {
       }}
     />
   );
-
-  console.log(profileUser);
 
   return (
     <View>
@@ -479,8 +491,8 @@ const styles = StyleSheet.create({
   },
   badge: {
     fontSize: 24,
-    padding: 12
-  }
+    padding: 12,
+  },
 });
 
 export default ProfileScreen;

@@ -7,14 +7,7 @@ import { TWILIO_SERVER_URL } from "../api/TwilioAPI";
 const StreamingScreen = ({ navigation, route }) => {
   const { myAccount, currentEvent } = route.params;
   const [canAddBadge, setCanAddBadge] = useState(true);
-  const [
-    eventCreationOverlayVisible,
-    setEventCreationOverlayVisible,
-  ] = useState(false);
 
-  const toggleEventCreationOverlay = () => {
-    setEventCreationOverlayVisible(!eventCreationOverlayVisible);
-  };
 
   const linkTwilioServer = () => {
     Linking.canOpenURL(TWILIO_SERVER_URL).then(supported => {
@@ -30,6 +23,8 @@ const StreamingScreen = ({ navigation, route }) => {
     leaveEvent({
       userId: myAccount.user.id,
       eventId: currentEvent.id
+    }, () => {
+      currentEvent = null;
     })
   }
 
@@ -44,7 +39,7 @@ const StreamingScreen = ({ navigation, route }) => {
 
   let streamingView;
   if (currentEvent == null) {
-    streamingView = (<Button title="Host a new Event" onPress={toggleEventCreationOverlay} />);
+    streamingView = (<Button title="Host a new Event" onPress={() => navigation.navigate("EventCreation")} />);
   } else {
     streamingView = (<View>
       <Button title="Join the streaming room" onPress={linkTwilioServer} />
@@ -65,11 +60,6 @@ const StreamingScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       {streamingView}
-      <EventCreationOverlay
-        isVisible={eventCreationOverlayVisible}
-        currentUser={myAccount.user}
-        toggleOverlay={toggleEventCreationOverlay}
-      />
     </View>
   );
 };

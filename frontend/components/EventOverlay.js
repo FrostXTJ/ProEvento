@@ -7,9 +7,12 @@ import {
   getUserHostEvents,
   registerEvent,
   unregisterEvent,
+  cancelEvent,
   startEvent,
   endEvent,
-  joinEvent
+  joinEvent,
+  leaveEvent,
+  sendEventNotification,
 } from "../api/ProEventoAPI";
 
 const checkEventInList = (event, list) => {
@@ -22,8 +25,21 @@ const checkEventInList = (event, list) => {
   return result;
 };
 
+const dateTimeToString = date => {
+  const iso = date.toISOString();a
+  return iso.slice(0, 10) + " " + iso.slice(11, 19);
+};
+
 const EventOverlay = props => {
-  const { event, setEvent, currentUser, isVisible, toggleOverlay, imageNum, navigation} = props;
+  const {
+    event,
+    setEvent,
+    currentUser,
+    isVisible,
+    toggleOverlay,
+    imageNum,
+    navigation,
+  } = props;
 
   const [registeredEvents, setRegisteredEvents] = useState([]);
   const [hostEvents, setHostEvents] = useState([]);
@@ -82,9 +98,10 @@ const EventOverlay = props => {
         eventId: eventId,
       },
       () => {
-        setEvent({ ...event, status: "streaming" })
+        setEvent({ ...event, status: "streaming" });
         navigation.navigate("Streaming", {
-          currentEvent: event,
+          screen: "Streaming",
+          params: { currentEvent: event },
         });
       }
     );
@@ -98,12 +115,27 @@ const EventOverlay = props => {
       },
       () => {
         navigation.navigate("Streaming", {
-          currentEvent: event,
+          screen: "Streaming",
+          params: { currentEvent: event },
         });
       }
     );
   };
 
+  const onLeaveEvent = (userId, eventId) => {
+    leaveEvent(
+      {
+        userId: userId,
+        eventId: eventId,
+      },
+      () => {
+        navigation.navigate("Streaming", {
+          screen: "Streaming",
+          params: { currentEvent: null },
+        });
+      }
+    );
+  };
 
   const onEndEvent = eventId => {
     endEvent(
@@ -112,69 +144,140 @@ const EventOverlay = props => {
       },
       () => {
         setEvent({ ...event, status: "ended" });
+        navigation.navigate("Streaming", {
+          screen: "Streaming",
+          params: { currentEvent: null },
+        });
       }
     );
   };
 
-  let eventButton = <Button title="Loading..." disabled />;
+  const onCancelEvent = eventId => {
+    cancelEvent(
+      {
+        eventId: eventId,
+      },
+      () => {
+        setEvent({ ...event, status: "cancelled" });
+        sendEventNotification({
+          dateTime: dateTimeToString(new Date(Date.now())),
+          content: `Event "${event.name}" hosted by ${currentUser.username} has been cancelled.`,
+          type: "cancel",
+          sender: {
+            id: currentUser.id,
+          },
+          event: {
+            id: event.id,
+          },
+          receivers: event.guests,
+        });
+      }
+    );
+  };
+
+  let eventButtons = (
+    <View>
+      <Button title="Loading..." disabled />
+    </View>
+  );
   if (event) {
     if (event.host.id === currentUser.id) {
       if (event.status === "streaming") {
-        eventButton = (
-          <Button
-            title="End Event"
-            buttonStyle={styles.endButton}
-            onPress={() => {
-              onEndEvent(event.id);
-            }}
-          />
+        eventButtons = (
+          <View>
+            <Button
+              title="Join"
+              onPress={() => {
+                onJoinEvent(currentUser.id, event.id);
+              }}
+            />
+            <Button
+              title="End Event"
+              buttonStyle={styles.endButton}
+              onPress={() => {
+                onEndEvent(event.id);
+              }}
+            />
+          </View>
         );
       } else {
-        eventButton = (
-          <Button
-            title="Start Event"
-            buttonStyle={styles.startButton}
-            onPress={() => {
-              onStartEvent(event.id);
-            }}
-          />
+        eventButtons = (
+          <View>
+            <Button
+              title="Start Event"
+              buttonStyle={styles.startButton}
+              onPress={() => {
+                onStartEvent(event.id);
+              }}
+            />
+            <Button
+              title="Cancel Event"
+              buttonStyle={styles.endButton}
+              onPress={() => {
+                onCancelEvent(event.id);
+              }}
+            />
+          </View>
         );
       }
     } else {
       if (event.status === "open for registration") {
         if (checkEventInList(event, registeredEvents)) {
-          eventButton = (
-            <Button
-              title="Unregister"
-              onPress={() => {
-                onUnregisterEvent(currentUser.id, event.id);
-              }}
-            />
+          eventButtons = (
+            <View>
+              <Button
+                title="Unregister"
+                onPress={() => {
+                  onUnregisterEvent(currentUser.id, event.id);
+                }}
+              />
+            </View>
           );
         } else {
-          eventButton = (
-            <Button
-              title="Register"
-              onPress={() => {
-                onRegisterEvent(currentUser.id, event.id);
-              }}
-            />
+          eventButtons = (
+            <View>
+              <Button
+                title="Register"
+                onPress={() => {
+                  onRegisterEvent(currentUser.id, event.id);
+                }}
+              />
+            </View>
           );
         }
       } else if (event.status === "streaming") {
-        eventButton = (
-          <Button
-            title="Join"
-            onPress={() => {
-              onJoinEvent(currentUser.id, event.id);
-            }}
-          />
+        eventButtons = (
+          <View>
+            <Button
+              title="Join"
+              onPress={() => {
+                onJoinEvent(currentUser.id, event.id);
+              }}
+            />
+            <Button
+              title="Leave Event"
+              buttonStyle={styles.endButton}
+              onPress={() => {
+                onLeaveEvent(event.id);
+              }}
+            />
+          </View>
+        );
+      } else if (event.status === "terminated") {
+        eventButtons = (
+          <View>
+            <Button
+              title="Leave Event"
+              buttonStyle={styles.endButton}
+              onPress={() => {
+                onLeaveEvent(event.id);
+              }}
+            />
+          </View>
         );
       }
     }
   }
-
-
 
   return (
     <Overlay
@@ -194,7 +297,7 @@ const EventOverlay = props => {
             }}
             style={styles.image}
           />
-          {eventButton}
+          {eventButtons}
         </View>
       )}
     </Overlay>

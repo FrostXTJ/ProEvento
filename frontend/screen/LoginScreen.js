@@ -24,6 +24,8 @@ const LoginScreen = ({ navigation, route }) => {
   // TODO Delete this
   const fakeLogin = () => {
     const credential = {
+      // email: "alanturing@mail.com",
+      // password: "helloworld123",
       email: "tommy@usc.edu",
       password: "uscfighton!",
     };

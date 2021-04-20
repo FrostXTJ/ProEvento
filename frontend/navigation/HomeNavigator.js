@@ -8,13 +8,12 @@ import ChangePasswordScreen from "../screen/ChangePasswordScreen";
 const Stack = createStackNavigator();
 
 const HomeNavigator = ({ navigation, route }) => {
-    const { myAccount, profileUser, setMyAccount } = route.params;
+    const { myAccount, profileUser, setMyAccount} = route.params;
     return (
         <Stack.Navigator>
 
             <Stack.Screen name="Home" component={HomeScreen} initialParams={{
                 myAccount: myAccount,
-
             }} />
             <Stack.Screen name="Profile" component={ProfileScreen} initialParams={{
                 myAccount: myAccount,

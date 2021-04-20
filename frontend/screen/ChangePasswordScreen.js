@@ -16,12 +16,10 @@ const ChangePasswordScreen = ({navigation, route}) => {
             credential,
             account => {
                 setMyAccount(account);
-                console.log("You've changed your password successfully!");
                 setSuccess("You've successfully changed your password.");
                 setError(null);
             },
             error => {
-                console.log("The password change fails");
                 setError("The Old Password is Wrong");
 
             }

@@ -416,3 +416,54 @@ export const addBadge = (body,
     .then(data => onSuccess(data))
     .catch(error => onFailure(error));
 };
+
+export const cancelEvent = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/cancel`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const sendEventNotification = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event_notification/send`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const sendFollowRequest = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/follow_notification/send`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};

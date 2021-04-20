@@ -1,127 +1,114 @@
-import React, {useState} from "react";
-import { StyleSheet, Alert,View, Text,Button,TouchableOpacity,ScrollView} from "react-native";
-import { Divider,Input, Icon } from "react-native-elements";
-
+import React, { useState } from "react";
 import {
-    deactivate
-} from "../api/ProEventoAPI";
+  StyleSheet,
+  Alert,
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { Divider, Input, Icon } from "react-native-elements";
 
-const ProfileSettingScreen = ({navigation, route}) => {
-  const {myAccount, profileUser,setMyAccount} = route.params;
+import { deactivate } from "../api/ProEventoAPI";
 
-    const onLogout = () => {
-        setMyAccount(null);
-    };
-    const deactivate = () => {
-        Alert.alert(
-            'Are you sure?',
-            'There are a lot of funny events going on right now!',
-            [
-                {text: 'Yes', onPress: () =>
-                    {
-                        deactivate(
-                            {
-                                "id" : myAccount.id,
-                                "user": {
-                                    "id": myAccount.id,
-                                }
-                            },
-                            success => {
-                                setMyAccount(null);
-                                console.log("The user deactivated");
-                            },
-                            failure => {
-                                console.log("Deactivation function failed");
-                            }
-                        )
-                    }},
-                {text: 'No'},
-            ],
-            {
-                cancelable: true
-            }
-        );
+const ProfileSettingScreen = ({ navigation, route }) => {
+  const { myAccount, profileUser, setMyAccount } = route.params;
 
-    }; //account deactivation logic
+  const onLogout = () => {
+    setMyAccount(null);
+  };
+  const onDeactivate = () => {
+    Alert.alert(
+      "Are you sure?",
+      "There are a lot of funny events going on right now!",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            deactivate(
+              {
+                id: myAccount.id,
+                user: {
+                  id: myAccount.id,
+                },
+              },
+              success => {
+                setMyAccount(null);
+              },
+              failure => {
+              }
+            );
+          },
+        },
+        { text: "No" },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  }; //account deactivation logic
 
   return (
-
     <View style={styles.container}>
-
-        <TouchableOpacity
-            style = {styles.button}
-        >
-            <View  style = {styles.setting}>
-                <Text style = {styles.text}>Change Email Address</Text>
-                <View  style = {styles.icon}>
-                    <Icon name="chevron-right" size={40} color="orange" />
-                </View>
-            </View>
-        </TouchableOpacity>
-        <Divider style={{ width: "100%", margin: 1 }} />
-
-        <TouchableOpacity
-            style = {styles.button}
-            //newly added
-        >
-            <View  style = {styles.setting}>
-
-                <Text style = {styles.text}>Change Username</Text>
-                <Icon name="chevron-right" size={40} color="orange" />
-            </View>
-        </TouchableOpacity>
-        <Divider style={{ width: "100%", margin: 1 }} />
+      <TouchableOpacity style={styles.button}>
+        <View style={styles.setting}>
+          <Text style={styles.text}>Change Email Address</Text>
+          <View style={styles.icon}>
+            <Icon name="chevron-right" size={40} color="orange" />
+          </View>
+        </View>
+      </TouchableOpacity>
+      <Divider style={{ width: "100%", margin: 1 }} />
 
       <TouchableOpacity
-              style = {styles.button}
-              onPress={() => navigation.navigate("ChangePassword", {
-              })} //newly added
+        style={styles.button}
+        //newly added
       >
-          <View  style = {styles.setting}>
-
-              <Text style = {styles.text}>Change Password</Text>
-              <Icon name="chevron-right" size={40} color="orange" />
-          </View>
+        <View style={styles.setting}>
+          <Text style={styles.text}>Change Username</Text>
+          <Icon name="chevron-right" size={40} color="orange" />
+        </View>
       </TouchableOpacity>
+      <Divider style={{ width: "100%", margin: 1 }} />
 
-        <Divider style={{ width: "100%", margin: 1 }} />
-        <TouchableOpacity
-            style = {styles.button}
-            //newly added
-        >
-            <View  style = {styles.setting}>
-
-                <Text style = {styles.text}>Reset Password</Text>
-                <Icon name="chevron-right" size={40} color="orange" />
-            </View>
-        </TouchableOpacity>
-
-        <Divider style={{ width: "100%", margin: 1 }} />
       <TouchableOpacity
-          style = {styles.button}
-        onPress={onLogout}
-        >
-          <View  style = {styles.setting}>
-
-              <Text style = {styles.text}>Log Out</Text>
-              <Icon name="chevron-right" size={40} color="orange" />
-          </View>
+        style={styles.button}
+        onPress={() => navigation.navigate("ChangePassword", {})} //newly added
+      >
+        <View style={styles.setting}>
+          <Text style={styles.text}>Change Password</Text>
+          <Icon name="chevron-right" size={40} color="orange" />
+        </View>
       </TouchableOpacity>
 
-        <Divider style={{ width: "100%", margin: 1 }} />
-        <TouchableOpacity
-            style = {styles.button}
-            onPress={deactivate}
-        >
-            <View  style = {styles.setting}>
+      <Divider style={{ width: "100%", margin: 1 }} />
+      <TouchableOpacity
+        style={styles.button}
+        //newly added
+      >
+        <View style={styles.setting}>
+          <Text style={styles.text}>Reset Password</Text>
+          <Icon name="chevron-right" size={40} color="orange" />
+        </View>
+      </TouchableOpacity>
 
-                <Text style = {styles.text}>Deactivate</Text>
-                <Icon name="chevron-right" size={40} color="orange" />
-            </View>
-        </TouchableOpacity>
+      <Divider style={{ width: "100%", margin: 1 }} />
+      <TouchableOpacity style={styles.button} onPress={onLogout}>
+        <View style={styles.setting}>
+          <Text style={styles.text}>Log Out</Text>
+          <Icon name="chevron-right" size={40} color="orange" />
+        </View>
+      </TouchableOpacity>
 
+      <Divider style={{ width: "100%", margin: 1 }} />
+      <TouchableOpacity style={styles.button} onPress={onDeactivate}>
+        <View style={styles.setting}>
+          <Text style={styles.text}>Deactivate</Text>
+          <Icon name="chevron-right" size={40} color="orange" />
+        </View>
+      </TouchableOpacity>
     </View>
-
   );
 };
 
@@ -130,25 +117,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-
   },
-    button: {
-        backgroundColor: "#fff",
-        width : '100%',
-        height : '10%',
-    },
-    text : {
-        color : 'grey',
-        alignItems: "center",
-        padding : 20,
-        fontSize : 20,
-    },
-    setting : {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-
+  button: {
+    backgroundColor: "#fff",
+    width: "100%",
+    height: "10%",
+  },
+  text: {
+    color: "grey",
+    alignItems: "center",
+    padding: 20,
+    fontSize: 20,
+  },
+  setting: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
 export default ProfileSettingScreen;
