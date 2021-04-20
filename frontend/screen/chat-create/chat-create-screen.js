@@ -83,7 +83,7 @@ export function ChatCreateScreen({ navigation, route }) {
       dformat = [d.getFullYear(),
                  (d.getMonth()+1).padLeft(),
                  d.getDate().padLeft()
-                 ].join('/') +' ' +
+                 ].join('-') +' ' +
                 [d.getHours().padLeft(),
                  d.getMinutes().padLeft(),
                  d.getSeconds().padLeft()].join(':');
@@ -92,8 +92,6 @@ export function ChatCreateScreen({ navigation, route }) {
       request.content = content;
       const sender = {id: userId};
       request.sender = sender;
-
-      console.log(request);
 
       sendGroupRequest(request, ()=>{
         showMessage({ message: 'You have requested to join the group' })
