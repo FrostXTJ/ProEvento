@@ -31,7 +31,7 @@ const GroupScreen = ({ route, navigation, props }) => {
         });
     }, []);
 
-    //get all groups that the user already joined 
+    //get all groups that the user already joined
     useEffect(()=>{
         getGroupsByMember(userId, groups=>{
             const joinedGroups = groups.map(group=>{
@@ -56,14 +56,14 @@ const GroupScreen = ({ route, navigation, props }) => {
     }, [search, refresh]);
 
     const onSendRequest = (groupName) =>{
-        //send request to group owner 
+        //send request to group owner
         const request = {};
         getGroupsByName (groupName, (groups)=> {
           const userGroup = {id: groups[0].id};
           request.userGroup = userGroup;
           const receivers = [{id: groups[0].founder.id}]
           request.receivers = receivers;
-    
+
           Number.prototype.padLeft = function(base,chr){
             var  len = (String(base || 10).length - String(this).length)+1;
             return len > 0? new Array(len).join(chr || '0')+this : this;
@@ -117,7 +117,7 @@ const GroupScreen = ({ route, navigation, props }) => {
                                     <Button
                                         buttonStyle={{
                                             width: 'auto',
-                                            borderRadius: '10',
+                                            borderRadius: 10,
                                             backgroundColor: 'orangered',
                                         }}
                                         title={l.tag.name}
@@ -127,7 +127,7 @@ const GroupScreen = ({ route, navigation, props }) => {
                                     <Button
                                     buttonStyle={{
                                         width: 'auto',
-                                        borderRadius: '10',
+                                        borderRadius: 10,
                                         backgroundColor: 'green',
                                     }}
                                     title={`Request to Join`}
