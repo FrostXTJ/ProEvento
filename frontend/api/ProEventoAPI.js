@@ -583,3 +583,21 @@ export const removeGroupNotification = (
       .then(data => onSuccess(data))
       .catch(error => onFailure(error));
 };
+
+export const removeEventNotification = (
+    body,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+      `${PROEVENTO_BACKEND_SERVER}/api/event_notification/remove_receiver`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      })
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+};
