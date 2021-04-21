@@ -531,18 +531,10 @@ export const getGroupNotification = (
       .catch(error => onFailure(error));
 };
 
-<<<<<<< HEAD
-
-export const addUserToGroup = (
-  body,
-  onSuccess = defaultOnSuccessCallback,
-  onFailure = defaultOnFailureCallback
-=======
 export const addUserToGroup = (
     body,
     onSuccess = defaultOnSuccessCallback,
     onFailure = defaultOnFailureCallback
->>>>>>> zhaoxu
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/add_user`, {
     method: "POST",
@@ -551,11 +543,6 @@ export const addUserToGroup = (
     },
     body: JSON.stringify(body),
   })
-<<<<<<< HEAD
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
-=======
       .then(response => response.text())
       .then(data => onSuccess(data))
       .catch(error => onFailure(error));
@@ -595,5 +582,4 @@ export const removeGroupNotification = (
       .then(response => response.json())
       .then(data => onSuccess(data))
       .catch(error => onFailure(error));
->>>>>>> zhaoxu
 };
