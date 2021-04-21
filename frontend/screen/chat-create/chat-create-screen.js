@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useLayoutEffect} from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { colors } from '../../theme';
@@ -8,8 +8,9 @@ import { LoadingOverlay } from '../../components/loading-overlay';
 import { useApp } from '../../app-context';
 import { sendGroupRequest, createGroup, getAllTags, getGroupsByName} from "../../api/ProEventoAPI";
 import {Picker} from '@react-native-picker/picker';
+import { routes } from '../MessageScreen';
 
-export function ChatCreateScreen({ navigation, route }) {
+export function ChatCreateScreen({ route, navigation}) {
   const [channelName, setChannelName] = useState('');
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState("");
@@ -19,6 +20,16 @@ export function ChatCreateScreen({ navigation, route }) {
   const { myAccount } = route.params;
   const userId = myAccount.user.id;
   const userName = myAccount.user.username;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate(routes.ChatDirectContact.name,  { myAccount: myAccount})}>
+          <Text style={styles.addButtonText}>{'Direct Message'}</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   useEffect(()=>{
     getAllTags(tags=>{
@@ -66,39 +77,6 @@ export function ChatCreateScreen({ navigation, route }) {
 
   };
 
-  const onSendRequest = () =>{
-    //send request to group owner 
-    const request = {};
-    getGroupsByName (channelName, (groups)=> {
-      const userGroup = {id: groups[0].id};
-      request.userGroup = userGroup;
-      const receivers = [{id: groups[0].founder.id}]
-      request.receivers = receivers;
-
-      Number.prototype.padLeft = function(base,chr){
-        var  len = (String(base || 10).length - String(this).length)+1;
-        return len > 0? new Array(len).join(chr || '0')+this : this;
-      }
-      var d = new Date,
-      dformat = [d.getFullYear(),
-                 (d.getMonth()+1).padLeft(),
-                 d.getDate().padLeft()
-                 ].join('-') +' ' +
-                [d.getHours().padLeft(),
-                 d.getMinutes().padLeft(),
-                 d.getSeconds().padLeft()].join(':');
-      request.dateTime = dformat;
-      const content = `${userName} wants to join ${channelName}`;
-      request.content = content;
-      const sender = {id: userId};
-      request.sender = sender;
-
-      sendGroupRequest(request, ()=>{
-        showMessage({ message: 'You have requested to join the group' })
-      });
-    });
-  };
-
   const tagSlide = tagList.map((tag)=>{
     return <Picker.Item label={tag.name} value={tag.id} key={tag.id}/>
    });
@@ -113,9 +91,6 @@ export function ChatCreateScreen({ navigation, route }) {
         placeholder="Group Name"
         placeholderTextColor={colors.ghost}
       />
-      <TouchableOpacity style={styles.button1} onPress={onSendRequest}>
-        <Text style={styles.buttonText}>Request to Join</Text>
-      </TouchableOpacity>
 
       <TextInput
         value={description}
@@ -127,7 +102,7 @@ export function ChatCreateScreen({ navigation, route }) {
 
       <Picker
         selectedValue={selectedTag}
-        style={{ height: 50, width: 150 }}
+        style={{ height: 100, width: 150, marginTop: 0}}
         mode="dialog"
         onValueChange={(itemValue, itemIndex) => setSelectedTag(itemValue)}
       >
@@ -162,7 +137,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.eclipse,
-    marginTop: 32,
+    marginTop: 20,
     marginBottom: 16,
   },
   button1: {
@@ -185,6 +160,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 17,
+    color: colors.white,
+  },
+  addButtonText: {
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 24,
+    marginRight: 10,
     color: colors.white,
   },
 });

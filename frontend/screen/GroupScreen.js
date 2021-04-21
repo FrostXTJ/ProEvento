@@ -132,7 +132,6 @@ const GroupScreen = ({ route, navigation, props }) => {
                                     }}
                                     title={`Request to Join`}
                                     onPress={()=>{
-                                        console.log("check");
                                         onSendRequest(l.name);
                                     }}
                                     />

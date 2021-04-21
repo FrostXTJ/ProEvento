@@ -217,7 +217,6 @@ const NotificationScreen = ({navigation, route}) => {
         getGroupNotification(myUser.id,allGroups => {
             let arr = [];
             if (allGroups != null) {
-                console.log(allGroups)
                 allGroups.forEach(i => {
                     const card = (
                         <GroupCard

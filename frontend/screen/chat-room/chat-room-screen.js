@@ -1,18 +1,28 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { StyleSheet, View, Text} from 'react-native';
+import React, { useState, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { showMessage } from 'react-native-flash-message';
-
+import { routes } from '../MessageScreen';
 import { colors } from '../../theme';
 import { TwilioService } from '../../services/twilio-service';
 //import { ChatLoader } from './components/chat-loader';
 
-export function ChatRoomScreen({ route }) {
-  const { channelId, identity } = route.params;
+export function ChatRoomScreen({ navigation, route }) {
+  const { channelId, channelName, identity, myAccount} = route.params;
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const chatClientChannel = useRef();
   const chatMessagesPaginator = useRef();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate(routes.ChatAddUser.name,  { myAccount: myAccount, channelName: channelName})}>
+          <Text style={styles.addButtonText}>{'Add Member'}</Text>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const setChannelEvents = useCallback((channel) => {
     chatClientChannel.current = channel;
@@ -57,13 +67,13 @@ export function ChatRoomScreen({ route }) {
       {loading ? (
         <Text>Loading... </Text>
       ) : (
-        <GiftedChat
-          messagesContainerStyle={styles.messageContainer}
-          messages={messages}
-          renderAvatarOnTop
-          onSend={(messages) => onSend(messages)}
-          user={{ _id: identity }}
-        />
+          <GiftedChat
+            messagesContainerStyle={styles.messageContainer}
+            messages={messages}
+            renderAvatarOnTop
+            onSend={(messages) => onSend(messages)}
+            user={{ _id: identity }}
+          />
       )}
     </View>
   );
@@ -76,5 +86,12 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     backgroundColor: colors.snow,
+  },
+  addButtonText: {
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 24,
+    marginRight: 10,
+    color: colors.white,
   },
 });

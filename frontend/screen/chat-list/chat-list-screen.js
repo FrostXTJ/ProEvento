@@ -125,7 +125,7 @@ export function ChatListScreen({ navigation, route }) {
           renderItem={({ item }) => (
             <ChatListItem
               channel={item}
-              onPress={() => navigation.navigate(routes.ChatRoom.name, { channelId: item.id, identity: username })}
+              onPress={() => navigation.navigate(routes.ChatRoom.name, { channelId: item.id, channelName: item.name, identity: username, myAccount: myAccount})}
             />
           )}
           ListEmptyComponent={<ChatListEmpty />}
