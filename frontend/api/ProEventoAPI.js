@@ -18,6 +18,20 @@ export const testConnection = (
     .catch(error => onFailure(error));
 };
 
+export const deactivate =(
+    body,
+    onSuccess = defaultOnSuccessCallback,
+    onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/account/deactivate`, {
+    method: "POST",
+    body: JSON.stringify(body),
+  })
+      .then(response => response.json())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+
+};
 export const login = (
   body,
   onSuccess = defaultOnSuccessCallback,
@@ -448,6 +462,21 @@ export const getEventNotification = (
     .then(data => onSuccess(data))
     .catch(error => onFailure(error));
 };
+export const addBadge = (body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/user/add_badge`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
 
 export const getFollowNotification = (
     userId,
@@ -470,6 +499,7 @@ export const createGroup = (
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
+
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/create`, {
     method: "POST",
     headers: {
@@ -482,6 +512,22 @@ export const createGroup = (
     .catch(error => onFailure(error));
 };
 
+export const cancelEvent = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/cancel`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
 
 export const sendGroupRequest = (
   body,
@@ -489,6 +535,24 @@ export const sendGroupRequest = (
   onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/group_notification/send`, {
+
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then(response => response.text())
+    .then(data => onSuccess(data))
+    .catch(error => onFailure(error));
+};
+
+export const sendEventNotification = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event_notification/send`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -537,6 +601,23 @@ export const addUserToGroup = (
     onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/add_user`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+      .then(response => response.text())
+      .then(data => onSuccess(data))
+      .catch(error => onFailure(error));
+};
+
+export const sendFollowRequest = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/follow_notification/send`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

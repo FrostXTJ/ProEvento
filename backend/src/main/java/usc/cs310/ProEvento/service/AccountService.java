@@ -105,4 +105,8 @@ public class AccountService {
         account.setPassword(newPassword);
         return accountDao.updateAccount(account);
     }
+
+    public boolean deactivateAccount(Account account) {
+        return accountDao.deleteAccount(account);
+    }
 }

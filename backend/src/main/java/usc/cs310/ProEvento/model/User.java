@@ -31,6 +31,36 @@ public class User implements Serializable {
 
     private String status;
 
+    @Column(name = "badge_fun_count")
+    private long badgeFunCount;
+
+    @Column(name = "badge_cool_count")
+    private long badgeCoolCount;
+
+    @Column(name = "badge_helpful_count")
+    private long badgeHelpfulCount;
+
+    @Column(name = "badge_lovely_count")
+    private long badgeLovelyCount;
+
+    @Column(name = "badge_charming_count")
+    private long badgeCharmingCount;
+
+    @Column(name = "badge_awesome_count")
+    private long badgeAwesomeCount;
+
+    @Column(name = "badge_energetic_count")
+    private long badgeEnergeticCount;
+
+    @Column(name = "badge_smart_count")
+    private long badgeSmartCount;
+
+    @Column(name = "badge_dull_count")
+    private long badgeDullCount;
+
+    @Column(name = "badge_rude_count")
+    private long badgeRudeCount;
+
     @Column(name = "enable_notification")
     private boolean enableNotifications;
 
@@ -98,6 +128,46 @@ public class User implements Serializable {
         this.status = "Free";
     }
 
+    public void addFunBadge() {
+        badgeFunCount++;
+    }
+
+    public void addCoolBadge() {
+        badgeCoolCount++;
+    }
+
+    public void addHelpfulBadge() {
+        badgeHelpfulCount++;
+    }
+
+    public void addLovelyBadge() {
+        badgeLovelyCount++;
+    }
+
+    public void addCharmingBadge() {
+        badgeCharmingCount++;
+    }
+
+    public void addAwesomeBadge() {
+        badgeAwesomeCount++;
+    }
+
+    public void addEnergeticBadge() {
+        badgeEnergeticCount++;
+    }
+
+    public void addSmartBadge() {
+        badgeSmartCount++;
+    }
+
+    public void addDullBadge() {
+        badgeDullCount++;
+    }
+
+    public void addRudeBadge() {
+        badgeRudeCount++;
+    }
+
     // Getters and Setters
     public long getId() {
         return id;
@@ -145,6 +215,86 @@ public class User implements Serializable {
 
     public void setEnableNotifications(boolean enableNotifications) {
         this.enableNotifications = enableNotifications;
+    }
+
+    public long getBadgeFunCount() {
+        return badgeFunCount;
+    }
+
+    public void setBadgeFunCount(long badgeFunCount) {
+        this.badgeFunCount = badgeFunCount;
+    }
+
+    public long getBadgeCoolCount() {
+        return badgeCoolCount;
+    }
+
+    public void setBadgeCoolCount(long badgeCoolCount) {
+        this.badgeCoolCount = badgeCoolCount;
+    }
+
+    public long getBadgeHelpfulCount() {
+        return badgeHelpfulCount;
+    }
+
+    public void setBadgeHelpfulCount(long badgeHelpfulCount) {
+        this.badgeHelpfulCount = badgeHelpfulCount;
+    }
+
+    public long getBadgeLovelyCount() {
+        return badgeLovelyCount;
+    }
+
+    public void setBadgeLovelyCount(long badgeLovelyCount) {
+        this.badgeLovelyCount = badgeLovelyCount;
+    }
+
+    public long getBadgeCharmingCount() {
+        return badgeCharmingCount;
+    }
+
+    public void setBadgeCharmingCount(long badgeCharmingCount) {
+        this.badgeCharmingCount = badgeCharmingCount;
+    }
+
+    public long getBadgeAwesomeCount() {
+        return badgeAwesomeCount;
+    }
+
+    public void setBadgeAwesomeCount(long badgeAwesomeCount) {
+        this.badgeAwesomeCount = badgeAwesomeCount;
+    }
+
+    public long getBadgeEnergeticCount() {
+        return badgeEnergeticCount;
+    }
+
+    public void setBadgeEnergeticCount(long badgeEnergeticCount) {
+        this.badgeEnergeticCount = badgeEnergeticCount;
+    }
+
+    public long getBadgeSmartCount() {
+        return badgeSmartCount;
+    }
+
+    public void setBadgeSmartCount(long badgeSmartCount) {
+        this.badgeSmartCount = badgeSmartCount;
+    }
+
+    public long getBadgeDullCount() {
+        return badgeDullCount;
+    }
+
+    public void setBadgeDullCount(long badgeDullCount) {
+        this.badgeDullCount = badgeDullCount;
+    }
+
+    public long getBadgeRudeCount() {
+        return badgeRudeCount;
+    }
+
+    public void setBadgeRudeCount(long badgeRudeCount) {
+        this.badgeRudeCount = badgeRudeCount;
     }
 
     public Event getCurrentEvent() {

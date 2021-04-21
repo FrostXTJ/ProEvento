@@ -41,8 +41,10 @@ const dateTimeToString = date => {
   return iso.slice(0, 10) + " " + iso.slice(11, 19);
 };
 
-const EventCreationOverlay = props => {
-  const { currentUser, isVisible, toggleOverlay } = props;
+const EventCreationScreen = ({ navigation, route }) => {
+  const { myAccount } = route.params;
+  const [datePickerShow, setDatePickerShow] = useState(true);
+  const [timePickerShow, setTimePickerShow] = useState(true);
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventDateTime, setEventDateTime] = useState(new Date(Date.now()));
@@ -50,6 +52,8 @@ const EventCreationOverlay = props => {
   const [allTags, setAllTags] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [selectedTagIndex, setSelectedTagIndex] = useState(0);
+
+  const currentUser = myAccount.user;
 
   // Get user's host events.
   useEffect(() => {
@@ -109,65 +113,66 @@ const EventCreationOverlay = props => {
   };
 
   return (
-    <Overlay
-      isVisible={isVisible}
-      onBackdropPress={toggleOverlay}
-      overlayStyle={styles.overlay}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>Host a new Event</Text>
-        <Input
-          placeholder="Event Name"
-          onChangeText={input => {
-            setEventName(input);
-          }}
-        />
-        <Input
-          placeholder="Event Description"
-          onChangeText={input => {
-            setEventDescription(input);
-          }}
-        />
-        <Picker
-          style={{ height: 150, width: 150 }}
-          selectedValue={selectedTagIndex}
-          onValueChange={(tag, tagIndex) => setSelectedTagIndex(tagIndex)}
-        >
-          {allTags.map((tag, idx) => (
-            <Picker.Item key={tag.id} label={tag.name} value={idx} />
-          ))}
-        </Picker>
-        <DateTimePicker
-          style={styles.datetimepicker}
-          value={eventDateTime}
-          mode={"date"}
-          display="default"
-          onChange={(e, selectedDate) => {
-            const datetime = new Date(eventDateTime);
-            datetime.setFullYear(selectedDate.getFullYear());
-            datetime.setMonth(selectedDate.getMonth());
-            datetime.setDate(selectedDate.getDate());
-            setEventDateTime(datetime);
-          }}
-        />
-        <DateTimePicker
-          style={styles.datetimepicker}
-          value={eventDateTime}
-          mode={"time"}
-          is24Hour={true}
-          display="default"
-          onChange={(e, selectedTime) => {
-            const datetime = new Date(eventDateTime);
-            datetime.setHours(selectedTime.getHours());
-            datetime.setMinutes(selectedTime.getMinutes());
-            datetime.setSeconds(selectedTime.getSeconds());
-            setEventDateTime(datetime);
-          }}
-        />
-
-        <Button title="host" onPress={onHostEvent} />
+    <View style={styles.container}>
+      <Text style={styles.title}>Host a new Event</Text>
+      <Input
+        placeholder="Event Name"
+        onChangeText={input => {
+          setEventName(input);
+        }}
+      />
+      <Input
+        placeholder="Event Description"
+        onChangeText={input => {
+          setEventDescription(input);
+        }}
+      />
+      <Picker
+        style={{ height: 150, width: 150 }}
+        selectedValue={selectedTagIndex}
+        onValueChange={(tag, tagIndex) => setSelectedTagIndex(tagIndex)}
+      >
+        {allTags.map((tag, idx) => (
+          <Picker.Item key={tag.id} label={tag.name} value={idx} />
+        ))}
+      </Picker>
+      <View style={styles.datatimepickerWrapper}>
+        {datePickerShow && (
+          <DateTimePicker
+            style={styles.datetimepicker}
+            value={eventDateTime}
+            mode={"date"}
+            display="default"
+            onChange={(e, selectedDate) => {
+              const datetime = new Date(eventDateTime);
+              datetime.setFullYear(selectedDate.getFullYear());
+              datetime.setMonth(selectedDate.getMonth());
+              datetime.setDate(selectedDate.getDate());
+              setDatePickerShow(Platform.OS === "ios");
+              setEventDateTime(datetime);
+            }}
+          />
+        )}
+        {timePickerShow && (
+          <DateTimePicker
+            style={styles.datetimepicker}
+            value={eventDateTime}
+            mode={"time"}
+            is24Hour={true}
+            display="default"
+            onChange={(e, selectedTime) => {
+              const datetime = new Date(eventDateTime);
+              datetime.setHours(selectedTime.getHours());
+              datetime.setMinutes(selectedTime.getMinutes());
+              datetime.setSeconds(selectedTime.getSeconds());
+              setTimePickerShow(Platform.OS === "ios");
+              setEventDateTime(datetime);
+            }}
+          />
+        )}
       </View>
-    </Overlay>
+      <Button title="host" onPress={onHostEvent} />
+    </View>
   );
 };
 
@@ -177,13 +182,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: 24,
   },
-  overlay: {
-    width: "80%",
-    height: "60%",
-    alignContent: "center",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   container: {
     width: "100%",
     height: "80%",
@@ -191,11 +189,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  datatimepickerWrapper: {
+    paddingTop: 64,
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   datetimepicker: {
     width: 128,
-    height: 128,
-    backgroundColor: "white",
+    height: 28,
   },
 });
 
-export default EventCreationOverlay;
+export default EventCreationScreen;

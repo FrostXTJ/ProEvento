@@ -110,16 +110,16 @@ export default function HomeScreen({ route, navigation }) {
 
   const renderUserCards = user => {
     return (
-      <UserCard user={user}>
-        <Button
-          title={`Check ${user.username}'s profile`}
-          onPress={() =>
-            navigation.navigate("Profile", {
-              myAccount: myAccount,
-              profileUser: user,
-            })
-          }
-        ></Button>
+      <UserCard user={user} navigation={navigation}>
+{/*         <Button */}
+{/*           title={`Check ${user.username}'s profile`} */}
+{/*           onPress={() => */}
+{/*             navigation.navigate("Profile", { */}
+{/*               myAccount: myAccount, */}
+{/*               profileUser: user, */}
+{/*             }) */}
+{/*           } */}
+{/*         ></Button> */}
       </UserCard>
     );
   };
@@ -167,6 +167,7 @@ export default function HomeScreen({ route, navigation }) {
           event={selectedEvent}
           toggleOverlay={toggleEventOverlay}
           setEvent={setSelectedEvent}
+          navigation={navigation}
           imageNum = {Math.floor(Math.random() * 100 + 1)}
         />
       </View>

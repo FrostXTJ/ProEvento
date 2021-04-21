@@ -26,8 +26,8 @@ const LoginScreen = ({ navigation, route }) => {
     const credential = {
       // email: "alanturing@mail.com",
       // password: "helloworld123",
-      "email": "tommy@usc.edu",
-      "password": "uscfighton!"
+      email: "tommy@usc.edu",
+      password: "uscfighton!",
     };
     login(
       credential,
@@ -67,7 +67,7 @@ const LoginScreen = ({ navigation, route }) => {
       />
       <Button
         title="Sign up a new account"
-        onPress={() => navigation.navigate("Register")}
+        onPress={() => navigation.navigate("onboard1")}
       />
     </View>
   );
