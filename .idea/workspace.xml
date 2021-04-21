@@ -36,9 +36,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="373" y="186" width="1200" height="624" key="AVDManager" timestamp="1618783409939">
-      <screen x="0" y="23" width="1440" height="830" />
+    <state x="240" y="186" width="1200" height="624" key="AVDManager" timestamp="1618855009068">
+      <screen x="0" y="23" width="1440" height="828" />
     </state>
+    <state x="240" y="186" width="1200" height="624" key="AVDManager/0.23.1440.828@0.23.1440.828" timestamp="1618855009068" />
     <state x="373" y="186" width="1200" height="624" key="AVDManager/0.23.1440.830@0.23.1440.830" timestamp="1618783409939" />
   </component>
 </project>

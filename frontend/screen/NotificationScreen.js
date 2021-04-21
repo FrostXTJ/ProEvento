@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {RefreshControl, StyleSheet, Text, View, Alert, ScrollView, Image} from "react-native";
+import {StyleSheet, Text, View, Alert, ScrollView, Image} from "react-native";
 
 import {Card, Button, Avatar, ListItem} from "react-native-elements";
 import {
@@ -13,18 +13,32 @@ import {
     addUserToGroup,
     removeFollowNotification,
     removeGroupNotification,
-
+    removeEventNotification
 } from "../api/ProEventoAPI";
 
 const EventCard = props => {
-    const {content, senderName, eventName, userId, event, type, eventId} = props;
-    const [registeredEvents, setRegisteredEvents] = useState([]);
+    const {content, senderName, eventName, event, type, eventId, myUserId, notificationId} = props;
 
+    const [registeredEvents, setRegisteredEvents] = useState([]);
     useEffect(() => {
-        getUserRegisteredEvents(userId, events => {
+        getUserRegisteredEvents(myUserId, events => {
             setRegisteredEvents(events);
         });
     }, []);
+
+    const onRemoveEvent = (myUserId, notificationId) => {
+        removeEventNotification(
+            {
+                userId: myUserId,
+                notificationId: notificationId,
+            },
+            response => {
+                if (response == "success") {
+                    console.log("successfully deleted");
+                }
+            }
+        );
+    };
 
     const checkEventInList = (event, list) => {
         let result = false;
@@ -36,26 +50,26 @@ const EventCard = props => {
         return result;
     };
 
-    const onRegisterEvent = (userId, eventId) => {
+    const onRegisterEvent = (myUserId, eventId) => {
         registerEvent(
             {
-                userId: userId,
+                userId: myUserId,
                 eventId: eventId,
             },
             () => {
-                Alert.alert("You have registered this event!");
+                console.log("successfully registered")
             }
         );
     };
 
-    const onUnregisterEvent = (userId, eventId) => {
+    const onUnregisterEvent = (myUserId, eventId) => {
         unregisterEvent(
             {
-                userId: userId,
+                userId: myUserId,
                 eventId: eventId,
             },
             () => {
-                Alert.alert("You have unregistered this event!");
+                console.log("successfully unregistered")
             }
         );
     };
@@ -73,6 +87,7 @@ const EventCard = props => {
                 title="Cancelled"
                 onPress={() => {
                     alert("this event has been cancelled");
+                    onRemoveEvent(myUserId, notificationId);
                 }}
             />
     } else {
@@ -85,9 +100,10 @@ const EventCard = props => {
                         marginRight: 0,
                         marginBottom: 0,
                     }}
-                    title="Register"
+                    title="Unregister"
                     onPress={() => {
-                        onRegisterEvent(userId, eventId);
+                        alert("You have unregistered this event!");
+                        onUnregisterEvent(myUserId, eventId);
                     }}
                 />
         } else {
@@ -99,9 +115,10 @@ const EventCard = props => {
                         marginRight: 0,
                         marginBottom: 0,
                     }}
-                    title="Unregister"
+                    title="Register"
                     onPress={() => {
-                        onUnregisterEvent(userId, eventId);
+                        alert("You have registered this event!");
+                        onRegisterEvent(myUserId, eventId);
                     }}
                 />
         }
@@ -120,12 +137,16 @@ const EventCard = props => {
 
 const FollowCard = props => {
     const {content, senderName, senderId, myUserId, notificationId} = props;
-
     const onRemoveFollow = (myUserId, notificationId) => {
         removeFollowNotification(
             {
                 userId: myUserId,
                 notificationId: notificationId,
+            },
+            response => {
+                if (response == "success") {
+                    console.log("successfully deleted");
+                }
             }
         );
     };
@@ -185,8 +206,8 @@ const GroupCard = props => {
                 notificationId: notificationId,
             },
             response => {
-                if (response == success) {
-                    console.log("succesfully deleted");
+                if (response == "success") {
+                    console.log("successfully deleted");
                 }
             }
 
@@ -243,16 +264,6 @@ const NotificationScreen = ({navigation, route}) => {
     const [eventCards, setEventCards] = useState([]);
     const [followCards, setFollowCards] = useState([]);
     const [groupCards, setGroupCards] = useState([]);
-    const [refreshing, setRefreshing] = useState(false);
-
-    const wait = (timeout) => {
-        return new Promise(resolve => setTimeout(resolve, timeout));
-    }
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-
 
     useEffect(() => {
         let arr = [];
@@ -264,7 +275,6 @@ const NotificationScreen = ({navigation, route}) => {
                             content={i.content}
                             senderName={i.sender.username}
                             eventName={i.event.name}
-                            userId={myUser.id}
                             event={i.event}
                             eventId={i.event.id}
                             type={i.type}
@@ -324,12 +334,7 @@ const NotificationScreen = ({navigation, route}) => {
     }, []);
 
     return (
-        <ScrollView contentContainerStyle={styles.scrollView}
-            refreshControl={
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                />}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
             <View style={styles.container}>
                 {eventCards}
                 {followCards}
