@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {StyleSheet, Text, View, Alert, ScrollView, Image} from "react-native";
+import {RefreshControl, StyleSheet, Text, View, Alert, ScrollView, Image} from "react-native";
 
 import {Card, Button, Avatar, ListItem} from "react-native-elements";
 import {
@@ -8,11 +8,16 @@ import {
     getUserRegisteredEvents,
     getEventNotification,
     getFollowNotification,
-    getGroupNotification
+    getGroupNotification,
+    follow,
+    addUserToGroup,
+    removeFollowNotification,
+    removeGroupNotification,
+
 } from "../api/ProEventoAPI";
 
 const EventCard = props => {
-    const {content, senderName, eventName, userId, event} = props;
+    const {content, senderName, eventName, userId, event, type, eventId} = props;
     const [registeredEvents, setRegisteredEvents] = useState([]);
 
     useEffect(() => {
@@ -55,45 +60,75 @@ const EventCard = props => {
         );
     };
 
+    let button = <Button title="Loading"></Button>
+    if (type == "cancel") {
+        button =
+            <Button
+                buttonStyle={{
+                    borderRadius: 0,
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginBottom: 0,
+                }}
+                title="Cancelled"
+                onPress={() => {
+                    alert("this event has been cancelled");
+                }}
+            />
+    } else {
+        if (checkEventInList(event, registeredEvents)) {
+            button =
+                <Button
+                    buttonStyle={{
+                        borderRadius: 0,
+                        marginLeft: 0,
+                        marginRight: 0,
+                        marginBottom: 0,
+                    }}
+                    title="Register"
+                    onPress={() => {
+                        onRegisterEvent(userId, eventId);
+                    }}
+                />
+        } else {
+            button =
+                <Button
+                    buttonStyle={{
+                        borderRadius: 0,
+                        marginLeft: 0,
+                        marginRight: 0,
+                        marginBottom: 0,
+                    }}
+                    title="Unregister"
+                    onPress={() => {
+                        onUnregisterEvent(userId, eventId);
+                    }}
+                />
+        }
+    }
+
     return (
         <Card containerStyle={{width: 350, borderRadius: 20}}>
             <Card.Title>{eventName}</Card.Title>
             <Text style={{fontWeight: "bold"}}>From {senderName}</Text>
             <Card.Divider/>
             <Text style={{marginBottom: 10}}>{content}</Text>
-            {checkEventInList(event, registeredEvents) ? (
-                <Button
-                    buttonStyle={{
-                        borderRadius: 0,
-                        marginLeft: 0,
-                        marginRight: 0,
-                        marginBottom: 0,
-                    }}
-                    title="UNREGISTER"
-                    onPress={() => {
-                        onUnregisterEvent(userId, event.id);
-                    }}
-                />
-            ) : (
-                <Button
-                    buttonStyle={{
-                        borderRadius: 0,
-                        marginLeft: 0,
-                        marginRight: 0,
-                        marginBottom: 0,
-                    }}
-                    title="REGISTER"
-                    onPress={() => {
-                        onRegisterEvent(userId, event.id);
-                    }}
-                />
-            )}
+            {button}
         </Card>
     );
 };
 
 const FollowCard = props => {
-    const {content, senderName, senderId} = props;
+    const {content, senderName, senderId, myUserId, notificationId} = props;
+
+    const onRemoveFollow = (myUserId, notificationId) => {
+        removeFollowNotification(
+            {
+                userId: myUserId,
+                notificationId: notificationId,
+            }
+        );
+    };
 
     return (
         <Card containerStyle={{width: 350, borderRadius: 20}}>
@@ -120,7 +155,18 @@ const FollowCard = props => {
                         }}
                         title="Accept"
                         onPress={() => {
-                            alert("Will accept")
+                            follow(
+                                {
+                                    followerId: senderId,
+                                    followeeId: myUserId,
+                                },
+                                response => {
+                                    if (response == "success") {
+                                        alert("You have accepted this follow request!");
+                                        onRemoveFollow(myUserId, notificationId);
+                                    }
+                                }
+                            );
                         }}
                     />
                 </View>
@@ -130,7 +176,23 @@ const FollowCard = props => {
 };
 
 const GroupCard = props => {
-    const {content, senderName, groupName} = props;
+    const {content, senderName, groupName, senderId, groupId, myUserId, notificationId} = props;
+
+    const onRemoveGroup = (myUserId, notificationId) => {
+        removeGroupNotification(
+            {
+                userId: myUserId,
+                notificationId: notificationId,
+            },
+            response => {
+                if (response == success) {
+                    console.log("succesfully deleted");
+                }
+            }
+
+        );
+    };
+
     return (
         <Card containerStyle={{width: 350, borderRadius: 20}}>
             <Card.Title>{groupName}</Card.Title>
@@ -144,9 +206,20 @@ const GroupCard = props => {
                         marginTop: "10%",
                     }}
                     title="Approve"
-                    // onPress={() => {
-                    //     Approve the request
-                    // }}
+                    onPress={() => {
+                        addUserToGroup(
+                            {
+                                userId: senderId,
+                                groupId: groupId,
+                            },
+                            response => {
+                                if (response == "success") {
+                                    alert("You have approved the group request");
+                                    onRemoveGroup(myUserId, notificationId);
+                                }
+                            }
+                        );
+                    }}
                 />
                 <Button
                     buttonStyle={{
@@ -155,9 +228,10 @@ const GroupCard = props => {
                         marginLeft: "auto"
                     }}
                     title="Decline"
-                    // onPress={() => {
-                    //     Decline the request
-                    // }}
+                    onPress={() => {
+                        alert("You have declined the group request");
+                        onRemoveGroup(myUserId, notificationId);
+                    }}
                 />
             </View>
         </Card>
@@ -169,7 +243,15 @@ const NotificationScreen = ({navigation, route}) => {
     const [eventCards, setEventCards] = useState([]);
     const [followCards, setFollowCards] = useState([]);
     const [groupCards, setGroupCards] = useState([]);
-    const [refresh, setRefresh] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+
+    const wait = (timeout) => {
+        return new Promise(resolve => setTimeout(resolve, timeout));
+    }
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
 
     useEffect(() => {
@@ -179,12 +261,15 @@ const NotificationScreen = ({navigation, route}) => {
                 allEvents.forEach(i => {
                     const card = (
                         <EventCard
-                            key={i.id}
                             content={i.content}
                             senderName={i.sender.username}
                             eventName={i.event.name}
                             userId={myUser.id}
                             event={i.event}
+                            eventId={i.event.id}
+                            type={i.type}
+                            myUserId = {myUser.id}
+                            notificationId={i.id}
                         />
                     );
                     arr.push(card);
@@ -192,7 +277,7 @@ const NotificationScreen = ({navigation, route}) => {
                 setEventCards(arr);
             }
         });
-    }, [refresh]);
+    }, []);
 
     useEffect(() => {
         getFollowNotification(myUser.id,allFollows => {
@@ -204,6 +289,8 @@ const NotificationScreen = ({navigation, route}) => {
                             content={i.content}
                             senderName={i.sender.username}
                             senderId = {i.sender.id}
+                            myUserId = {myUser.id}
+                            notificationId= {i.id}
                         />
                     );
                     arr.push(card);
@@ -222,7 +309,11 @@ const NotificationScreen = ({navigation, route}) => {
                         <GroupCard
                             content={i.content}
                             senderName={i.sender.username}
+                            senderId={i.sender.id}
                             groupName={i.userGroup.name}
+                            groupId={i.userGroup.id}
+                            myUserId = {myUser.id}
+                            notificationId= {i.id}
                         />
                     );
                     arr.push(card);
@@ -233,14 +324,13 @@ const NotificationScreen = ({navigation, route}) => {
     }, []);
 
     return (
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollView}
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />}>
             <View style={styles.container}>
-                <Button style={styles.refreshButton}
-                        title="Refresh"
-                        onPress={() => {
-                            setRefresh(!refresh);
-                        }}
-                />
                 {eventCards}
                 {followCards}
                 {groupCards}
