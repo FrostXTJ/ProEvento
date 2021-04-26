@@ -59,9 +59,16 @@ export default function HomeScreen({ route, navigation }) {
     }
     else
     {
-      newEventList = eventList.filter(event => {
+      let newEventListByName = eventList.filter(event => {
         return event.name.includes(search);
       });
+      let newEventListByDescription = eventList.filter(event => {
+        return event.description.includes(search);
+      });
+      let newEventListByHashtags = eventList.filter(event => {
+        return event.hashtags.includes(search);
+      });
+      newEventList = Array.from(new Set(newEventListByName.concat(newEventListByDescription).concat(newEventListByHashtags)));
     }
     newEventList.sort(function (a, b) {
       if (a.dateTime < b.dateTime) {
