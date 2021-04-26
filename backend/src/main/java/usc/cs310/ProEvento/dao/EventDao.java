@@ -105,6 +105,20 @@ public class EventDao {
         }
     }
 
+    public List<Event> selectEventsByHashtag(String hashtag) {
+        try (Session session = sessionFactory.openSession()) {
+            session.getTransaction().begin();
+            Query query = session.createQuery("FROM Event e WHERE e.hashtags LIKE :hashtag");
+            query.setParameter("hashtag", '%' + hashtag + '%');
+            List<Event> events = (List<Event>) query.list();
+            session.getTransaction().commit();
+            return events;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
     // TODO: Implement this function.
     public List<Event> selectEventsByTag(Tag tag) {
         return Collections.emptyList();

@@ -143,4 +143,17 @@ public class EventService {
         }
         return false;
     }
+
+    public boolean setEventRecordingUrl(long eventId, String recordingUrl) {
+        Event event = eventDao.selectEventById(eventId);
+        if (event != null) {
+            event.setRecordingUrl(recordingUrl);
+            return eventDao.updateEvent(event);
+        }
+        return false;
+    }
+
+    public List<Event> getEventsByHashtag(String hashtag) {
+        return eventDao.selectEventsByHashtag(hashtag);
+    }
 }

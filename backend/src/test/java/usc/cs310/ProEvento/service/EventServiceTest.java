@@ -108,6 +108,5 @@ class EventServiceTest {
 //        User user = userService.getUserBydId(6); // User "Shannon"
 //        Event event = eventService.getEventById(10); // Event "Who am I?"
 //        user.joinEvent(event); // Event "Who am I?"
-//    }
-
+    }
 }
