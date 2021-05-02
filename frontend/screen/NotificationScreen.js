@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {StyleSheet, Text, View, Alert, ScrollView, Image} from "react-native";
+import {StyleSheet, Text, View, Alert, ScrollView, Image, Linking} from "react-native";
 
 import {Card, Button, Avatar, ListItem} from "react-native-elements";
 import {
@@ -75,6 +75,7 @@ const EventCard = props => {
     };
 
     let button = <Button title="Loading"></Button>
+    let displayContent = <Text style={{marginBottom: 10}}>{content}</Text>
     if (type == "cancel") {
         button =
             <Button
@@ -84,13 +85,13 @@ const EventCard = props => {
                     marginRight: 0,
                     marginBottom: 0,
                 }}
-                title="Cancelled"
+                title="Delete Notification"
                 onPress={() => {
-                    alert("this event has been cancelled");
+                    alert("this notification has been deleted");
                     onRemoveEvent(myUserId, notificationId);
                 }}
             />
-    } else {
+    } else if (type == "invitation") {
         if (checkEventInList(event, registeredEvents)) {
             button =
                 <Button
@@ -100,7 +101,7 @@ const EventCard = props => {
                         marginRight: 0,
                         marginBottom: 0,
                     }}
-                    title="Unregister"
+                    title="View Recording"
                     onPress={() => {
                         alert("You have unregistered this event!");
                         onUnregisterEvent(myUserId, eventId);
@@ -122,14 +123,30 @@ const EventCard = props => {
                     }}
                 />
         }
+    } else {
+        displayContent = <Text style={{marginBottom: 10}}>The recording of this event is processinsg. Click the button to view the recording.</Text>;
+        button =
+            <Button
+                buttonStyle={{
+                    borderRadius: 0,
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginBottom: 0,
+                }}
+                title="View Recording"
+                onPress={() =>
+                    Linking.openURL('https://drive.google.com/drive/folders/1TbgpjqdAkBgx5wNNYiNYAoWVqTEc-K-t?usp=sharing')
+                }
+            />
     }
+
 
     return (
         <Card containerStyle={{width: 350, borderRadius: 20}}>
             <Card.Title>{eventName}</Card.Title>
             <Text style={{fontWeight: "bold"}}>From {senderName}</Text>
             <Card.Divider/>
-            <Text style={{marginBottom: 10}}>{content}</Text>
+            <Text style={{marginBottom: 10}}>{displayContent}</Text>
             {button}
         </Card>
     );
