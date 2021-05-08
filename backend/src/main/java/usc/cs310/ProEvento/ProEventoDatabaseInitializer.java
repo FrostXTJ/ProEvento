@@ -150,6 +150,7 @@ public class ProEventoDatabaseInitializer {
             testSuggestionOne.setVotes(1);
             testSuggestionOne.setStatus("ongoing");
             testSuggestionOne.setDescription("Let's dance!");
+            testSuggestionOne.setHashtags("#dance");
             testSuggestionOne.setTag(tagDance);
             testSuggestionOne.setVoters(Set.of(testUserTommy));
             testSuggestionOne.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
@@ -160,10 +161,22 @@ public class ProEventoDatabaseInitializer {
             testSuggestionTwo.setVotes(2);
             testSuggestionTwo.setStatus("ongoing");
             testSuggestionTwo.setDescription("Video games that we love.");
+            testSuggestionTwo.setHashtags("#game");
             testSuggestionTwo.setTag(tagGame);
             testSuggestionTwo.setVoters(Set.of(testUserTommy, testUserTuring));
             testSuggestionTwo.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
             testSuggestionTwo.setUserGroup(testUserGroupUSC);
+
+            EventSuggestion testSuggestionThree = new EventSuggestion();
+            testSuggestionThree.setName("Best Boba Tea Shop");
+            testSuggestionThree.setVotes(0);
+            testSuggestionThree.setStatus("ongoing");
+            testSuggestionThree.setDescription("Best boba tea shops near USC.");
+            testSuggestionThree.setHashtags("#Boba");
+            testSuggestionThree.setTag(tagFood);
+            testSuggestionThree.setVoters(Collections.emptySet());
+            testSuggestionThree.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
+            testSuggestionThree.setUserGroup(testUserGroupUSC);
 
             UserGroup testUserGroupCS = new UserGroup();
             testUserGroupCS.setName("Computer Scientists Group");
@@ -173,15 +186,16 @@ public class ProEventoDatabaseInitializer {
             testUserGroupCS.setTag(tagTech);
             testUserGroupCS.setMembers(new HashSet<>(Set.of(testUserTuring, testUserNeumann)));
 
-            EventSuggestion testSuggestionThree = new EventSuggestion();
-            testSuggestionThree.setName("Best Programming Language");
-            testSuggestionThree.setVotes(0);
-            testSuggestionThree.setStatus("ongoing");
-            testSuggestionThree.setDescription("Best programming language.");
-            testSuggestionThree.setTag(tagTech);
-            testSuggestionThree.setVoters(Collections.emptySet());
-            testSuggestionThree.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
-            testSuggestionThree.setUserGroup(testUserGroupCS);
+            EventSuggestion testSuggestionFour = new EventSuggestion();
+            testSuggestionFour.setName("Best Programming Language");
+            testSuggestionFour.setVotes(0);
+            testSuggestionFour.setStatus("ongoing");
+            testSuggestionFour.setDescription("Best programming language.");
+            testSuggestionFour.setHashtags("#cs");
+            testSuggestionFour.setTag(tagTech);
+            testSuggestionFour.setVoters(Collections.emptySet());
+            testSuggestionFour.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
+            testSuggestionFour.setUserGroup(testUserGroupCS);
 
             EventNotification testEventNotification = new EventNotification();
             testEventNotification.setContent("Event \'Best Songs for CSCI 310\' hosted by Tommy has been cancelled.");
@@ -260,6 +274,7 @@ public class ProEventoDatabaseInitializer {
             session.save(testSuggestionOne);
             session.save(testSuggestionTwo);
             session.save(testSuggestionThree);
+            session.save(testSuggestionFour);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();

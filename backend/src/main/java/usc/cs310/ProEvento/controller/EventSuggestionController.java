@@ -34,17 +34,29 @@ public class EventSuggestionController {
     }
 
     @PostMapping("/api/suggestion/create")
-    public boolean createEventSuggestion(@RequestBody EventSuggestion suggestion) {
-        return eventSuggestionService.createEventSuggestion(suggestion);
+    public String createEventSuggestion(@RequestBody EventSuggestion suggestion) {
+        boolean success = eventSuggestionService.createEventSuggestion(suggestion);
+        if (success) {
+            return "success";
+        }
+        return "failure";
     }
 
     @PostMapping("/api/suggestion/vote")
-    public boolean voteEventSuggestion(@RequestBody EventSuggestionRequestBody requestBody) {
-        return eventSuggestionService.voteEventSuggestion(requestBody.userId, requestBody.eventSuggestionId);
+    public String voteEventSuggestion(@RequestBody EventSuggestionRequestBody requestBody) {
+        boolean success = eventSuggestionService.voteEventSuggestion(requestBody.userId, requestBody.eventSuggestionId);
+        if (success) {
+            return "success";
+        }
+        return "failure";
     }
 
     @PostMapping("/api/suggestion/to_events")
-    public boolean convertOngoingSuggestionsToEvents(@RequestParam long groupId) {
-        return eventSuggestionService.convertOngoingSuggestionsToEvents(groupId);
+    public String convertOngoingSuggestionsToEvents(@RequestParam long groupId) {
+        boolean success = eventSuggestionService.convertOngoingSuggestionsToEvents(groupId);
+        if (success) {
+            return "success";
+        }
+        return "failure";
     }
 }

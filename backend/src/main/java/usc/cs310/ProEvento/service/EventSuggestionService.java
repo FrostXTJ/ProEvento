@@ -62,7 +62,7 @@ public class EventSuggestionService {
             event.setCoverImageUrl("");
             event.setDescription(suggestion.getDescription());
             event.setTag(suggestion.getTag());
-            event
+            event.setHashtags(suggestion.getHashtags());
             event.setStatus("open for registration");
             event.setHost(suggestion.getUserGroup().getFounder());
             event.setDateTime(suggestion.getDateTime());

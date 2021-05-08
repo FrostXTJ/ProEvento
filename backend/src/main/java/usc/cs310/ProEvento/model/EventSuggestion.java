@@ -33,6 +33,8 @@ public class EventSuggestion implements Serializable {
 
     private String description;
 
+    private String hashtags;
+
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Tag tag;
 
@@ -103,6 +105,14 @@ public class EventSuggestion implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(String hashtags) {
+        this.hashtags = hashtags;
     }
 
     public Tag getTag() {
