@@ -113,6 +113,7 @@ public class ProEventoDatabaseInitializer {
             testEventOne.setCoverImageUrl("");
             testEventOne.setDescription("What is the best song in CSCI 310?");
             testEventOne.setStatus("open for registration");
+            testEventOne.setHashtags("#cs310 #usc");
             testEventOne.setTag(tagMusic);
             testEventOne.setDateTime(LocalDateTime.of(2021, 5, 1, 12, 0, 0));
             testEventOne.setHost(testUserTommy);
@@ -124,6 +125,7 @@ public class ProEventoDatabaseInitializer {
             testEventTwo.setCoverImageUrl("");
             testEventTwo.setDescription("The first computer game in the human history!");
             testEventTwo.setStatus("open for registration");
+            testEventTwo.setHashtags("#game");
             testEventTwo.setTag(tagGame);
             testEventTwo.setHost(testUserTuring);
             testEventTwo.setDateTime(LocalDateTime.of(2021, 12, 21, 10, 0, 0));

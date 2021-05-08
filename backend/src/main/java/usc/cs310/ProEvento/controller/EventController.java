@@ -3,6 +3,7 @@ package usc.cs310.ProEvento.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import usc.cs310.ProEvento.model.Event;
+import usc.cs310.ProEvento.model.requestbody.EventRecordingRequestBody;
 import usc.cs310.ProEvento.model.requestbody.UserEventRequestBody;
 import usc.cs310.ProEvento.service.EventService;
 
@@ -48,6 +49,11 @@ public class EventController {
     @GetMapping("/api/event/all_events")
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
+    }
+
+    @GetMapping("/api/event/events_by_hashtag")
+    public List<Event> getEventsByHashtag(@RequestParam String hashtag) {
+        return eventService.getEventsByHashtag(hashtag);
     }
 
     @PostMapping("/api/event/host")
@@ -109,6 +115,14 @@ public class EventController {
     @PostMapping("/api/event/leave")
     public String userLeaveEvent(@RequestBody UserEventRequestBody requestBody) {
         if (eventService.userLeaveEvent(requestBody.userId, requestBody.eventId)) {
+            return "success";
+        }
+        return "failure";
+    }
+
+    @PostMapping("/api/event/set_recording_url")
+    public String setEventRecordingUrl(@RequestBody EventRecordingRequestBody requestBody) {
+        if (eventService.setEventRecordingUrl(requestBody.eventId, requestBody.recordingUrl)) {
             return "success";
         }
         return "failure";

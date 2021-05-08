@@ -37,6 +37,11 @@ public class Event implements Serializable {
 
     private String status;
 
+    @Column(name = "recording_url")
+    private String recordingUrl;
+
+    private String hashtags;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonAlias({"dateTime", "datetime"})
@@ -131,6 +136,22 @@ public class Event implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRecordingUrl() {
+        return recordingUrl;
+    }
+
+    public void setRecordingUrl(String recordingUrl) {
+        this.recordingUrl = recordingUrl;
+    }
+
+    public String getHashtags() {
+        return hashtags;
+    }
+
+    public void setHashtags(String hashtags) {
+        this.hashtags = hashtags;
     }
 
     public LocalDateTime getDateTime() {
