@@ -86,7 +86,7 @@ export default function HomeScreen({ route, navigation }) {
   // Handle search users.
   useEffect(() => {
     searchUsersByUsername(search, users => {
-      if (search == "") {
+      if (search == "" || search[0] === '#') {
         users = [];
       }
       users.sort(function (a, b) {
@@ -148,7 +148,7 @@ export default function HomeScreen({ route, navigation }) {
         />
         <Text style={styles.title}>Current Events</Text>
         <TextInput
-          style={{ height: 40 }}
+          style={{ height: 40, width: 200 }}
           placeholder="Search by Events or Users or Dates"
           onChangeText={search => handleSearch(search)}
           defaultValue={search}

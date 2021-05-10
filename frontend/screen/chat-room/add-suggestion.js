@@ -117,7 +117,7 @@ export function AddSuggestionScreen({ route, navigation }) {
             style={styles.datetimepicker}
             value={eventDateTime}
             mode={"date"}
-            display="default"
+            display="spinner"
             onChange={(e, selectedDate) => {
               const datetime = new Date(eventDateTime);
               datetime.setFullYear(selectedDate.getFullYear());
@@ -196,7 +196,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 100,
   },
   buttonText: {
     fontSize: 17,
@@ -210,15 +209,15 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   datatimepickerWrapper: {
-    paddingTop: 100,
+    marginTop: 100,
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 0,
   },
   datetimepicker: {
-    width: 128,
-    height: 28,
-    fontSize: 30,
+    width: 300,
+    height: 64,
+    fontSize: 8,
   },
 });

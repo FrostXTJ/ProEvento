@@ -142,8 +142,10 @@ const EventOverlay = props => {
       {
         eventId: eventId,
       },
-      () => {
+      response => {
         setEvent({ ...event, status: "ended" });
+        let receivers = event.guests;
+        receivers.push(event.host);
         sendEventNotification({
           dateTime: dateTimeToString(new Date(Date.now())),
           content: `The recording of ${event.name} is processing, which may take some time. Click the button to view the recording.`,
@@ -172,20 +174,23 @@ const EventOverlay = props => {
       },
       () => {
         setEvent({ ...event, status: "cancelled" });
-        sendEventNotification({
-          dateTime: dateTimeToString(new Date(Date.now())),
-          content: `Event "${event.name}" hosted by ${currentUser.username} has been cancelled.`,
-          type: "cancel",
-          sender: {
-            id: currentUser.id,
+        sendEventNotification(
+          {
+            dateTime: dateTimeToString(new Date(Date.now())),
+            content: `Event "${event.name}" hosted by ${currentUser.username} has been cancelled.`,
+            type: "cancel",
+            sender: {
+              id: currentUser.id,
+            },
+            event: {
+              id: event.id,
+            },
+            receivers: event.guests,
           },
-          event: {
-            id: event.id,
-          },
-          receivers: event.guests,
-        }, (data)=>{
-          console.log(data);
-        });
+          data => {
+            console.log(data);
+          }
+        );
       }
     );
   };

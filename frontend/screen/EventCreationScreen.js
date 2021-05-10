@@ -197,14 +197,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   datatimepickerWrapper: {
-    paddingTop: 64,
+    marginTop: 100,
     alignContent: "center",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 0,
   },
   datetimepicker: {
-    width: 128,
-    height: 28,
+    width: 300,
+    height: 64,
+    fontSize: 8,
   },
 });
 
