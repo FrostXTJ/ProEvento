@@ -8,13 +8,13 @@ const LoginScreen = ({ navigation, route }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const onLogin = credential => {
+  const onLogin = (credential) => {
     login(
       credential,
-      account => {
+      (account) => {
         setMyAccount(account);
       },
-      error => {
+      (error) => {
         console.log(error);
         setMyAccount(null);
       }
@@ -35,10 +35,10 @@ const LoginScreen = ({ navigation, route }) => {
     };
     login(
       credential,
-      account => {
+      (account) => {
         setMyAccount(account);
       },
-      error => {
+      (error) => {
         setMyAccount(null);
       }
     );
@@ -48,7 +48,7 @@ const LoginScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <Input
         placeholder="E-mail"
-        onChangeText={input => {
+        onChangeText={(input) => {
           setEmail(input);
         }}
         leftIcon={<Icon name="email" size={24} color="black" />}
@@ -56,7 +56,7 @@ const LoginScreen = ({ navigation, route }) => {
       <Input
         placeholder="Password"
         secureTextEntry={true}
-        onChangeText={input => {
+        onChangeText={(input) => {
           setPassword(input);
         }}
         leftIcon={<Icon name="lock" size={24} color="black" />}
@@ -66,11 +66,7 @@ const LoginScreen = ({ navigation, route }) => {
         onPress={() => {
           // TODO Delete this
           fakeLogin();
-<<<<<<< HEAD
           //onLogin({ email: email, password: password });
-=======
-          // onLogin({ email: email, password: password });
->>>>>>> cb69f5c8c8da5535d7122f29923b4ec28497e8a5
         }}
       />
       <Button
