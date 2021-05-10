@@ -1,10 +1,10 @@
 import { PROEVENTO_BACKEND_SERVER } from "@env";
 
-const defaultOnSuccessCallback = data => {
+const defaultOnSuccessCallback = (data) => {
   console.log(data);
 };
 
-const defaultOnFailureCallback = error => {
+const defaultOnFailureCallback = (error) => {
   console.warn(error);
 };
 
@@ -13,24 +13,23 @@ export const testConnection = (
   onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/test`)
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
-export const deactivate =(
-    body,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+export const deactivate = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/account/deactivate`, {
     method: "POST",
     body: JSON.stringify(body),
   })
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
-
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 export const login = (
   body,
@@ -44,9 +43,9 @@ export const login = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const register = (
@@ -61,9 +60,9 @@ export const register = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const changePassword = (
@@ -78,9 +77,9 @@ export const changePassword = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const searchUserById = (
@@ -94,9 +93,9 @@ export const searchUserById = (
         userId: userId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const searchUsersByUsername = (
@@ -110,9 +109,9 @@ export const searchUsersByUsername = (
         username: username,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getFollowers = (
@@ -126,9 +125,9 @@ export const getFollowers = (
         userId: userId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getFollowing = (
@@ -142,9 +141,9 @@ export const getFollowing = (
         userId: userId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const follow = (
@@ -159,9 +158,9 @@ export const follow = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const unfollow = (
@@ -176,9 +175,9 @@ export const unfollow = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getAllTags = (
@@ -186,9 +185,9 @@ export const getAllTags = (
   onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/tag/all_tags`)
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getAllEvents = (
@@ -196,9 +195,9 @@ export const getAllEvents = (
   onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/event/all_events`)
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const searchEventById = (
@@ -212,9 +211,9 @@ export const searchEventById = (
         eventId: eventId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const searchEventsByName = (
@@ -228,9 +227,9 @@ export const searchEventsByName = (
         name: name,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getUserRegisteredEvents = (
@@ -244,9 +243,9 @@ export const getUserRegisteredEvents = (
         userId: userId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getUserHostEvents = (
@@ -260,9 +259,9 @@ export const getUserHostEvents = (
         userId: userId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const registerEvent = (
@@ -277,9 +276,9 @@ export const registerEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const unregisterEvent = (
@@ -294,9 +293,9 @@ export const unregisterEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const hostEvent = (
@@ -311,9 +310,9 @@ export const hostEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const startEvent = (
@@ -328,9 +327,9 @@ export const startEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const endEvent = (
@@ -345,9 +344,9 @@ export const endEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const joinEvent = (
@@ -362,9 +361,9 @@ export const joinEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const leaveEvent = (
@@ -379,9 +378,9 @@ export const leaveEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const sendInvitation = (
@@ -389,7 +388,7 @@ export const sendInvitation = (
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
-  console.log(JSON.stringify)
+  console.log(JSON.stringify);
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/invitation/send`, {
     method: "POST",
     headers: {
@@ -397,20 +396,19 @@ export const sendInvitation = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getAllGroups = (
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
-  fetch(
-      `${PROEVENTO_BACKEND_SERVER}/api/group/all_groups`)
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/all_groups`)
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getGroupsByFounder = (
@@ -418,51 +416,50 @@ export const getGroupsByFounder = (
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
-fetch(
+  fetch(
     `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_founder?` +
-    new URLSearchParams({
-      userId: userId,
-    })
-)
-  .then(response => response.json())
-  .then(data => onSuccess(data))
-  .catch(error => onFailure(error));
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
-
 
 export const getGroupsByMember = (
   userId,
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
-fetch(
-    `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_member?` +
-    new URLSearchParams({
-      userId: userId,
-    })
-)
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
-};
-
-
-export const getEventNotification = (
-    userId,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
-) => {
   fetch(
-      `${PROEVENTO_BACKEND_SERVER}/api/event_notification/by_receiver_id?` +
+    `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_member?` +
       new URLSearchParams({
         userId: userId,
       })
   )
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
-export const addBadge = (body,
+
+export const getEventNotification = (
+  userId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+    `${PROEVENTO_BACKEND_SERVER}/api/event_notification/by_receiver_id?` +
+      new URLSearchParams({
+        userId: userId,
+      })
+  )
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
+};
+export const addBadge = (
+  body,
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
@@ -473,25 +470,25 @@ export const addBadge = (body,
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getFollowNotification = (
-    userId,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+  userId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
   fetch(
-      `${PROEVENTO_BACKEND_SERVER}/api/follow_notification/by_receiver_id?` +
+    `${PROEVENTO_BACKEND_SERVER}/api/follow_notification/by_receiver_id?` +
       new URLSearchParams({
         userId: userId,
       })
   )
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const createGroup = (
@@ -499,7 +496,6 @@ export const createGroup = (
   onSuccess = defaultOnSuccessCallback,
   onFailure = defaultOnFailureCallback
 ) => {
-
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/create`, {
     method: "POST",
     headers: {
@@ -507,9 +503,9 @@ export const createGroup = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const cancelEvent = (
@@ -524,9 +520,9 @@ export const cancelEvent = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const sendGroupRequest = (
@@ -535,16 +531,15 @@ export const sendGroupRequest = (
   onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/group_notification/send`, {
-
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const sendEventNotification = (
@@ -559,9 +554,9 @@ export const sendEventNotification = (
     },
     body: JSON.stringify(body),
   })
-    .then(response => response.text())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const getGroupsByName = (
@@ -571,34 +566,34 @@ export const getGroupsByName = (
 ) => {
   fetch(
     `${PROEVENTO_BACKEND_SERVER}/api/group/groups_by_name?` +
-    new URLSearchParams({
-      name: name,
-    })
-)
-    .then(response => response.json())
-    .then(data => onSuccess(data))
-    .catch(error => onFailure(error));
+      new URLSearchParams({
+        name: name,
+      })
+  )
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 export const getGroupNotification = (
-    userId,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+  userId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
   fetch(
-      `${PROEVENTO_BACKEND_SERVER}/api/group_notification/by_receiver_id?` +
+    `${PROEVENTO_BACKEND_SERVER}/api/group_notification/by_receiver_id?` +
       new URLSearchParams({
         userId: userId,
       })
   )
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const addUserToGroup = (
-    body,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
   fetch(`${PROEVENTO_BACKEND_SERVER}/api/group/add_user`, {
     method: "POST",
@@ -607,9 +602,9 @@ export const addUserToGroup = (
     },
     body: JSON.stringify(body),
   })
-      .then(response => response.text())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const sendFollowRequest = (
@@ -624,61 +619,143 @@ export const sendFollowRequest = (
     },
     body: JSON.stringify(body),
   })
-      .then(response => response.text())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+    .then((response) => response.text())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const removeFollowNotification = (
-    body,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
-  fetch(
-      `${PROEVENTO_BACKEND_SERVER}/api/follow_notification/remove_receiver`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/follow_notification/remove_receiver`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const removeGroupNotification = (
-    body,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
-  fetch(
-      `${PROEVENTO_BACKEND_SERVER}/api/group_notification/remove_receiver`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      })
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/group_notification/remove_receiver`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };
 
 export const removeEventNotification = (
-    body,
-    onSuccess = defaultOnSuccessCallback,
-    onFailure = defaultOnFailureCallback
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/event_notification/remove_receiver`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
+};
+
+export const getPastSelectedSuggestionsByGroupId = (
+  groupId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
 ) => {
   fetch(
-      `${PROEVENTO_BACKEND_SERVER}/api/event_notification/remove_receiver`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
+    `${PROEVENTO_BACKEND_SERVER}/api/suggestion/past_selected_by_group_id?` +
+      new URLSearchParams({
+        groupId: groupId,
       })
-      .then(response => response.json())
-      .then(data => onSuccess(data))
-      .catch(error => onFailure(error));
+  )
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
+};
+
+export const getOngoingEventSuggestions = (
+  groupId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+    `${PROEVENTO_BACKEND_SERVER}/api/suggestion/ongoing_by_group_id?` +
+      new URLSearchParams({
+        groupId: groupId,
+      })
+  )
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
+};
+
+export const voteEventSuggestion = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/suggestion/vote`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
+};
+
+export const createEventSuggestion = (
+  body,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(`${PROEVENTO_BACKEND_SERVER}/api/suggestion/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
+};
+
+export const convertEventSuggestionToEvents = (
+  groupId,
+  onSuccess = defaultOnSuccessCallback,
+  onFailure = defaultOnFailureCallback
+) => {
+  fetch(
+    `${PROEVENTO_BACKEND_SERVER}/api/suggestion/to_events?` +
+      new URLSearchParams({
+        groupId: groupId,
+      }),
+    {
+      method: "POST",
+    }
+  )
+    .then((response) => response.json())
+    .then((data) => onSuccess(data))
+    .catch((error) => onFailure(error));
 };

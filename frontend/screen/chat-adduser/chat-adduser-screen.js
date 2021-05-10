@@ -1,36 +1,42 @@
-import React, { useState, useEffect} from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import { showMessage } from 'react-native-flash-message';
-import { colors } from '../../theme';
-import { images } from '../../assets';
-import { LoadingOverlay } from '../../components/loading-overlay';
-import { searchUsersByUsername, getGroupsByName, addUserToGroup} from "../../api/ProEventoAPI";
-
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { showMessage } from "react-native-flash-message";
+import { colors } from "../../theme";
+import { images } from "../../assets";
+import { LoadingOverlay } from "../../components/loading-overlay";
+import {
+  searchUsersByUsername,
+  getGroupsByName,
+  addUserToGroup,
+} from "../../api/ProEventoAPI";
 
 export function ChatAddUserScreen({ route }) {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
-  const { myAccount, channelName} = route.params;
- const onAddUser = ()=>{
-    if (username == "")
-    {
-        showMessage({ message: 'Please enter a user name' });
-    }
-    else
-    {
-        searchUsersByUsername(username, users=>{
-            const userId = users[0].id;
-            getGroupsByName(channelName, groups=>{
-               const groupId = groups[0].id;
-               const body = {userId: userId, groupId:groupId};
-               console.log(body);
-               addUserToGroup(body, ()=>{
-                showMessage({ message: 'Successfully added user' });
-               })
-            });
+  const { myAccount, channelName } = route.params;
+  const onAddUser = () => {
+    if (username == "") {
+      showMessage({ message: "Please enter a user name" });
+    } else {
+      searchUsersByUsername(username, (users) => {
+        const userId = users[0].id;
+        getGroupsByName(channelName, (groups) => {
+          const groupId = groups[0].id;
+          const body = { userId: userId, groupId: groupId };
+          addUserToGroup(body, () => {
+            showMessage({ message: "Successfully added user" });
+          });
         });
+      });
     }
- }
+  };
 
   return (
     <View style={styles.screen}>
@@ -43,9 +49,12 @@ export function ChatAddUserScreen({ route }) {
         placeholderTextColor={colors.ghost}
       />
 
-      <TouchableOpacity style={styles.button} onPress={()=>{
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
           onAddUser();
-      }}>
+        }}
+      >
         <Text style={styles.buttonText}>{`Add user to ${channelName}`}</Text>
       </TouchableOpacity>
       {loading && <LoadingOverlay />}
@@ -56,8 +65,8 @@ export function ChatAddUserScreen({ route }) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: colors.whisper,
   },
   logo: {
@@ -81,9 +90,9 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: colors.malibu,
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 10
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
   },
   buttonText: {
     fontSize: 17,

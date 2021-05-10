@@ -5,24 +5,31 @@ import { showMessage } from 'react-native-flash-message';
 import { routes } from '../MessageScreen';
 import { colors } from '../../theme';
 import { TwilioService } from '../../services/twilio-service';
-//import { ChatLoader } from './components/chat-loader';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-export function ChatRoomScreen({ navigation, route }) {
+import {ChatAddUserScreen} from '../chat-adduser/chat-adduser-screen';
+import {AddSuggestionScreen} from '../chat-room/add-suggestion';
+import {PastStatsScreen} from '../chat-room/pastStatsticScreen';
+import {ChatVoteScreen} from '../chat-room/chat-vote-screen';
+
+const Drawer = createDrawerNavigator();
+
+function ChatRoomMainScreen({ navigation, route }) {
   const { channelId, channelName, identity, myAccount} = route.params;
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const chatClientChannel = useRef();
   const chatMessagesPaginator = useRef();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate(routes.ChatAddUser.name,  { myAccount: myAccount, channelName: channelName})}>
-          <Text style={styles.addButtonText}>{'Add Member'}</Text>
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerRight: () => (
+  //       <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate(routes.ChatAddUser.name,  { myAccount: myAccount, channelName: channelName})}>
+  //         <Text style={styles.addButtonText}>{'Add Member'}</Text>
+  //       </TouchableOpacity>
+  //     ),
+  //   });
+  // }, [navigation]);
 
   const setChannelEvents = useCallback((channel) => {
     chatClientChannel.current = channel;
@@ -76,6 +83,57 @@ export function ChatRoomScreen({ navigation, route }) {
           />
       )}
     </View>
+  );
+}
+
+export function ChatRoomScreen({ navigation, route }) {
+  const {channelId, channelName, identity, myAccount} = route.params;
+  return (
+      <Drawer.Navigator initialRouteName="Main">
+        <Drawer.Screen 
+          name="Main" 
+          component={ChatRoomMainScreen} 
+          initialParams={{
+            channelId: channelId,
+            channelName: channelName,
+            identity:identity,
+            myAccount: myAccount,
+          }}
+        />
+        <Drawer.Screen
+          name = "Add User"
+          component={ChatAddUserScreen}
+          initialParams={{
+            myAccount: myAccount,
+            channelName: channelName
+          }}
+        />
+        <Drawer.Screen
+          name = "Add Suggestion"
+          component={AddSuggestionScreen}
+          initialParams={{
+            myAccount: myAccount,
+            channelName: channelName
+          }}
+        />
+        <Drawer.Screen
+          name = "Past Statistic"
+          component={PastStatsScreen}
+          initialParams={{
+            myAccount: myAccount,
+            channelName: channelName
+          }}
+        />
+        <Drawer.Screen
+          name = "Chat vote screen"
+          component={ChatVoteScreen}
+          initialParams={{
+            myAccount: myAccount,
+            channelName: channelName
+          }}
+        />
+
+      </Drawer.Navigator>
   );
 }
 

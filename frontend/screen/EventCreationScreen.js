@@ -78,7 +78,6 @@ const EventCreationScreen = ({ navigation, route }) => {
   });
 
   const onHostEvent = () => {
-    toggleOverlay();
     const oldEvents = hostEvents;
     const event = {
       name: eventName,

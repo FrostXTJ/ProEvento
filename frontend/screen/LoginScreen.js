@@ -24,10 +24,14 @@ const LoginScreen = ({ navigation, route }) => {
   // TODO Delete this
   const fakeLogin = () => {
     const credential = {
-      // email: "alanturing@mail.com",
-      // password: "helloworld123",
-      email: "tommy@usc.edu",
-      password: "uscfighton!",
+      email: "alanturing@mail.com",
+      password: "helloworld123",
+      // email: "tommy@usc.edu",
+      // password: "uscfighton!",
+      // email: "viterbi@usc.edu",
+      // password: "123123"
+      // email: "Demo@usc.edu",
+      // password:"123456",
     };
     login(
       credential,
@@ -61,8 +65,8 @@ const LoginScreen = ({ navigation, route }) => {
         title="Log in"
         onPress={() => {
           // TODO Delete this
-          // fakeLogin();
-          onLogin({ email: email, password: password });
+          fakeLogin();
+          //onLogin({ email: email, password: password });
         }}
       />
       <Button

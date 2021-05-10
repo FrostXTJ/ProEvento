@@ -26,7 +26,7 @@ const checkEventInList = (event, list) => {
 };
 
 const dateTimeToString = date => {
-  const iso = date.toISOString();a
+  const iso = date.toISOString();
   return iso.slice(0, 10) + " " + iso.slice(11, 19);
 };
 
@@ -170,6 +170,8 @@ const EventOverlay = props => {
             id: event.id,
           },
           receivers: event.guests,
+        }, (data)=>{
+          console.log(data);
         });
       }
     );
