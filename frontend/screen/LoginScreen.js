@@ -66,7 +66,11 @@ const LoginScreen = ({ navigation, route }) => {
         onPress={() => {
           // TODO Delete this
           fakeLogin();
+<<<<<<< HEAD
           //onLogin({ email: email, password: password });
+=======
+          // onLogin({ email: email, password: password });
+>>>>>>> cb69f5c8c8da5535d7122f29923b4ec28497e8a5
         }}
       />
       <Button

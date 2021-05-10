@@ -47,6 +47,7 @@ const EventCreationScreen = ({ navigation, route }) => {
   const [timePickerShow, setTimePickerShow] = useState(true);
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
+  const [eventHashtags, setEventHashtags] = useState("");
   const [eventDateTime, setEventDateTime] = useState(new Date(Date.now()));
   const [hostEvents, setHostEvents] = useState([]);
   const [allTags, setAllTags] = useState([]);
@@ -82,6 +83,7 @@ const EventCreationScreen = ({ navigation, route }) => {
     const event = {
       name: eventName,
       description: eventDescription,
+      hashtags: eventHashtags,
       coverImageUrl: "",
       tag: allTags[selectedTagIndex],
       host: { id: currentUser.id },
@@ -125,6 +127,12 @@ const EventCreationScreen = ({ navigation, route }) => {
         onChangeText={input => {
           setEventDescription(input);
         }}
+      />
+      <Input
+          placeholder="Event Hashtags"
+          onChangeText={input => {
+            setEventHashtags(input);
+          }}
       />
       <Picker
         style={{ height: 150, width: 150 }}

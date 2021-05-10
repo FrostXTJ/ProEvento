@@ -144,6 +144,19 @@ const EventOverlay = props => {
       },
       () => {
         setEvent({ ...event, status: "ended" });
+        sendEventNotification({
+          dateTime: dateTimeToString(new Date(Date.now())),
+          content: `The recording of ${event.name} is processing, which may take some time. Click the button to view the recording.`,
+          type: "recording",
+          sender: {
+            id: currentUser.id,
+          },
+          event: {
+            id: event.id,
+          },
+          receivers: event.guests,
+        });
+
         navigation.navigate("Streaming", {
           screen: "Streaming",
           params: { currentEvent: null },

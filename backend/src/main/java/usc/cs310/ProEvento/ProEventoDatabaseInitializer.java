@@ -7,6 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import usc.cs310.ProEvento.model.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -112,6 +113,7 @@ public class ProEventoDatabaseInitializer {
             testEventOne.setCoverImageUrl("");
             testEventOne.setDescription("What is the best song in CSCI 310?");
             testEventOne.setStatus("open for registration");
+            testEventOne.setHashtags("#cs310 #usc");
             testEventOne.setTag(tagMusic);
             testEventOne.setDateTime(LocalDateTime.of(2021, 5, 1, 12, 0, 0));
             testEventOne.setHost(testUserTommy);
@@ -123,6 +125,7 @@ public class ProEventoDatabaseInitializer {
             testEventTwo.setCoverImageUrl("");
             testEventTwo.setDescription("The first computer game in the human history!");
             testEventTwo.setStatus("open for registration");
+            testEventTwo.setHashtags("#game");
             testEventTwo.setTag(tagGame);
             testEventTwo.setHost(testUserTuring);
             testEventTwo.setDateTime(LocalDateTime.of(2021, 12, 21, 10, 0, 0));
@@ -142,13 +145,57 @@ public class ProEventoDatabaseInitializer {
             testUserGroupUSC.setTag(tagLife);
             testUserGroupUSC.setMembers(new HashSet<>(Set.of(testUserTommy, testUserNeumann, testUserTuring)));
 
+            EventSuggestion testSuggestionOne = new EventSuggestion();
+            testSuggestionOne.setName("Dance All Night");
+            testSuggestionOne.setVotes(1);
+            testSuggestionOne.setStatus("ongoing");
+            testSuggestionOne.setDescription("Let's dance!");
+            testSuggestionOne.setHashtags("#dance");
+            testSuggestionOne.setTag(tagDance);
+            testSuggestionOne.setVoters(Set.of(testUserTommy));
+            testSuggestionOne.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
+            testSuggestionOne.setUserGroup(testUserGroupUSC);
+
+            EventSuggestion testSuggestionTwo = new EventSuggestion();
+            testSuggestionTwo.setName("Video Game");
+            testSuggestionTwo.setVotes(2);
+            testSuggestionTwo.setStatus("ongoing");
+            testSuggestionTwo.setDescription("Video games that we love.");
+            testSuggestionTwo.setHashtags("#game");
+            testSuggestionTwo.setTag(tagGame);
+            testSuggestionTwo.setVoters(Set.of(testUserTommy, testUserTuring));
+            testSuggestionTwo.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
+            testSuggestionTwo.setUserGroup(testUserGroupUSC);
+
+            EventSuggestion testSuggestionThree = new EventSuggestion();
+            testSuggestionThree.setName("Best Boba Tea Shop");
+            testSuggestionThree.setVotes(0);
+            testSuggestionThree.setStatus("ongoing");
+            testSuggestionThree.setDescription("Best boba tea shops near USC.");
+            testSuggestionThree.setHashtags("#Boba");
+            testSuggestionThree.setTag(tagFood);
+            testSuggestionThree.setVoters(Collections.emptySet());
+            testSuggestionThree.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
+            testSuggestionThree.setUserGroup(testUserGroupUSC);
+
             UserGroup testUserGroupCS = new UserGroup();
             testUserGroupCS.setName("Computer Scientists Group");
             testUserGroupCS.setFounder(testUserTuring);
             testUserGroupCS.setDescription("User group for computer scientists");
             testUserGroupCS.setAvatarUrl("");
             testUserGroupCS.setTag(tagTech);
-            testUserGroupCS.setMembers(new HashSet<>(Set.of(testUserTuring, testUserNeumann))   );
+            testUserGroupCS.setMembers(new HashSet<>(Set.of(testUserTuring, testUserNeumann)));
+
+            EventSuggestion testSuggestionFour = new EventSuggestion();
+            testSuggestionFour.setName("Best Programming Language");
+            testSuggestionFour.setVotes(0);
+            testSuggestionFour.setStatus("ongoing");
+            testSuggestionFour.setDescription("Best programming language.");
+            testSuggestionFour.setHashtags("#cs");
+            testSuggestionFour.setTag(tagTech);
+            testSuggestionFour.setVoters(Collections.emptySet());
+            testSuggestionFour.setDateTime(LocalDateTime.of(2021, 05, 15, 9, 0, 0));
+            testSuggestionFour.setUserGroup(testUserGroupCS);
 
             EventNotification testEventNotification = new EventNotification();
             testEventNotification.setContent("Event \'Best Songs for CSCI 310\' hosted by Tommy has been cancelled.");
@@ -159,6 +206,22 @@ public class ProEventoDatabaseInitializer {
             Set<User> s = new HashSet<>();
             s.add(testUserTuring);
             testEventNotification.setReceivers(s);
+
+            EventNotification testEventInvitation = new EventNotification();
+            testEventInvitation.setContent("Turing invites you to his event \"The First Video Game!\".");
+            testEventInvitation.setSender(testUserTuring);
+            testEventInvitation.setEvent(testEventTwo);
+            testEventInvitation.setDateTime(LocalDateTime.now());
+            testEventInvitation.setType("invite");
+            testEventInvitation.setReceivers(Set.of(testUserTommy, testUserNeumann));
+
+            EventNotification testEventRecording = new EventNotification();
+            testEventRecording.setContent("The recording of the event \"Best Songs for CSCI 310\" has been processing. It may take a couple of minutes for it to be available.");
+            testEventRecording.setSender(testUserTommy);
+            testEventRecording.setEvent(testEventOne);
+            testEventRecording.setDateTime(LocalDateTime.now());
+            testEventRecording.setType("record");
+            testEventRecording.setReceivers(Set.of(testUserTommy, testUserTuring, testUserNeumann));
 
             FollowRequestNotification testFollowRequestNotification = new FollowRequestNotification();
             testFollowRequestNotification.setSender(testUserNeumann);
@@ -200,12 +263,18 @@ public class ProEventoDatabaseInitializer {
             session.save(testAccountNeumann);
             session.save(testEventOne);
             session.save(testEventTwo);
+            session.save(testEventInvitation);
+            session.save(testEventRecording);
             session.save(testEventNotification);
             session.save(testInvitation);
             session.save(testFollowRequestNotification);
             session.save(testGroupRequestNotification);
             session.save(testUserGroupUSC);
             session.save(testUserGroupCS);
+            session.save(testSuggestionOne);
+            session.save(testSuggestionTwo);
+            session.save(testSuggestionThree);
+            session.save(testSuggestionFour);
             session.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
